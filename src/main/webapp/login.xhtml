@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Hej</title>
+    </h:head>
+    <h:body>    
+        <h:form>
+            <h:commandLink action="#{locale.changeLocale}">
+                <f:param name="languageCode" value="sv"/>
+                <h:graphicImage value="/sv.gif"/>
+            </h:commandLink>
+            &nbsp;
+            <h:commandLink action="#{locale.changeLocale}">
+                <f:param name="languageCode" value="en"/>
+                <h:graphicImage value="/en.gif"/>
+            </h:commandLink>
+        </h:form>
+        <h1>#{messages.welcome}!</h1>
+        <h:form>
+            <h3>#{messages.loginAsApplicant}</h3>
+            <p>
+                <h:outputLabel for="loginUsername" value="#{messages.username}: "/>
+                <h:inputText id="loginUsername" value="#{loginManager.applicantUsername}"
+                             validatorMessage="#{messages.noUsername}!">
+                    <f:validateRequired/>
+                </h:inputText><br/><br/>
+                <h:outputLabel for="loginPassword" value="#{messages.password}: "/>              
+                <h:inputSecret id="loginPassword" value="#{loginManager.applicantPassword}"
+                               validatorMessage="#{messages.noPassword}!">
+                    <f:validateRequired/>
+                </h:inputSecret><br/><br/>
+                <h:commandButton value="#{messages.loginAsApplicant}" action="#{loginManager.loginAsApplicant}"/>
+                <p><h:outputLabel rendered="#{loginManager.applicantMessage != null}"  
+                                    value="#{messages.loginFailed}"/></p>
+                <p><h:message for="loginUsername"/></p>
+                <p><h:message for="loginPassword"/></p>
+            </p>
+            <hr/>
+        </h:form>
+        <h:form>
+            <h3>#{messages.loginAsRecruiter}</h3>
+            <p>
+                <h:outputLabel for="loginRUsername" value="#{messages.username}: "/>
+                <h:inputText id="loginRUsername" value="#{loginManager.recruiterUsername}"
+                             validatorMessage="#{messages.noUsername}!">
+                    <f:validateRequired/>
+                </h:inputText><br/><br/>
+                <h:outputLabel for="loginRPassword" value="#{messages.password}: "/>
+                <h:inputSecret id="loginRPassword" value="#{loginManager.recruiterPassword}"
+                               validatorMessage="#{messages.noPassword}!">
+                    <f:validateRequired/>
+                </h:inputSecret><br/><br/>
+                <h:commandButton value="#{messages.loginAsRecruiter}" action="#{loginManager.loginAsRecruiter}"/>
+                <p><h:outputLabel rendered="#{loginManager.recruiterMessage != null}"  
+                                    value="#{messages.loginFailed}"/></p>
+                <p><h:message for="loginRUsername"/></p>
+                <p><h:message for="loginRPassword"/></p>
+            </p>
+            <hr/>
+        </h:form>  
+    </h:body>
+</html>

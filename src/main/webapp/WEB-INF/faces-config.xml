@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>view.Messages</base-name>
+            <var>messages</var>
+        </resource-bundle>
+    </application>
+    
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{loginManager.loginAsApplicantSuccess}</if>
+            <to-view-id>/applicant.xhtml</to-view-id>
+        </navigation-case>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{loginManager.loginAsRecruiterSuccess}</if>
+            <to-view-id>/recruiter.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
