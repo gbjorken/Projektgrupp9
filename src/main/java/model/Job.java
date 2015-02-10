@@ -19,10 +19,10 @@ public class Job implements Serializable {
     @Column(name = "id")
     private Integer id;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
-    private Collection<Status_Localized> statusLocalized;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
+    private Collection<Job_Localized> jobLocalized;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private Collection<Application> applications;
     
     public Job(){
@@ -41,7 +41,6 @@ public class Job implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Job)) {
             return false;
         }
