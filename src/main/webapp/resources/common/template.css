@@ -1,0 +1,72 @@
+html, body {
+    width: 98.5%;
+    height: 98.5%;
+    color: black;
+    font-family: arial,verdana,tahoma;
+    line-height: 150%;
+}
+h1, h2, h3 {
+    font-family: arial black;
+}
+img {
+    float: right;
+    border: 1px solid black;
+}
+
+
+#bigbox {
+    border: 1px solid black;
+    float: left;
+    width: 100%;
+    height: 100%;
+    background: #6699CC;
+}
+#menubox {
+    border: 1px solid black;
+    float: left;
+    width: 250px;
+    height: calc(100% - 4px);
+    background: #FFFF00;
+}
+#contbox {
+    border: 1px solid black;
+    float: right;
+    width: calc(100% - 250px - 4px);
+    height: calc(100% - 4px);
+}
+
+
+#top {
+    clear: both;
+    padding: 5px 3%;
+    text-align: left;
+    background: #330000;
+    color: #fff;
+}
+#slide {
+    padding: 15px;
+    height: calc(100% - 170px);
+    background: #66FF33;
+}
+#foot {
+    clear: both;
+    background: #330000;
+    color: #fff;
+    padding: 5px 3%;
+    text-align: right;
+}
+
+
+ul#nav {
+    margin-left: 0px;
+    margin-right: 10px;
+    list-style-type: none;
+    float: left;
+    padding: 5px;
+    background: #D3D3D3;
+    border: 3px solid #808080;
+} ul#nav li {
+        display: inline;
+} ul#nav a {
+        text-decoration: none;
+}
