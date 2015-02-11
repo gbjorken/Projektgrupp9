@@ -13,7 +13,6 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Job_Localized implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "jobLocalizedIdSeq", 
             sequenceName = "JOBLOCALIZED_ID_SEQ", allocationSize = 1, initialValue = 1)
@@ -21,7 +20,7 @@ public class Job_Localized implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "jobName", nullable = false)
+    @Column(name = "jobName", nullable = false, unique = true)
     private String jobName;
     
     @ManyToOne(optional = false)
@@ -31,12 +30,12 @@ public class Job_Localized implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
-    
+
     public Job_Localized(){
     }
     
     public Job_Localized(String jobName, Locale locale,
-                                Job job)
+                          Job job)
     {
         this.jobName = jobName;
         this.locale = locale;
@@ -46,7 +45,7 @@ public class Job_Localized implements Serializable {
     public Integer getId() {
         return id;
     }
-
+    
     public String getLocale(){
         return locale.getLangCode();
     }
@@ -55,20 +54,20 @@ public class Job_Localized implements Serializable {
         this.locale = locale;
     }
     
-    public Integer getCompetence(){
+    public Integer getJob(){
         return job.getId();
     }
     
-    public void setCompetence(Competence competence){
+    public void setJob(Job job){
         this.job = job;
     }
     
-    public String getCompetenceName(){
+    public String getJobTypeName(){
         return jobName;
     }
     
-    public void setCompetenceName(String competenceName){
-        this.jobName = competenceName;
+    public void setJobName(String jobName){
+        this.jobName = jobName;
     }
     
     @Override
@@ -80,16 +79,15 @@ public class Job_Localized implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Job_Localized)) {
             return false;
         }
         Job_Localized other = (Job_Localized) object;
-        return this.id.equals(other.id);    
+        return this.id.equals(other.id);
     }
 
     @Override
     public String toString() {
         return "model.Job_Localized[ id=" + id + " ]";
-    }    
+    }
 }

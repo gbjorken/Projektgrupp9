@@ -21,7 +21,7 @@ public class Status_Localized implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "statusName", nullable = false)
+    @Column(name = "statusName", nullable = false, unique = true)
     private String statusName;
     
     @ManyToOne(optional = false)

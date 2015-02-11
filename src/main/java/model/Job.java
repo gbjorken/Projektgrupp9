@@ -18,22 +18,18 @@ public class Job implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobIdSeq")
     @Column(name = "id")
     private Integer id;
-
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
+    private Collection<Job_Localized> jobLocalized;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private Collection<Application> applications;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
-    private Collection<Job_Localized> jobs;
-
-    public Job() {
+    public Job(){
     }
-
+    
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override
@@ -45,20 +41,15 @@ public class Job implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Job)) {
             return false;
         }
         Job other = (Job) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return this.id.equals(other.id);
     }
 
     @Override
     public String toString() {
         return "model.Job[ id=" + id + " ]";
-    }
-    
+    }    
 }

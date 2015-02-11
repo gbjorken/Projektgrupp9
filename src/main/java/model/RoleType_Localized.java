@@ -14,13 +14,13 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class RoleType_Localized implements Serializable {
     @Id
-    @SequenceGenerator(name = "roleLocalizedIdSeq", 
-            sequenceName = "ROLELOCALIZED_ID_SEQ", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleLocalizedIdSeq")
+    @SequenceGenerator(name = "roleTypeLocalizedIdSeq", 
+            sequenceName = "ROLETYPELOCALIZED_ID_SEQ", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleTypeLocalizedIdSeq")
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "roletypeName", nullable = false)
+    @Column(name = "roletypeName", nullable = false, unique = true)
     private String roletypeName;
     
     @ManyToOne(optional = false)
@@ -89,6 +89,6 @@ public class RoleType_Localized implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Role_Localized[ id=" + id + " ]";
+        return "model.RoleType_Localized[ id=" + id + " ]";
     }
 }

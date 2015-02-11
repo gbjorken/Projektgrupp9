@@ -32,6 +32,9 @@ public class Locale implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
     private Collection<Competence_Localized> competenceLocalized;
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
+    private Collection<Job_Localized> jobLocalized;
+    
     public Locale(){
     }
     

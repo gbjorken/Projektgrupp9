@@ -44,14 +44,19 @@ public class Application implements Serializable {
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
     
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
+    private Job job;
+    
     public Application(){
     }
     
-    public Application(String date_made, Person person, Status status)
+    public Application(String date_made, Person person, Status status, Job job)
     {
         this.date_made = date_made;
         this.person = person;
         this.status = status;
+        this.job = job;
     }
     
     public Integer getId() {
@@ -80,6 +85,14 @@ public class Application implements Serializable {
     
     public void setStatus(Status status){
         this.status = status;
+    }
+    
+    public Integer getJob(){
+        return job.getId();
+    }
+    
+    public void setJob(Job job){
+        this.job = job;
     }
 
     @Override

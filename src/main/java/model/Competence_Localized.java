@@ -21,7 +21,7 @@ public class Competence_Localized implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "competenceName", nullable = false)
+    @Column(name = "competenceName", nullable = false, unique = true)
     private String competenceName;
     
     @ManyToOne(optional = false)
