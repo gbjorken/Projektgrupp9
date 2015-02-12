@@ -46,6 +46,7 @@ public class Application implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
+    private Job job;
     
     public Application(){
     }
