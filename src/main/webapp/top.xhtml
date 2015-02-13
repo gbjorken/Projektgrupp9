@@ -14,8 +14,6 @@
                     <h:outputLabel rendered="#{loginManager.loginAsRecruiterSuccess}">
                         #{messages.loggedRecruiter}: #{loginManager.recruiterUsername}
                     </h:outputLabel>
-                </h:form>
-                <h:form>
                     <h:commandLink action="#{locale.changeLocale}">
                         <f:param name="languageCode" value="sv"/>
                         <h:graphicImage library="common" name="sv.gif"/>

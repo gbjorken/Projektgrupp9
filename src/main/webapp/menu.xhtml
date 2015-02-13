@@ -8,11 +8,20 @@
             <div id="menubox">
                 <ul id="nav">
                     <h:form>
-                        <h:commandLink action="faces/welcome">#{messages.welcome}</h:commandLink><br/>
-                        <h:commandLink action="faces/login">#{messages.login}</h:commandLink><br/>
-                        <h:commandLink action="faces/register">#{messages.register}</h:commandLink><br/>
-                        <h:commandLink>#{messages.application}</h:commandLink><br/>
-                        <h:commandLink action="faces/jobs">#{messages.jobs}</h:commandLink><br/>
+                        <h:commandLink action="/welcome">#{messages.welcome}</h:commandLink><br/>
+                        <h:commandLink action="/login"
+                            rendered="#{!loginManager.loginAsApplicantSuccess}">
+                            #{messages.login}<br/></h:commandLink>
+                        <h:commandLink action="/logout"
+                            rendered="#{loginManager.loginAsApplicantSuccess}">
+                            #{messages.logout}<br/></h:commandLink>
+                        <h:commandLink action="/register" 
+                            rendered="#{!loginManager.loginAsApplicantSuccess}">
+                            #{messages.register}<br/></h:commandLink>
+                        <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}">
+                                                #{messages.application}<br/></h:commandLink>
+                        <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}"
+                                       action="/jobs">#{messages.jobs}<br/></h:commandLink>
                     </h:form>
                 </ul>
             </div>

@@ -21,8 +21,10 @@ public class LoginManager implements Serializable
     private String applicantPassword;
     private String recruiterUsername;
     private String recruiterPassword;
-    private boolean loginAsApplicantSuccess;
-    private boolean loginAsRecruiterSuccess;
+    private Boolean loginAsApplicantSuccess = false;
+    private Boolean logoutAsApplicantSuccess = true;
+    private Boolean loginAsRecruiterSuccess = false;
+    private Boolean logoutAsRecruiterSuccess = true;
     private String applicantMessage;
     private String recruiterMessage;
         
@@ -81,6 +83,10 @@ public class LoginManager implements Serializable
         startConversation();
         loginAsApplicantSuccess = controller.
                 loginAsApplicant(applicantUsername, applicantPassword);
+        
+        if(loginAsApplicantSuccess)
+            logoutAsApplicantSuccess = true;
+            
         if(!loginAsApplicantSuccess)
         {
             applicantMessage = "Inloggningen misslyckades";
@@ -89,8 +95,17 @@ public class LoginManager implements Serializable
         }
     }
     
+    public void logoutAsApplicant(){
+        loginAsApplicantSuccess = false;
+        stopConversation();
+    }
+    
     public boolean getLoginAsApplicantSuccess(){
         return loginAsApplicantSuccess;
+    }
+    
+    public boolean getLogoutAsApplicantSuccess(){
+        return logoutAsApplicantSuccess;
     }
     
     public void loginAsRecruiter(){
@@ -105,8 +120,18 @@ public class LoginManager implements Serializable
         }
     }
     
+    public void logoutAsRecruiter(){
+        loginAsApplicantSuccess = false;
+        logoutAsApplicantSuccess = true;
+        stopConversation();
+    }
+    
     public boolean getLoginAsRecruiterSuccess(){
         return loginAsRecruiterSuccess;
+    }
+    
+    public boolean getLogoutAsARecruiterSuccess(){
+        return logoutAsRecruiterSuccess;
     }
     
     public String getApplicantMessage(){
