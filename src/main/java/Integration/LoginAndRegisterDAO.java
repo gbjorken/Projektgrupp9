@@ -6,9 +6,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.Person;
+import model.RoleType;
 
 @Stateless
-public class LoginDAO {
+public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
@@ -32,6 +34,26 @@ public class LoginDAO {
                 return true;
         }
         return false;
+    }
+    
+    public Boolean register(String name, String surname, String ssn, 
+                            String email, String username, String password)
+    {
+        Query query = em.createNativeQuery("SELECT * FROM Person WHERE username = ?");
+        query.setParameter(1, username);
+        if(query.getResultList().size() > 0)
+            return false;
+        
+        query = em.createNativeQuery("SELECT id FROM RoleType AS rt "
+            + "WHERE rt.id = (SELECT roletype FROM RoleType_Localized WHERE roletypename = ?)");
+        query.setParameter(1, "applicant");
+        Integer roleTypeId = (Integer)query.getSingleResult();
+        
+        Person person = new Person(name, surname, ssn, email, 
+                        username, password, em.find(RoleType.class, roleTypeId));
+        em.persist(person);
+        
+        return true;
     }
     
     private List<PersonDTO> checkUsernameAndPassword(String username, String password)

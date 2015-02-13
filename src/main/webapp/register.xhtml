@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="titled">#{messages.register}</ui:define>
+            <ui:define name="slide">
+                <h1>#{messages.registerApplicant}:</h1>
+                <h:form>
+                    <h:outputLabel for="name" value="#{messages.name}: "/>
+                    <h:inputText id="name" value="#{registerManager.name}"
+                                 validatorMessage="#{messages.name} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputText><br/>
+                    <h:outputLabel for="surname" value="#{messages.surname}: "/>
+                    <h:inputText id="surname" value="#{registerManager.surname}"
+                                 validatorMessage="#{messages.surname} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputText><br/>
+                    <h:outputLabel for="ssn" value="#{messages.ssn}: "/>
+                    <h:inputText id="ssn" value="#{registerManager.ssn}"
+                                 validatorMessage="#{messages.ssn} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputText><br/>
+                    <h:outputLabel for="email" value="#{messages.email}: "/>
+                    <h:inputText id="email" value="#{registerManager.email}"
+                                 validatorMessage="#{messages.email} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputText><br/>
+                    <h:outputLabel for="username" value="#{messages.username}: "/>
+                    <h:inputText id="username" value="#{registerManager.username}"
+                                 validatorMessage="#{messages.username} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputText><br/>
+                    <h:outputLabel for="password" value="#{messages.password}: "/>              
+                    <h:inputSecret id="password" value="#{registerManager.password}"
+                                   validatorMessage="#{messages.password} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputSecret><br/>
+                    <h:outputLabel for="repeatPassword" value="#{messages.repeatPassword}: "/>              
+                    <h:inputSecret id="repeatPassword" value="#{registerManager.repeatPassword}"
+                                   validatorMessage="#{messages.password} #{messages.oblig}!">
+                        <f:validateRequired/>
+                    </h:inputSecret><br/>
+                    <h:commandButton value="#{messages.register}" action="#{registerManager.register}"/>
+                    <p><h:outputLabel rendered="#{registerManager.showMessage}"  
+                                        value="#{messages.registerFailed}!"/></p>
+                    <p><h:outputLabel rendered="#{registerManager.showPasswordMessage}"  
+                                        value="#{messages.passwordFail}!"/></p>
+                    <p><h:message for="name"/></p>
+                    <p><h:message for="surname"/></p>
+                    <p><h:message for="email"/></p>
+                    <p><h:message for="username"/></p>
+                    <p><h:message for="password"/></p>
+                    <p><h:message for="repeatPassword"/></p>
+                </h:form>
+                <hr/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -44,10 +44,6 @@ public class Application implements Serializable {
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
-    private Job job;
-    
     public Application(){
     }
     

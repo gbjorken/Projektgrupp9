@@ -8,6 +8,14 @@
         <ui:composition>
             <div id="top">
                 <h:form>
+                    <h:outputLabel rendered="#{loginManager.loginAsApplicantSuccess}">
+                        #{messages.loggedApplicant}: #{loginManager.applicantUsername}
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{loginManager.loginAsRecruiterSuccess}">
+                        #{messages.loggedRecruiter}: #{loginManager.recruiterUsername}
+                    </h:outputLabel>
+                </h:form>
+                <h:form>
                     <h:commandLink action="#{locale.changeLocale}">
                         <f:param name="languageCode" value="sv"/>
                         <h:graphicImage library="common" name="sv.gif"/>
@@ -18,7 +26,6 @@
                         <h:graphicImage library="common" name="en.gif"/>
                     </h:commandLink>
                 </h:form>
-                <h2>#{messages.login}...</h2>
             </div>
         </ui:composition>
     </h:body>

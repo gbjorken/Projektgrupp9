@@ -1,6 +1,6 @@
 package view;
 
-import controller.LoginFacade;
+import controller.Controller;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
@@ -15,7 +15,7 @@ public class LoginManager implements Serializable
     private static final long serialVersionUID = 16247164405L;
     
     @EJB
-    private LoginFacade loginFacade;
+    private Controller controller;
     
     private String applicantUsername;
     private String applicantPassword;
@@ -79,7 +79,7 @@ public class LoginManager implements Serializable
     
     public void loginAsApplicant(){
         startConversation();
-        loginAsApplicantSuccess = loginFacade.
+        loginAsApplicantSuccess = controller.
                 loginAsApplicant(applicantUsername, applicantPassword);
         if(!loginAsApplicantSuccess)
         {
@@ -95,7 +95,7 @@ public class LoginManager implements Serializable
     
     public void loginAsRecruiter(){
         startConversation();
-        loginAsRecruiterSuccess = loginFacade.
+        loginAsRecruiterSuccess = controller.
                 loginAsRecruiter(recruiterUsername, recruiterPassword);
         if(!loginAsRecruiterSuccess)
         {

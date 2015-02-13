@@ -1,17 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+    <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:body>
         <ui:composition>
             <div id="menubox">
                 <ul id="nav">
-                    <li><a href="faces/welcome.xhtml">#{messages.welcome}</a></li><br/>
-                    <li><a href="faces/login.xhtml">#{messages.login}</a></li><br/>
-                    <li><a href="#">#{messages.register}</a></li><br/>
-                    <li><a href="#">#{messages.application}</a></li><br/>
-                    <li><a href="faces/jobs.xhtml">#{messages.jobs}</a></li><br/>
+                    <h:form>
+                        <h:commandLink action="faces/welcome">#{messages.welcome}</h:commandLink><br/>
+                        <h:commandLink action="faces/login">#{messages.login}</h:commandLink><br/>
+                        <h:commandLink action="faces/register">#{messages.register}</h:commandLink><br/>
+                        <h:commandLink>#{messages.application}</h:commandLink><br/>
+                        <h:commandLink action="faces/jobs">#{messages.jobs}</h:commandLink><br/>
+                    </h:form>
                 </ul>
             </div>
         </ui:composition>
