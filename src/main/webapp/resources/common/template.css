@@ -24,15 +24,15 @@ img {
 #menubox {
     border: 1px solid black;
     float: left;
-    width: 250px;
-    height: calc(100% - 4px);
+    width: 150px;
+    height: 100%;
     background: #FFFF00;
 }
 #contbox {
     border: 1px solid black;
     float: right;
-    width: calc(100% - 250px - 4px);
-    height: calc(100% - 4px);
+    height: 100%;
+    width: calc(100% - 150px - 4px);
 }
 
 
@@ -58,15 +58,15 @@ img {
 
 
 ul#nav {
-    margin-left: 0px;
-    margin-right: 10px;
+    margin: auto;
     list-style-type: none;
-    float: left;
-    padding: 5px;
-    background: #D3D3D3;
-    border: 3px solid #808080;
+    padding: 15px;
 } ul#nav li {
         display: inline;
 } ul#nav a {
+        font-weight: bold;
         text-decoration: none;
+}
+form#locale {
+    float: right;
 }
