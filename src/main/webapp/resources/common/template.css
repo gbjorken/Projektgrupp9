@@ -42,6 +42,7 @@ img {
     text-align: left;
     background: #330000;
     color: #fff;
+    min-height: 60px;
 }
 #slide {
     padding: 15px;

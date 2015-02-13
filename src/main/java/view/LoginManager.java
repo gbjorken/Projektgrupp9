@@ -22,9 +22,8 @@ public class LoginManager implements Serializable
     private String recruiterUsername;
     private String recruiterPassword;
     private Boolean loginAsApplicantSuccess = false;
-    private Boolean logoutAsApplicantSuccess = true;
     private Boolean loginAsRecruiterSuccess = false;
-    private Boolean logoutAsRecruiterSuccess = true;
+    private Boolean logoutSuccess = true;
     private String applicantMessage;
     private String recruiterMessage;
         
@@ -85,8 +84,8 @@ public class LoginManager implements Serializable
                 loginAsApplicant(applicantUsername, applicantPassword);
         
         if(loginAsApplicantSuccess)
-            logoutAsApplicantSuccess = true;
-            
+            logoutSuccess = false;
+        
         if(!loginAsApplicantSuccess)
         {
             applicantMessage = "Inloggningen misslyckades";
@@ -97,6 +96,7 @@ public class LoginManager implements Serializable
     
     public void logoutAsApplicant(){
         loginAsApplicantSuccess = false;
+        logoutSuccess = true;
         stopConversation();
     }
     
@@ -104,14 +104,18 @@ public class LoginManager implements Serializable
         return loginAsApplicantSuccess;
     }
     
-    public boolean getLogoutAsApplicantSuccess(){
-        return logoutAsApplicantSuccess;
+    public boolean getLogoutSuccess(){
+        return logoutSuccess;
     }
     
     public void loginAsRecruiter(){
         startConversation();
         loginAsRecruiterSuccess = controller.
                 loginAsRecruiter(recruiterUsername, recruiterPassword);
+        
+        if(loginAsRecruiterSuccess)
+            logoutSuccess = false;
+        
         if(!loginAsRecruiterSuccess)
         {
             recruiterMessage = "Inloggningen misslyckades";
@@ -121,17 +125,13 @@ public class LoginManager implements Serializable
     }
     
     public void logoutAsRecruiter(){
-        loginAsApplicantSuccess = false;
-        logoutAsApplicantSuccess = true;
+        loginAsRecruiterSuccess = false;
+        logoutSuccess = true;
         stopConversation();
     }
     
     public boolean getLoginAsRecruiterSuccess(){
         return loginAsRecruiterSuccess;
-    }
-    
-    public boolean getLogoutAsARecruiterSuccess(){
-        return logoutAsRecruiterSuccess;
     }
     
     public String getApplicantMessage(){
