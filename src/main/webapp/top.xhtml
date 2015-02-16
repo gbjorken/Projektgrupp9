@@ -15,12 +15,12 @@
                         #{messages.loggedRecruiter}: #{loginManager.recruiterUsername}
                     </h:outputLabel>
                     <h:commandLink action="#{locale.changeLocale}">
-                        <f:param name="languageCode" value="sv"/>
+                        <f:setPropertyActionListener target="#{locale.lang}" value="sv"/>
                         <h:graphicImage library="common" name="sv.gif"/>
                     </h:commandLink>
                     &nbsp;
                     <h:commandLink action="#{locale.changeLocale}">
-                        <f:param name="languageCode" value="en"/>
+                        <f:setPropertyActionListener target="#{locale.lang}" value="en"/>
                         <h:graphicImage library="common" name="en.gif"/>
                     </h:commandLink>
                 </h:form>

@@ -8,48 +8,64 @@
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.login}</ui:define>
             <ui:define name="slide">
+                <h3>#{messages.loginAsApplicant}</h3>
                 <h:form>
-                    <h3>#{messages.loginAsApplicant}</h3>
-                    <p>
+                <h:panelGrid columns="3">
                         <h:outputLabel for="loginUsername" value="#{messages.username}: "/>
                         <h:inputText id="loginUsername" value="#{loginManager.applicantUsername}"
-                                     validatorMessage="#{messages.username} #{messages.oblig}!">
+                                     validatorMessage="#{messages.username} #{messages.oblig}">
                             <f:validateRequired/>
-                        </h:inputText><br/>
+                        </h:inputText>
+                        <h:message for="loginUsername" style="color:red"/>
+                        
                         <h:outputLabel for="loginPassword" value="#{messages.password}: "/>              
                         <h:inputSecret id="loginPassword" value="#{loginManager.applicantPassword}"
-                                       validatorMessage="#{messages.password} #{messages.oblig}!">
+                                       validatorMessage="#{messages.password} #{messages.oblig}">
                             <f:validateRequired/>
-                        </h:inputSecret><br/>
-                        <h:commandButton value="#{messages.loginAsApplicant}" action="#{loginManager.loginAsApplicant}"/>
-                        <p><h:outputLabel rendered="#{loginManager.applicantMessage != null}"  
-                                            value="#{messages.loginFailed}"/></p>
-                        <p><h:message for="loginUsername"/></p>
-                        <p><h:message for="loginPassword"/></p>
-                    </p>
-                    <hr/>
+                        </h:inputSecret>
+                        <h:message for="loginPassword" style="color:red"/>
+                        &nbsp;
+                        <h:commandButton value="#{messages.loginAsApplicant}" 
+                                         action="#{loginManager.loginAsApplicant}"/>
+                </h:panelGrid>
+                        <h:outputLabel rendered="#{loginManager.applicantMessage != null}"  
+                                            value="#{messages.loginFailed}" style="color:red"/>
                 </h:form>
+                <hr/>
+                
+                <h3>#{messages.loginAsRecruiter}</h3>
                 <h:form>
-                    <h3>#{messages.loginAsRecruiter}</h3>
-                    <p>
+                <h:panelGrid columns="3">    
                         <h:outputLabel for="loginRUsername" value="#{messages.username}: "/>
                         <h:inputText id="loginRUsername" value="#{loginManager.recruiterUsername}"
-                                     validatorMessage="#{messages.username} #{messages.oblig}!">
+                                     validatorMessage="#{messages.username} #{messages.oblig}">
                             <f:validateRequired/>
-                        </h:inputText><br/>
+                        </h:inputText>
+                        <h:message for="loginRUsername" style="color:red"/>
+                        
                         <h:outputLabel for="loginRPassword" value="#{messages.password}: "/>
                         <h:inputSecret id="loginRPassword" value="#{loginManager.recruiterPassword}"
-                                       validatorMessage="#{messages.password} #{messages.oblig}!">
+                                       validatorMessage="#{messages.password} #{messages.oblig}">
                             <f:validateRequired/>
-                        </h:inputSecret><br/>
-                        <h:commandButton value="#{messages.loginAsRecruiter}" action="#{loginManager.loginAsRecruiter}"/>
-                        <p><h:outputLabel rendered="#{loginManager.recruiterMessage != null}"  
-                                            value="#{messages.loginFailed}"/></p>
-                        <p><h:message for="loginRUsername"/></p>
-                        <p><h:message for="loginRPassword"/></p>
-                    </p>
-                    <hr/>
+                        </h:inputSecret>
+                        <h:message for="loginRPassword" style="color:red"/>
+                        &nbsp;
+                        <h:commandButton value="#{messages.loginAsRecruiter}" 
+                                         action="#{loginManager.loginAsRecruiter}"/>
+                </h:panelGrid>
+                        <h:outputLabel rendered="#{loginManager.recruiterMessage != null}"  
+                                            value="#{messages.loginFailed}" style="color:red"/>                        
                 </h:form>
+                <hr/>
+                <!--<form method="POST" action="j_security_check">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="User Name"/>
+                        <input type="text" name="j_username" />
+                        <h:outputLabel value="Password"/>
+                        <input type="password" name="j_password" />
+                        <input type="submit" value="Login" />
+                    </h:panelGrid>
+                </form> -->
             </ui:define>
         </ui:composition>
     </h:body>

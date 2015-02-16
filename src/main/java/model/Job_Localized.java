@@ -1,5 +1,6 @@
 package model;
 
+import DTO.JobDTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,7 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Job_Localized implements Serializable {
+public class Job_Localized implements Serializable, JobDTO 
+{
     @Id
     @SequenceGenerator(name = "jobLocalizedIdSeq", 
             sequenceName = "JOBLOCALIZED_ID_SEQ", allocationSize = 1, initialValue = 1)

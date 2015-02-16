@@ -1,5 +1,6 @@
 package view;
 
+import view.validators.ValidSSN;
 import controller.Controller;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -7,6 +8,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import view.validators.ValidEmail;
 
 @Named("registerManager")
 @ConversationScoped
@@ -19,7 +21,9 @@ public class RegisterManager implements Serializable
     
     private String name;
     private String surname;
+    @ValidSSN
     private String ssn;
+    @ValidEmail
     private String email;
     private String username;
     private String password;

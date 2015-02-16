@@ -24,9 +24,6 @@ public class Locale implements Serializable {
     private String lang_code;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
-    private Collection<RoleType_Localized> roleLocalized;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
     private Collection<Status_Localized> statusLocalized;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
