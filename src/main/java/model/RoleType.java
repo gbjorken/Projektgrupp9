@@ -22,8 +22,8 @@ public class RoleType implements Serializable
     private Integer id;
     
     @Basic(optional = false)
-    @Column(name="roleTypeName", nullable = false, unique = true)
-    private String roleTypeName;
+    @Column(name="name", nullable = false, unique = true)
+    private String name;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roletype")
     private Collection<Person> persons;
@@ -35,12 +35,12 @@ public class RoleType implements Serializable
         return id;
     }
     
-    public void setRoleTypeName(String roleTypeName){
-        this.roleTypeName = roleTypeName;
+    public void setName(String name){
+        this.name = name;
     }
     
-    public String getRoleTypeName(){
-        return roleTypeName;
+    public String getName(){
+        return name;
     }
         
     @Override

@@ -44,7 +44,7 @@ public class LoginAndRegisterDAO {
         if(query.getResultList().size() > 0)
             return false;
         
-        query = em.createNativeQuery("SELECT id FROM RoleType WHERE roleTypeName = 'applicant'");
+        query = em.createNativeQuery("SELECT id FROM RoleType WHERE name = 'applicant'");
         Integer roleTypeId = (Integer)query.getSingleResult();
         
         Person person = new Person(name, surname, ssn, email, 
@@ -65,7 +65,7 @@ public class LoginAndRegisterDAO {
     
     private String getRoleTypeName(int roleTypeId)
     {
-        Query query = em.createNativeQuery("SELECT roletypename FROM RoleType "
+        Query query = em.createNativeQuery("SELECT name FROM RoleType "
             + "WHERE id = ?");
         query.setParameter(1, roleTypeId);
         String roleTypeName = (String)query.getSingleResult();
