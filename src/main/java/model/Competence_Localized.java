@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen innehåller alla översättningar av tjänstenamn.
+ */
 @Entity
 public class Competence_Localized implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,9 +35,20 @@ public class Competence_Localized implements Serializable {
     @JoinColumn(name = "competence", referencedColumnName = "id", nullable = false)
     private Competence competence;
     
+    /**
+     * Tom konstruktor.
+     */
     public Competence_Localized(){
     }
     
+    /**
+     * Metoden som kallas. Tar in parametrar som innehåller nummer som
+     * i sin tur berättar om vilken typ av språk som ska användas för 
+     * retur metoderna nedan.
+     * @param competenceName Tjänstens namn
+     * @param locale Vilken typ av språk
+     * @param competence Antal år i denna specifika tjänst
+     */
     public Competence_Localized(String competenceName, Locale locale,
                                 Competence competence)
     {
@@ -43,34 +57,68 @@ public class Competence_Localized implements Serializable {
         this.competence = competence;
     }
     
+    /**
+     * Returnerar id som berättar vilken rad som ska användas.
+     * @return ID nummer
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Returnerar det specifika numret som finns i kolumnen 
+     * localize som berättar om vilket språk som är valt av
+     * användaren eller default.
+     * @return Språkets nummer
+     */
     public String getLocale(){
         return locale.getLangCode();
     }
     
+    /**
+     * Siffra som representerar ett visst språk skickas in.
+     * @param locale Siffra som representerar ett visst språk
+     */
     public void setLocale(Locale locale){
         this.locale = locale;
     }
     
+    /**
+     * Returnerar ID:et för en specifik kompetens.
+     * @return ID nummer
+     */
     public Integer getCompetence(){
         return competence.getId();
     }
     
+    /**
+     * Skriver en specifik kompetens.
+     * @param competence Kompetensen
+     */
     public void setCompetence(Competence competence){
         this.competence = competence;
     }
     
+    /**
+     * Returnerar kompetensens namn.
+     * @return Kompetensens namn
+     */
     public String getCompetenceName(){
         return competenceName;
     }
     
+    /**
+     * Skriver in en specifik kompetensens namn. 
+     * @param competenceName Kompetensens namn
+     */
     public void setCompetenceName(String competenceName){
         this.competenceName = competenceName;
     }
     
+    /**
+     * Hashishas
+     * @return Hashen
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -78,6 +126,11 @@ public class Competence_Localized implements Serializable {
         return hash;
     }
 
+    /**
+     * Check om rätt kompetens har hittats eller ej.
+     * @param object Kompetensen som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -88,6 +141,10 @@ public class Competence_Localized implements Serializable {
         return this.id.equals(other.id);    
     }
 
+    /**
+     * Konverterar ett språk ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Competence_Localized[ id=" + id + " ]";
