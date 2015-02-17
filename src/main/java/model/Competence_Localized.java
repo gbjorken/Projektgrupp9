@@ -36,12 +36,6 @@ public class Competence_Localized implements Serializable {
     private Competence competence;
     
     /**
-     * Tom konstruktor.
-     */
-    public Competence_Localized(){
-    }
-    
-    /**
      * Metoden som kallas. Tar in parametrar som innehåller nummer som
      * i sin tur berättar om vilken typ av språk som ska användas för 
      * retur metoderna nedan.
