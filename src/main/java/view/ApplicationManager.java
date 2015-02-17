@@ -31,7 +31,8 @@ public class ApplicationManager implements Serializable
     
     private String competence;
     private Double years;
-    private Date date1;
+    private Date startDate;
+    private Date endDate;
     
     public String getCompetence(){
         return competence;
@@ -71,6 +72,8 @@ public class ApplicationManager implements Serializable
     {
         competenceList.add(competence);
         yearsList.add(years);
+        competence = null;
+        years = null;
         return "";
     }
     
@@ -80,11 +83,28 @@ public class ApplicationManager implements Serializable
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
-    public Date getDate1() {
-        return date1;
+    public Date getStartDate() {
+        return startDate;
     }
  
-    public void setDate1(Date date1) {
-        this.date1 = date1;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+    
+    public Date getEndDate() {
+        return endDate;
+    }
+ 
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+    
+    public String addDates()
+    {
+        fromDateList.add(startDate.toString());
+        toDateList.add(endDate.toString());
+        startDate = null;
+        endDate = null;
+        return "";
     }
 }

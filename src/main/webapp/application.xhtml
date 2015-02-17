@@ -5,9 +5,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <script name="jquery/jquery.js" library="primefaces"></script>
-    </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.application}</ui:define>
@@ -32,8 +29,19 @@
                 </h:form>
                 <h:form>
                     <h3 style="text-decoration: underline;">#{messages.availablePeriod}:</h3>
-                    <h:outputLabel for="competence" value="#{messages.competence}: "/>
-                    <p:calendar value="#{applicationManager.date1}" pattern="yyyy-MM-dd"/>
+                    <h:panelGrid columns="3">
+                    <h:outputLabel for="startDate" value="#{messages.startDate}: "/>
+                    <p:calendar id="startDate" value="#{applicationManager.startDate}" 
+                                pattern="yyyy-MM-dd" size="10"
+                                validatorMessage="FEL HÄR1"/>
+                    <h:message for="startDate" style="color:red"/>
+                    <h:outputLabel for="endDate" value="#{messages.endDate}: "/>
+                    <p:calendar id="endDate" value="#{applicationManager.endDate}" 
+                                pattern="yyyy-MM-dd" size="10" 
+                                validatorMessage="FEL HÄR2"/>
+                    <h:message for="endDate" style="color:red"/>
+                    <h:commandButton value="#{messages.add}" action="#{applicationManager.addDates}"/>
+                    </h:panelGrid>
                 </h:form>
             </ui:define>
         </ui:composition>

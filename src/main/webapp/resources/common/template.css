@@ -61,6 +61,7 @@ img {
     background: #66FF33;
     margin-bottom: 50px;
     z-index: 1;
+    width: calc(97% - 170px);
 }
 #foot {
     position: fixed;
