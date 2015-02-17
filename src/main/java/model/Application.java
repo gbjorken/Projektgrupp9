@@ -52,12 +52,6 @@ public class Application implements Serializable {
     //private Job job;
     
     /**
-     * Tom konstruktor.
-     */
-    public Application(){
-    }
-    
-    /**
      *  Metoden som kallas och inparametrar då en applikation görs.
      * @param date_made Datumet applikationen gjordes.
      * @param person Vem som gjorde applikationen.
