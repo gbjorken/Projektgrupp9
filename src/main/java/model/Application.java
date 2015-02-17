@@ -59,7 +59,7 @@ public class Application implements Serializable {
     }
     
     /**
-     * Inparametrar då en applikation görs-
+     * Inparametrar då en applikation görs.
      * @param date_made Datumet applikationen gjordes.
      * @param person Vem som gjorde applikationen.
      * @param status Statusen på om applikationen blivit recenserad av rekryterare.
