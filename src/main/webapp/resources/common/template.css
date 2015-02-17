@@ -6,6 +6,7 @@ html, body {
     color: black;
     font-family: arial,verdana,tahoma;
     line-height: 150%;
+    background: #000000;
 }
 h1, h2, h3 {
     font-family: arial black;
@@ -21,7 +22,6 @@ img {
     float: left;
     min-width: calc(100% - 2px);
     min-height: calc(100% - 2px);
-    background: #000000;
 }
 #menubox {
     position: fixed;
@@ -34,7 +34,8 @@ img {
 #contbox {
     border: 1px solid black;
     float: right;
-    height: calc(100% - 1px);
+    height: auto;
+    min-height: calc(100% - 1px);
     width: calc(100% - 150px - 4px);
 }
 
@@ -50,20 +51,28 @@ img {
     text-align: left;
     background: #330000;
     color: #fff;
+    z-index: 2;
 }
 #slide {
+    position: absolute;
     padding: 15px;
     margin-top: 60px;
     min-height: calc(100% - 50px - 60px - 40px);
     background: #66FF33;
+    margin-bottom: 50px;
+    z-index: 1;
 }
 #foot {
+    position: fixed;
+    top: calc(100% - 60px);
     clear: both;
     height: 50px;
+    width: calc(97% - 170px);
     background: #330000;
     color: #fff;
     padding: 5px 3%;
     text-align: right;
+    z-index: 2;
 }
 
 
@@ -71,8 +80,11 @@ ul#nav {
     margin: auto;
     list-style-type: none;
     padding: 15px;
+    word-wrap: break-word;
+    text-indent: -15px;
 } ul#nav li {
-        display: inline;
+    margin-bottom: 7px;
+    padding-left: 15px;
 } ul#nav a {
         font-weight: bold;
         text-decoration: none;
