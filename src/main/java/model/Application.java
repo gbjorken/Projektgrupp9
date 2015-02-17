@@ -1,5 +1,5 @@
 package model;
-
+//pannkakor
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -43,6 +43,10 @@ public class Application implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
+    
+    //@ManyToOne(optional = false)
+   // @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
+    //private Job job;
     
     public Application(){
     }
