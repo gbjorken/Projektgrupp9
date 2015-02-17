@@ -19,10 +19,10 @@
                         <h:link outcome="/register" 
                             rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
                             #{messages.register}<br/></h:link>
-                        <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}">
-                                                #{messages.application}<br/></h:commandLink>
                         <h:commandLink action="/jobs" rendered="#{loginManager.loginAsApplicantSuccess}"
                                        >#{messages.jobs}<br/></h:commandLink>
+                        <h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
+                                       >#{messages.completedApplications}<br/></h:commandLink>
                         <h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"
                                        action="/recruite">#{messages.recruite}<br/></h:commandLink>
                     </h:form>

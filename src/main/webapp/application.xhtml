@@ -2,12 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <script name="jquery/jquery.js" library="primefaces"></script>
+    </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.application}</ui:define>
             <ui:define name="slide">
                 <h1>#{messages.applicationForJob}: #{jobManager.currentJob}</h1>
+                <h:form>
+                    <h3 style="text-decoration: underline;">#{messages.competence}:</h3>
+                    <h:panelGrid columns="3">
+                        <h:outputLabel for="competence" value="#{messages.competence}: "/>
+                        <h:selectOneMenu id="competence" value="#{applicationManager.competence}">
+                            <f:selectItems value="#{applicationManager.competenceValue}" var="com"
+                                itemLabel="#{com.comLabel}" itemValue="#{com.comValue}" />
+                        </h:selectOneMenu>
+                        &nbsp;
+                        <h:outputLabel for="years" value="#{messages.years}: "/>
+                            <h:inputText id="years" label="Years" value="#{applicationManager.years}" size="5">
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText>
+                        <h:message for="years" style="color:red"/>
+                        <h:commandButton value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
+                    </h:panelGrid>
+                </h:form>
+                <h:form>
+                    <h3 style="text-decoration: underline;">#{messages.availablePeriod}:</h3>
+                    <h:outputLabel for="competence" value="#{messages.competence}: "/>
+                    <p:calendar value="#{applicationManager.date1}" pattern="yyyy-MM-dd"/>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -1,6 +1,8 @@
 package controller;
 
+import DTO.CompetenceDTO;
 import DTO.JobDTO;
+import integration.ApplicationDAO;
 import integration.JobDAO;
 import integration.LoginAndRegisterDAO;
 import java.util.List;
@@ -14,6 +16,8 @@ public class Controller
     private LoginAndRegisterDAO loginAndRegisterDAO;
     @EJB
     private JobDAO jobDAO;
+    @EJB
+    private ApplicationDAO applicationDAO;
     
     public Boolean loginAsApplicant(String username, String password)
     {
@@ -39,4 +43,9 @@ public class Controller
     {
         return jobDAO.getJobNameById(id, lang);
     }
+    
+    public List<CompetenceDTO> getAllCompetences(String lang)
+    {
+        return applicationDAO.getAllCompetences(lang);
+    }    
 }
