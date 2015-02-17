@@ -14,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 /**
  * Tillgänglighet för en anställd eller sökande att jobba
  * under vissa perioder på arbetsplatsen.
- * @author Ansoa
  */
 @Entity
 public class Availability implements Serializable {
