@@ -20,11 +20,13 @@
                         </h:selectOneMenu>
                         &nbsp;
                         <h:outputLabel for="years" value="#{messages.years}: "/>
-                            <h:inputText id="years" label="Years" value="#{applicationManager.years}" size="5">
+                        <h:inputText id="years" label="Years" 
+                                     value="#{applicationManager.years}" size="5"
+                                     disabled="#{!applicationManager.enableButton}">
                             <f:convertNumber integerOnly="true" type="number" />
                         </h:inputText>
                         <h:message for="years" style="color:red"/>
-                        <h:commandButton value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
+                        <h:commandButton disabled="#{!applicationManager.enableButton}" value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
                     </h:panelGrid>
                 </h:form>
                 <h:form>
@@ -32,16 +34,37 @@
                     <h:panelGrid columns="3">
                     <h:outputLabel for="startDate" value="#{messages.startDate}: "/>
                     <p:calendar id="startDate" value="#{applicationManager.startDate}" 
-                                pattern="yyyy-MM-dd" size="10"
-                                validatorMessage="FEL HÄR1"/>
+                                pattern="yyyy-MM-dd" size="10" required="true"
+                                requiredMessage="#{messages.startDate} #{messages.oblig}." style="font-size: 10px"/>
                     <h:message for="startDate" style="color:red"/>
                     <h:outputLabel for="endDate" value="#{messages.endDate}: "/>
                     <p:calendar id="endDate" value="#{applicationManager.endDate}" 
-                                pattern="yyyy-MM-dd" size="10" 
-                                validatorMessage="FEL HÄR2"/>
+                                pattern="yyyy-MM-dd" size="10" required="true"
+                                requiredMessage="#{messages.endDate} #{messages.oblig}." 
+                                style="font-size: 10px"/>
                     <h:message for="endDate" style="color:red"/>
                     <h:commandButton value="#{messages.add}" action="#{applicationManager.addDates}"/>
                     </h:panelGrid>
+                    <h:outputText value="#{messages.dateMessage}."
+                             rendered="#{applicationManager.showDateMessage}" style="color:red"/>
+                </h:form>
+                <h3 style="text-decoration: underline;">#{messages.preview}:</h3>
+                <h:form>
+                    <ui:repeat value="#{applicationManager.competenceList}" var="comp" 
+                            rendered="#{applicationManager.competenceList != null}">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="#{comp}"/>
+                            <h:commandButton value="#{messages.delete}"/>
+                        </h:panelGrid>
+                    </ui:repeat>
+                    <br/>
+                    <ui:repeat value="#{applicationManager.fromDateList}" var="date" 
+                            rendered="#{applicationManager.fromDateList != null}">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="#{date}"/>
+                            <h:commandButton value="#{messages.delete}"/>
+                        </h:panelGrid>
+                    </ui:repeat>
                 </h:form>
             </ui:define>
         </ui:composition>

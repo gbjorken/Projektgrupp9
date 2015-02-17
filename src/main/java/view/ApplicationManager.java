@@ -1,7 +1,6 @@
 package view;
 
 import DTO.CompetenceDTO;
-import DTO.JobDTO;
 import controller.Controller;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -24,6 +23,7 @@ public class ApplicationManager implements Serializable
     @EJB
     Controller controller;
     
+    private List<CompetenceDTO> compList;
     private ArrayList<String> competenceList = new ArrayList<>();
     private ArrayList<Double> yearsList = new ArrayList<>();
     private ArrayList<String> fromDateList = new ArrayList<>();
@@ -33,6 +33,8 @@ public class ApplicationManager implements Serializable
     private Double years;
     private Date startDate;
     private Date endDate;
+    private Boolean showDateMessage;
+    private Boolean enableButton;
     
     public String getCompetence(){
         return competence;
@@ -51,21 +53,40 @@ public class ApplicationManager implements Serializable
     }
     
     private Competence[] comList;
-    
     public Competence[] getCompetenceValue() 
     {
-        List<CompetenceDTO> list = 
-                controller.getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        compList = controller.
+                getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         
-        comList = new Competence[list.size()];
+        comList = new Competence[compList.size()];
         String comName, comId;
-        for(int i = 0; i < list.size(); i++)
+        Boolean skip = false;
+        ArrayList<Competence> alComp = new ArrayList<>();
+        for(int i = 0; i < compList.size(); i++)
         {
-            comName = list.get(i).getCompetenceName();
-            comId = list.get(i).getCompetence().toString();
-            comList[i] = new Competence(comName, comId);
+            comId = compList.get(i).getCompetence().toString();
+            
+            for (String competenceList1 : competenceList) {
+                if (comId.equals(competenceList1)) {
+                    skip = true;
+                    break;
+                }
+            }
+            
+            if(!skip)
+            {
+                comName = compList.get(i).getCompetenceName();
+                alComp.add(new Competence(comName, comId));
+            }
+            
+            skip = false;
         }
+        comList = alComp.toArray(new Competence[alComp.size()]);
         return comList;
+    }
+    
+    public Boolean getEnableButton(){
+        return comList.length > 0;
     }
     
     public String addCompetence()
@@ -101,10 +122,50 @@ public class ApplicationManager implements Serializable
     
     public String addDates()
     {
-        fromDateList.add(startDate.toString());
-        toDateList.add(endDate.toString());
+        if(startDate.after(endDate))
+        {
+            showDateMessage = true;
+            return "";
+        }
+        
+        showDateMessage = false;    
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        fromDateList.add(df.format(startDate));
+        toDateList.add(df.format(endDate));
         startDate = null;
         endDate = null;
         return "";
     }
+    
+    public ArrayList<String> getCompetenceList(){
+        ArrayList<String> al = new ArrayList<>();
+        
+        String c;
+        for(int i = 0; i < competenceList.size(); i++)
+        {
+            c = competenceList.get(i);
+            for(int j = 0; j < compList.size(); j++)
+            {
+                if(c.equals(compList.get(i).getCompetence().toString()))
+                {
+                    al.add(compList.get(i).getCompetenceName());
+                    break;
+                }
+            }
+        }    
+        
+        return al;
+    }
+    
+    public ArrayList<String> getFromDateList(){
+        return fromDateList;
+    }
+    
+    public ArrayList<String> getToDateList(){
+        return toDateList;
+    }
+    
+    public Boolean getShowDateMessage(){
+        return showDateMessage;
+    }           
 }
