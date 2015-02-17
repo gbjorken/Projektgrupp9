@@ -16,7 +16,6 @@ import javax.persistence.SequenceGenerator;
 
 /**
  * Klassen Applikation. Applikationer skapas i denna klass.
- * @author Ansoa
  */
 @Entity
 public class Application implements Serializable {
@@ -59,7 +58,7 @@ public class Application implements Serializable {
     }
     
     /**
-     * Inparametrar då en applikation görs.
+     *  Metoden som kallas och inparametrar då en applikation görs.
      * @param date_made Datumet applikationen gjordes.
      * @param person Vem som gjorde applikationen.
      * @param status Statusen på om applikationen blivit recenserad av rekryterare.
@@ -75,7 +74,7 @@ public class Application implements Serializable {
     
     
     /**
-     * Returnerar ett nummer av kolumnen ID i en applikation från en sökande.
+     * Returnerar ett nummer av kolumnen ID från en applikation från en sökande.
      * @return Raden ids nummer.
      */
     public Integer getId() {
@@ -115,8 +114,8 @@ public class Application implements Serializable {
     }
     
     /**
-     * Berättar om applikationen blivit godkänd eller inte.
-     * @return id:ets status 
+     * Returnerar applikationsens ID status.
+     * @return Statusens ID
      */
     public Integer getStatus(){
         return status.getId();
