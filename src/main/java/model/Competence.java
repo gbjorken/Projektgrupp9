@@ -30,12 +30,6 @@ public class Competence implements Serializable {
     private Collection<Competence_Profile> competenceProfile;
     
     /**
-     * Tom konstruktor.
-     */
-    public Competence(){
-    }
-    
-    /**
      * Returnerar ett värde på ID som berättar om vilken
      * rad kompentensens värde ligger på.
      * @return ID
