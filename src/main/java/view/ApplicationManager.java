@@ -62,23 +62,19 @@ public class ApplicationManager implements Serializable
         String comName, comId;
         Boolean skip = false;
         ArrayList<Competence> alComp = new ArrayList<>();
-        for(int i = 0; i < compList.size(); i++)
+        for (CompetenceDTO compList1 : compList) 
         {
-            comId = compList.get(i).getCompetence().toString();
-            
+            comId = compList1.getCompetence().toString();
             for (String competenceList1 : competenceList) {
                 if (comId.equals(competenceList1)) {
                     skip = true;
                     break;
                 }
             }
-            
-            if(!skip)
-            {
-                comName = compList.get(i).getCompetenceName();
+            if (!skip) {
+                comName = compList1.getCompetenceName();
                 alComp.add(new Competence(comName, comId));
             }
-            
             skip = false;
         }
         comList = alComp.toArray(new Competence[alComp.size()]);
