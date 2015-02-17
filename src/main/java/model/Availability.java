@@ -111,6 +111,10 @@ public class Availability implements Serializable {
         this.application = application;
     }
     
+    /**
+     * Hash-kod, producerare av hashish.
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -118,6 +122,11 @@ public class Availability implements Serializable {
         return hash;
     }
 
+    /**
+     * Check om rätt tider har hittats eller ej.
+     * @param object Tillgänglighets tiden som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -128,6 +137,10 @@ public class Availability implements Serializable {
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar ett ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Availability[ id=" + id + " ]";
