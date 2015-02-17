@@ -11,6 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Tillgänglighet för en anställd eller sökande att jobba
+ * under vissa perioder på arbetsplatsen.
+ * @author Ansoa
+ */
 @Entity
 public class Availability implements Serializable {
     @Id
@@ -31,9 +36,18 @@ public class Availability implements Serializable {
     @JoinColumn(name = "application", referencedColumnName = "id", nullable = false)
     private Application application;
     
+    /**
+     * Tom konstruktor.
+     */
     public Availability(){
     }
     
+    /**
+     * Metoden som kallas och tar inparametrar då en tillgänglighet skapas.
+     * @param from_date Från vilket datum kan personen jobba.
+     * @param to_date Till vilket datum som personen kan jobba.
+     * @param application Vilka tider som tillhör applikation.
+     */
     public Availability(String from_date, String to_date, Application application)
     {
         this.from_date = from_date;
@@ -41,26 +55,50 @@ public class Availability implements Serializable {
         this.application = application;
     }
     
+    /**
+     * Returnerar ett nummer från kolumnen ID ur en specifik tillgänglighet från en sökande.
+     * @return 
+     */
     public Integer getId() {
         return id;
     }
     
+    /**
+     * Returerar ett start datum för en arbetande att arbeta.
+     * @return Start datum
+     */
     public String getFromDate(){
         return this.from_date;
     }
     
+    /**
+     * Skriver in i databasen vilket datum en sökande kan börja arbeta.
+     * @param from_date Start datum
+     */
     public void setFromDate(String from_date){
         this.from_date = from_date;
     }
     
+    /**
+     * Returnerar datumet då sökande inte längre kan jobba.
+     * @return Slut datum
+     */
     public String getToDate(){
         return this.to_date;
     }
     
+    /**
+     * Skriver in i databasen vilket datum sökande inte längre kan arbeta.
+     * @param to_date Slut datum
+     */
     public void setToDate(String to_date){
         this.to_date = to_date;
     }
     
+    /**
+     * Returnerar ID:et från en viss applikation.
+     * @return Applikations ID.
+     */
     public Integer getApplication(){
         return application.getId();
     }
