@@ -146,6 +146,10 @@ public class Application implements Serializable {
         this.job = job;
     }
 
+    /**
+     * Hash du vet.
+     * @return Hashen
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -153,6 +157,11 @@ public class Application implements Serializable {
         return hash;
     }
 
+    /**
+     * Check om rätt applikation hittats eller ej.
+     * @param object Applikationen som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) 
     {
@@ -163,6 +172,10 @@ public class Application implements Serializable {
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar ett ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Application[ id=" + id + " ]";
