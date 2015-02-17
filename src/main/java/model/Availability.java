@@ -103,6 +103,10 @@ public class Availability implements Serializable {
         return application.getId();
     }
     
+    /**
+     * Skriver in applikationen skrivs in i databasen.
+     * @param application 
+     */
     public void setApplication(Application application){
         this.application = application;
     }
