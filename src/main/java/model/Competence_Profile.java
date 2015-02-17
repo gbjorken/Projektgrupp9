@@ -35,12 +35,6 @@ public class Competence_Profile implements Serializable {
     private Application application;
     
     /**
-     * Tom konstruktor.
-     */
-    public Competence_Profile(){
-    }
-    
-    /**
      * Metoden som kallas med inparametrar om år av erfarenhet, namn på tjänst
      * och applikation. Denna klass skapar en egen profil för varje användare.
      * @param years_of_experience Antal år inom en viss tjänst.
