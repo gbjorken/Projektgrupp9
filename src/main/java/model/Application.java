@@ -1,5 +1,5 @@
 package model;
-//pannkakor
+//pannkakordfasdasdasdas
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
