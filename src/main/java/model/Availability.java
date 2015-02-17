@@ -36,12 +36,6 @@ public class Availability implements Serializable {
     private Application application;
     
     /**
-     * Tom konstruktor.
-     */
-    public Availability(){
-    }
-    
-    /**
      * Metoden som kallas och tar inparametrar då en tillgänglighet skapas.
      * @param from_date Från vilket datum kan personen jobba.
      * @param to_date Till vilket datum som personen kan jobba.
