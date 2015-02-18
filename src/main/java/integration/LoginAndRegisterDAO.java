@@ -10,7 +10,8 @@ import model.Person;
 import model.RoleType;
 
 /**
- * Klassen behandlar inloggning och registreringar för användarna.
+ * Klassen behandlar inloggning och registreringar för användarna mot
+ * databasen.
  */
 @Stateless
 public class LoginAndRegisterDAO {
