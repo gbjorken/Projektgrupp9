@@ -11,8 +11,8 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 /**
- * Klassen checkar om E-post adressen som skrivits in innehåller korrekta tecken.
- * The annotated target is checked to be a valid SSN
+ * Klassen checkar om E-post adressen som skrivits in innehåller korrekta 
+ * tecken. The annotated target is checked to be a valid E-mail.
  */
 @Constraint(validatedBy = ValidEmail.EmailValidator.class)
 @Documented
