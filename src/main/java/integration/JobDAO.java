@@ -7,11 +7,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+/**
+ * Klassen skickar förfrågningar till databasen om jobb.
+ */
 @Stateless
 public class JobDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
+    /**
+     * Listar alla typer av jobb.
+     * @param lang Språkkod
+     * @return Lista av tillgängliga jobb
+     */
     public List<JobDTO> getJobs(String lang)
     {
         Query query = em.createQuery("SELECT jl FROM Job_Localized AS jl "
@@ -20,6 +28,12 @@ public class JobDAO {
         return query.getResultList();
     }
     
+    /**
+     * Letar fram ett jobb baserat på en ID kod.
+     * @param id Jobb ID
+     * @param lang Språkkod
+     * @return Ett jobb filtrerat på ID
+     */
     public String getJobNameById(Integer id, String lang)
     {
         Query query = em.createQuery("SELECT jl.jobName FROM Job_Localized AS jl "
