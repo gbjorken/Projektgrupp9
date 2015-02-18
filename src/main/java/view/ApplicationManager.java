@@ -14,6 +14,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
+/**
+ * 
+ */
 @Named("applicationManager")
 @SessionScoped
 public class ApplicationManager implements Serializable 
@@ -36,23 +39,44 @@ public class ApplicationManager implements Serializable
     private Boolean showDateMessage;
     private Boolean enableButton;
     
+    /**
+     * 
+     * @return 
+     */
     public String getCompetence(){
         return competence;
     }
     
+    /**
+     * 
+     * @param competence 
+     */
     public void setCompetence(String competence){
         this.competence = competence;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public Double getYears(){
         return years;
     }
     
+    /**
+     * 
+     * @param years 
+     */
     public void setYears(Double years){
         this.years = years;
     }
     
     private Competence[] comList;
+    
+    /**
+     * 
+     * @return 
+     */
     public Competence[] getCompetenceValue() 
     {
         compList = controller.
@@ -81,10 +105,18 @@ public class ApplicationManager implements Serializable
         return comList;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public Boolean getEnableButton(){
         return comList.length > 0;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String addCompetence()
     {
         competenceList.add(competence);
@@ -94,28 +126,52 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+    /**
+     * 
+     * @param event 
+     */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
+    /**
+     * 
+     * @return 
+     */
     public Date getStartDate() {
         return startDate;
     }
  
+    /**
+     * 
+     * @param startDate 
+     */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public Date getEndDate() {
         return endDate;
     }
  
+    /**
+     * 
+     * @param endDate 
+     */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String addDates()
     {
         if(startDate.after(endDate))
@@ -133,6 +189,10 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<String> getCompetenceList(){
         ArrayList<String> al = new ArrayList<>();
         
@@ -153,14 +213,26 @@ public class ApplicationManager implements Serializable
         return al;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<String> getFromDateList(){
         return fromDateList;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<String> getToDateList(){
         return toDateList;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public Boolean getShowDateMessage(){
         return showDateMessage;
     }           
