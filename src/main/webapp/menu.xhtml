@@ -6,25 +6,23 @@
     <h:body>
         <ui:composition>
             <div id="menubox">
-                <ul id="nav">
-                    <h:form>
-                        <h:commandLink action="/welcome">#{messages.welcome}</h:commandLink><br/>
-                        <h:commandLink action="/login"
-                            rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
-                            #{messages.login}<br/></h:commandLink>
-                        <h:commandLink 
-                            rendered="#{loginManager.loginAsApplicantSuccess or loginManager.loginAsRecruiterSuccess}"
-                                       action="/logout">#{messages.logout}<br/></h:commandLink>
-                        <h:commandLink action="/register" 
-                            rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
-                            #{messages.register}<br/></h:commandLink>
-                        <h:commandLink action="/jobs">#{messages.jobs}<br/></h:commandLink>
-                        <h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
-                                       >#{messages.completedApplications}<br/></h:commandLink>
-                        <h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"
-                                       action="/recruite">#{messages.recruite}<br/></h:commandLink>
-                    </h:form>
-                </ul>
+                <h:form id="nav">
+                    <li><h:commandLink action="/welcome">#{messages.welcome}</h:commandLink></li>
+                    <li><h:commandLink action="/login"
+                        rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
+                        #{messages.login}</h:commandLink></li>
+                    <li><h:commandLink 
+                        rendered="#{loginManager.loginAsApplicantSuccess or loginManager.loginAsRecruiterSuccess}"
+                                   action="/logout">#{messages.logout}</h:commandLink></li>
+                    <li><h:commandLink action="/register" 
+                        rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
+                        #{messages.register}</h:commandLink></li>
+                    <li><h:commandLink action="/jobs">#{messages.jobs}</h:commandLink></li>
+                    <li><h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
+                                   >#{messages.completedApplications}</h:commandLink></li>
+                    <li><h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"
+                                   action="/recruite">#{messages.recruite}</h:commandLink></li>
+                </h:form>
             </div>
         </ui:composition>
     </h:body>
