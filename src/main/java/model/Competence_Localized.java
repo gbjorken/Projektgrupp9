@@ -37,9 +37,8 @@ public class Competence_Localized implements Serializable, CompetenceDTO {
     private Competence competence;
     
     /**
-     * Metoden som kallas. Tar in parametrar som innehåller nummer som
-     * i sin tur berättar om vilken typ av språk som ska användas för 
-     * retur metoderna nedan.
+     * Tar in parametrar som innehåller nummer som i sin tur berättar om 
+     * vilken typ av språk som ska användas för retur metoderna nedan.
      * @param competenceName Tjänstens namn
      * @param locale Vilken typ av språk
      * @param competence Antal år i denna specifika tjänst
