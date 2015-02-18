@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,17 +21,26 @@ public class RoleType implements Serializable
     @Column(name = "id")
     private Integer id;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roletype")
-    private Collection<Person> persons;
+    @Basic(optional = false)
+    @Column(name="name", nullable = false, unique = true)
+    private String name;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roletype")
-    private Collection<RoleType_Localized> names;
+    private Collection<Person> persons;
 
     public RoleType() {
     }
 
     public Integer getId() {
         return id;
+    }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    public String getName(){
+        return name;
     }
         
     @Override

@@ -1,5 +1,6 @@
 package model;
 
+import DTO.CompetenceDTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.SequenceGenerator;
  * Klassen innehåller alla översättningar av tjänstenamn.
  */
 @Entity
-public class Competence_Localized implements Serializable {
+public class Competence_Localized implements Serializable, CompetenceDTO {
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "competenceLocalizedIdSeq", 

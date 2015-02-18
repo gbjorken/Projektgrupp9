@@ -10,18 +10,19 @@
                     <h:form>
                         <h:commandLink action="/welcome">#{messages.welcome}</h:commandLink><br/>
                         <h:commandLink action="/login"
-                            rendered="#{!loginManager.loginAsApplicantSuccess}">
+                            rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
                             #{messages.login}<br/></h:commandLink>
-                        <h:commandLink action="/logout"
-                            rendered="#{loginManager.loginAsApplicantSuccess}">
-                            #{messages.logout}<br/></h:commandLink>
-                        <h:commandLink action="/register" 
-                            rendered="#{!loginManager.loginAsApplicantSuccess}">
-                            #{messages.register}<br/></h:commandLink>
-                        <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}">
-                                                #{messages.application}<br/></h:commandLink>
-                        <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}"
-                                       action="/jobs">#{messages.jobs}<br/></h:commandLink>
+                        <h:commandLink 
+                            rendered="#{loginManager.loginAsApplicantSuccess or loginManager.loginAsRecruiterSuccess}"
+                                       action="/logout">#{messages.logout}<br/></h:commandLink>
+                        <h:link outcome="/register" 
+                            rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
+                            #{messages.register}<br/></h:link>
+                        <h:commandLink action="/jobs">#{messages.jobs}<br/></h:commandLink>
+                        <h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
+                                       >#{messages.completedApplications}<br/></h:commandLink>
+                        <h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"
+                                       action="/recruite">#{messages.recruite}<br/></h:commandLink>
                     </h:form>
                 </ul>
             </div>

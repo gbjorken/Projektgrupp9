@@ -9,7 +9,10 @@
             <ui:define name="slide">
                 <h1>#{messages.logout}:</h1>
                 <h:form>
-                    <h:commandButton action="#{loginManager.logoutAsApplicant}" value="#{messages.logout}"/>
+                    <h:commandButton rendered="#{loginManager.loginAsApplicantSuccess}" 
+                                     action="#{loginManager.logoutAsApplicant}" value="#{messages.logout}"/>
+                    <h:commandButton rendered="#{loginManager.loginAsRecruiterSuccess}"  
+                                     action="#{loginManager.logoutAsRecruiter}" value="#{messages.logout}"/>
                 </h:form>
             </ui:define>
         </ui:composition>

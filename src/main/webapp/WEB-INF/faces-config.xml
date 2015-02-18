@@ -35,7 +35,7 @@
     <navigation-rule>
         <from-view-id>/logout.xhtml</from-view-id>
         <navigation-case>
-            <if>#{logiManager.logoutAsRecruiterSuccess}</if>
+            <if>#{loginManager.logoutSuccess}</if>
             <to-view-id>/welcome.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

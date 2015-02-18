@@ -10,52 +10,56 @@
             <ui:define name="slide">
                 <h1>#{messages.registerApplicant}:</h1>
                 <h:form>
+                <h:panelGrid columns="3">
                     <h:outputLabel for="name" value="#{messages.name}: "/>
                     <h:inputText id="name" value="#{registerManager.name}"
-                                 validatorMessage="#{messages.name} #{messages.oblig}!">
+                                 validatorMessage="#{messages.name} #{messages.oblig}">
                         <f:validateRequired/>
-                    </h:inputText><br/>
+                    </h:inputText>
+                    <h:message for="name" style="color:red"/>
+                    
                     <h:outputLabel for="surname" value="#{messages.surname}: "/>
                     <h:inputText id="surname" value="#{registerManager.surname}"
-                                 validatorMessage="#{messages.surname} #{messages.oblig}!">
+                                 validatorMessage="#{messages.surname} #{messages.oblig}">
                         <f:validateRequired/>
-                    </h:inputText><br/>
+                    </h:inputText>
+                    <h:message for="name" style="color:red"/>
+                    
                     <h:outputLabel for="ssn" value="#{messages.ssn}: "/>
-                    <h:inputText id="ssn" value="#{registerManager.ssn}"
-                                 validatorMessage="#{messages.ssn} #{messages.oblig}!">
-                        <f:validateRequired/>
-                    </h:inputText><br/>
+                    <h:inputText id="ssn" value="#{registerManager.ssn}"/>
+                    <h:message for="ssn" style="color:red"/>
+                    
                     <h:outputLabel for="email" value="#{messages.email}: "/>
-                    <h:inputText id="email" value="#{registerManager.email}"
-                                 validatorMessage="#{messages.email} #{messages.oblig}!">
-                        <f:validateRequired/>
-                    </h:inputText><br/>
+                    <h:inputText id="email" value="#{registerManager.email}"/>
+                    <h:message for="email" style="color:red"/>
+                    
                     <h:outputLabel for="username" value="#{messages.username}: "/>
                     <h:inputText id="username" value="#{registerManager.username}"
-                                 validatorMessage="#{messages.username} #{messages.oblig}!">
+                                 validatorMessage="#{messages.username} #{messages.oblig}">
                         <f:validateRequired/>
-                    </h:inputText><br/>
+                    </h:inputText>
+                    <h:message for="username" style="color:red"/>
+                    
                     <h:outputLabel for="password" value="#{messages.password}: "/>              
                     <h:inputSecret id="password" value="#{registerManager.password}"
-                                   validatorMessage="#{messages.password} #{messages.oblig}!">
+                                   validatorMessage="#{messages.password} #{messages.oblig}">
                         <f:validateRequired/>
-                    </h:inputSecret><br/>
+                    </h:inputSecret>
+                    <h:message for="password" style="color:red"/>
+                    
                     <h:outputLabel for="repeatPassword" value="#{messages.repeatPassword}: "/>              
                     <h:inputSecret id="repeatPassword" value="#{registerManager.repeatPassword}"
-                                   validatorMessage="#{messages.password} #{messages.oblig}!">
+                                   validatorMessage="#{messages.password} #{messages.oblig}">
                         <f:validateRequired/>
-                    </h:inputSecret><br/>
-                    <h:commandButton value="#{messages.register}" action="#{registerManager.register}"/>
+                    </h:inputSecret>
+                    <h:message for="repeatPassword" style="color:red"/>
+                &nbsp; 
+                <h:commandButton value="#{messages.register}" action="#{registerManager.register}" />
+                </h:panelGrid>
                     <p><h:outputLabel rendered="#{registerManager.showMessage}"  
-                                        value="#{messages.registerFailed}!"/></p>
+                                        value="#{messages.registerFailed}" style="color:red"/></p>
                     <p><h:outputLabel rendered="#{registerManager.showPasswordMessage}"  
-                                        value="#{messages.passwordFail}!"/></p>
-                    <p><h:message for="name"/></p>
-                    <p><h:message for="surname"/></p>
-                    <p><h:message for="email"/></p>
-                    <p><h:message for="username"/></p>
-                    <p><h:message for="password"/></p>
-                    <p><h:message for="repeatPassword"/></p>
+                                        value="#{messages.passwordFail}!" style="color:red"/></p>
                 </h:form>
                 <hr/>
             </ui:define>

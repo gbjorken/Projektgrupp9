@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="titled">#{messages.application}</ui:define>
+            <ui:define name="slide">
+                <h1>#{messages.applicationForJob}: #{jobManager.currentJob}</h1>
+                <h:form>
+                    <h3 style="text-decoration: underline;">#{messages.competence}:</h3>
+                    <h:panelGrid columns="3">
+                        <h:outputLabel for="competence" value="#{messages.competence}: "/>
+                        <h:selectOneMenu id="competence" value="#{applicationManager.competence}">
+                            <f:selectItems value="#{applicationManager.competenceValue}" var="com"
+                                itemLabel="#{com.comLabel}" itemValue="#{com.comValue}" />
+                        </h:selectOneMenu>
+                        &nbsp;
+                        <h:outputLabel for="years" value="#{messages.years}: "/>
+                        <h:inputText id="years" label="Years" 
+                                     value="#{applicationManager.years}" size="5"
+                                     disabled="#{!applicationManager.enableButton}">
+                            <f:convertNumber integerOnly="true" type="number" />
+                        </h:inputText>
+                        <h:message for="years" style="color:red"/>
+                        <h:commandButton disabled="#{!applicationManager.enableButton}" value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
+                    </h:panelGrid>
+                </h:form>
+                <h:form>
+                    <h3 style="text-decoration: underline;">#{messages.availablePeriod}:</h3>
+                    <h:panelGrid columns="3">
+                    <h:outputLabel for="startDate" value="#{messages.startDate}: "/>
+                    <p:calendar id="startDate" value="#{applicationManager.startDate}" 
+                                pattern="yyyy-MM-dd" size="10" required="true"
+                                requiredMessage="#{messages.startDate} #{messages.oblig}." style="font-size: 10px"/>
+                    <h:message for="startDate" style="color:red"/>
+                    <h:outputLabel for="endDate" value="#{messages.endDate}: "/>
+                    <p:calendar id="endDate" value="#{applicationManager.endDate}" 
+                                pattern="yyyy-MM-dd" size="10" required="true"
+                                requiredMessage="#{messages.endDate} #{messages.oblig}." 
+                                style="font-size: 10px"/>
+                    <h:message for="endDate" style="color:red"/>
+                    <h:commandButton value="#{messages.add}" action="#{applicationManager.addDates}"/>
+                    </h:panelGrid>
+                    <h:outputText value="#{messages.dateMessage}."
+                             rendered="#{applicationManager.showDateMessage}" style="color:red"/>
+                </h:form>
+                <h3 style="text-decoration: underline;">#{messages.preview}:</h3>
+                <h:form>
+                    <ui:repeat value="#{applicationManager.competenceList}" var="comp" 
+                            rendered="#{applicationManager.competenceList != null}">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="#{comp}"/>
+                            <h:commandButton value="#{messages.delete}"/>
+                        </h:panelGrid>
+                    </ui:repeat>
+                    <br/>
+                    <ui:repeat value="#{applicationManager.fromDateList}" var="date" 
+                            rendered="#{applicationManager.fromDateList != null}">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="#{date}"/>
+                            <h:commandButton value="#{messages.delete}"/>
+                        </h:panelGrid>
+                    </ui:repeat>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

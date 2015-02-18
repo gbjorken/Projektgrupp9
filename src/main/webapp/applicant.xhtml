@@ -5,10 +5,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:body>
         <ui:composition template="template.xhtml">
-            <ui:define name="titled">Applicant</ui:define>
+            <ui:define name="titled">#{messages.welcome} #{loginManager.applicantUsername}!</ui:define>
             <ui:define name="slide">
-                <h1>Hej Sökande: #{loginManager.applicantUsername}!</h1>
+                <h1>#{messages.hello} #{messages.applicant}: #{loginManager.applicantUsername}!</h1>
             </ui:define>
         </ui:composition>
     </h:body>
 </html>
+

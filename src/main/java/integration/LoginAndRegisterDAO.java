@@ -1,4 +1,4 @@
-package Integration;
+package integration;
 
 import DTO.PersonDTO;
 import java.util.List;
@@ -44,9 +44,7 @@ public class LoginAndRegisterDAO {
         if(query.getResultList().size() > 0)
             return false;
         
-        query = em.createNativeQuery("SELECT id FROM RoleType AS rt "
-            + "WHERE rt.id = (SELECT roletype FROM RoleType_Localized WHERE roletypename = ?)");
-        query.setParameter(1, "applicant");
+        query = em.createNativeQuery("SELECT id FROM RoleType WHERE name = 'applicant'");
         Integer roleTypeId = (Integer)query.getSingleResult();
         
         Person person = new Person(name, surname, ssn, email, 
@@ -67,11 +65,9 @@ public class LoginAndRegisterDAO {
     
     private String getRoleTypeName(int roleTypeId)
     {
-        Query query = em.createQuery("SELECT rtl.roletypeName FROM RoleType_Localized AS rtl "
-            + "WHERE rtl.roletype = (SELECT rt FROM RoleType AS rt WHERE rt.id = ?1) AND "
-            + "rtl.locale = (SELECT l FROM Locale l WHERE l.lang_code = ?2)", String.class);
+        Query query = em.createNativeQuery("SELECT name FROM RoleType "
+            + "WHERE id = ?");
         query.setParameter(1, roleTypeId);
-        query.setParameter(2, "en");
         String roleTypeName = (String)query.getSingleResult();
         
         return roleTypeName;
