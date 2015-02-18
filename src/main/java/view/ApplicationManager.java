@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
+import view.validators.ValidYear;
 
 /**
  * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
@@ -28,16 +29,18 @@ public class ApplicationManager implements Serializable
     
     private List<CompetenceDTO> compList;
     private ArrayList<String> competenceList = new ArrayList<>();
-    private ArrayList<Double> yearsList = new ArrayList<>();
+    private ArrayList<String> yearsList = new ArrayList<>();
+    private ArrayList<String> competenceAndYearList;
     private ArrayList<String> fromDateList = new ArrayList<>();
     private ArrayList<String> toDateList = new ArrayList<>();
+    private ArrayList<String> startDateAndEndDateList;
     
     private String competence;
-    private Double years;
+    @ValidYear
+    private String years;
     private Date startDate;
     private Date endDate;
     private Boolean showDateMessage;
-    private Boolean enableButton;
     
     /**
      * Returnerar en kompetens.
@@ -60,6 +63,7 @@ public class ApplicationManager implements Serializable
      * @return Antal år för en kompetens
      */
     public Double getYears(){
+    public String getYears(){
         return years;
     }
     
@@ -68,6 +72,7 @@ public class ApplicationManager implements Serializable
      * @param years Antal år för en kompetens
      */
     public void setYears(Double years){
+    public void setYears(String years){
         this.years = years;
     }
     
@@ -134,10 +139,38 @@ public class ApplicationManager implements Serializable
      * Användaren väljer datum för tillgänglighet.
      * @param event Event lyssnare
      */
+    public ArrayList<String> getCompetenceAndYearList()
+    {
+        ArrayList<String> al = new ArrayList<>();
+        competenceAndYearList = new ArrayList<>();
+        
+        String c;
+        for(int i = 0; i < competenceList.size(); i++)
+        {
+            c = competenceList.get(i);
+            for(int j = 0; j < compList.size(); j++)
+            {
+                if(c.equals(compList.get(j).getCompetence().toString()))
+                {
+                    al.add(compList.get(j).getCompetenceName());
+                    break;
+                }
+            }
+        }
+        
+        for(int i = 0; i < al.size(); i++)
+        {
+            competenceAndYearList.add(al.get(i) + " " + yearsList.get(i));
+        }
+        
+        return competenceAndYearList;
+    }
+    
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+        facesContext.addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
     /**
@@ -193,52 +226,103 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
-    /**
-     * Checkar om det finns namn kvar i kompetenslistan eller inte.
-     * Används av "Lägg till" knappen som en "boolean hjälpare".
-     * @return Listans längd
-     */
-    public ArrayList<String> getCompetenceList(){
-        ArrayList<String> al = new ArrayList<>();
-        
-        String c;
-        for(int i = 0; i < competenceList.size(); i++)
-        {
-            c = competenceList.get(i);
-            for(int j = 0; j < compList.size(); j++)
-            {
-                if(c.equals(compList.get(i).getCompetence().toString()))
-                {
-                    al.add(compList.get(i).getCompetenceName());
-                    break;
-                }
-            }
-        }    
-        
-        return al;
-    }
-    
-    /**
-     * Returnerar tillgänglighet / från datum ur listan.
-     * @return FrånDatum lista
-     */
-    public ArrayList<String> getFromDateList(){
-        return fromDateList;
-    }
-    
-    /**
-     * Returnerar tillgänglighet / till datum ur listan.
-     * @return  TillDatum lista
-     */
-    public ArrayList<String> getToDateList(){
-        return toDateList;
-    }
-    
-    /**
-     * Är av typen boolean. Visar meddelanden om datum. 
-     * @return Meddelande
-     */
     public Boolean getShowDateMessage(){
         return showDateMessage;
-    }           
+    }
+    
+    public ArrayList<String> getStartDateAndEndDateList()
+    {
+        ArrayList<String> al = new ArrayList<>();
+        startDateAndEndDateList = new ArrayList<>(); 
+        
+        for(int i = 0; i < fromDateList.size(); i++)
+        {
+            startDateAndEndDateList.add(fromDateList.get(i) + " --- " + toDateList.get(i));
+        }
+        
+        return startDateAndEndDateList;
+    }
+    
+    public String removeCurrentComp(String currentComp)
+    {
+        String[] arr;
+        String c = "";
+        String value = "";
+        
+        arr = currentComp.split(" ");
+        int j = 0;
+        String y = "";
+        //Skapa kompetensens namn som en sträng samt plocka ut år
+        while(true)
+        {
+            try 
+            {
+                Double.parseDouble(arr[j]);
+                y = arr[j];
+                break;
+            } 
+            catch (NumberFormatException nfe) 
+            {
+                c += arr[j] + " ";
+            }
+            j++;
+        }
+        
+        //Plocka ut kompetensens id
+        for (CompetenceDTO compList1 : compList) {
+            if ((compList1.getCompetenceName() + " ").equals(c)) 
+            {
+                value = compList1.getCompetence().toString();
+                break;
+            }
+        }
+        
+        //Tar fram på vilken position i competenceList 
+        //som den specifika kompetensen finns
+        int pos = 0;
+        for(int i = 0; i < competenceList.size(); i++)
+        {
+            if(competenceList.get(i).equals(value))
+            {
+                pos = i;
+                break;
+            }
+        }
+        competenceList.remove(value);
+        yearsList.remove(pos);
+        
+        return "";
+    }
+    
+    public String removeCurrentPeriod(String currentPeriod)
+    {
+        String[] arr = currentPeriod.split(" ");
+        for(int i = 0; i < fromDateList.size(); i++)
+        {
+            if(fromDateList.get(i).equals(arr[0]) && toDateList.get(i).equals(arr[2]))
+            {
+                fromDateList.remove(i);
+                toDateList.remove(i);
+                break;
+            }
+        }
+        return "";
+    }
+    
+    public String clearAll()
+    {
+        competenceList = new ArrayList<>();
+        yearsList = new ArrayList<>();
+        fromDateList = new ArrayList<>();
+        toDateList = new ArrayList<>();
+        
+        return "";
+    }
+    
+    public String confirmApplication(String username, String password, String jobName)
+    {
+        controller.createApplication
+          (competenceList, yearsList, fromDateList, toDateList, username, password, jobName);
+        return "";
+    }
 }

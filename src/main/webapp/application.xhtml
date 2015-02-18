@@ -22,11 +22,10 @@
                         <h:outputLabel for="years" value="#{messages.years}: "/>
                         <h:inputText id="years" label="Years" 
                                      value="#{applicationManager.years}" size="5"
-                                     disabled="#{!applicationManager.enableButton}">
-                            <f:convertNumber integerOnly="true" type="number" />
-                        </h:inputText>
+                                     disabled="#{!applicationManager.enableButton}" />
                         <h:message for="years" style="color:red"/>
-                        <h:commandButton disabled="#{!applicationManager.enableButton}" value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
+                        <h:commandButton disabled="#{!applicationManager.enableButton}" 
+                                         value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
                     </h:panelGrid>
                 </h:form>
                 <h:form>
@@ -50,21 +49,32 @@
                 </h:form>
                 <h3 style="text-decoration: underline;">#{messages.preview}:</h3>
                 <h:form>
-                    <ui:repeat value="#{applicationManager.competenceList}" var="comp" 
-                            rendered="#{applicationManager.competenceList != null}">
-                        <h:panelGrid columns="2">
-                            <h:outputText value="#{comp}"/>
-                            <h:commandButton value="#{messages.delete}"/>
+                    <ui:repeat value="#{applicationManager.competenceAndYearList}" var="comp" 
+                            rendered="#{applicationManager.competenceAndYearList != null}">
+                        <h:panelGrid columns="3">
+                            <li>
+                                <h:outputText value="#{comp}  #{messages.year}"/>
+                                <h:commandButton value="#{messages.delete}" 
+                                             action="#{applicationManager.removeCurrentComp(comp)}"/>
+                            </li>
                         </h:panelGrid>
                     </ui:repeat>
-                    <br/>
-                    <ui:repeat value="#{applicationManager.fromDateList}" var="date" 
-                            rendered="#{applicationManager.fromDateList != null}">
-                        <h:panelGrid columns="2">
-                            <h:outputText value="#{date}"/>
-                            <h:commandButton value="#{messages.delete}"/>
+                    <ui:repeat value="#{applicationManager.startDateAndEndDateList}" var="date" 
+                            rendered="#{applicationManager.startDateAndEndDateList != null}">
+                        <h:panelGrid columns="3">
+                            <li>
+                                <h:outputText value="#{date}"/>
+                                <h:commandButton value="#{messages.delete}"
+                                             action="#{applicationManager.removeCurrentPeriod(date)}"/>
+                            </li>
                         </h:panelGrid>
                     </ui:repeat>
+                </h:form>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="Fortsätt" action="confirmApplication"/>
+                        <h:commandButton value="Avbryt" action="#{applicationManager.clearAll}"/>
+                    </h:panelGrid>
                 </h:form>
             </ui:define>
         </ui:composition>
