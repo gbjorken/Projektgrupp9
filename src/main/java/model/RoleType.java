@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen rolltyp bestämmer om en person är rekryterare eller ansökande.
+ */
 @Entity
 public class RoleType implements Serializable 
 {    
@@ -28,21 +31,34 @@ public class RoleType implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roletype")
     private Collection<Person> persons;
 
-    public RoleType() {
-    }
-
+    /**
+     * Returnerar en ID kod från kolumnen ID.
+     * @return ID kod
+     */
     public Integer getId() {
         return id;
     }
     
+    /**
+     * Skriver in namnet på typen av roll.
+     * @param name Rollnamn
+     */
     public void setName(String name){
         this.name = name;
     }
     
+    /**
+     * Returnerar namnet på typen av roll.
+     * @return Rollnamn
+     */
     public String getName(){
         return name;
     }
-        
+       
+    /**
+     * Det är hash överallt.
+     * @return Hashkoden
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -50,6 +66,11 @@ public class RoleType implements Serializable
         return hash;
     }
 
+    /**
+     * Check om rätt rolltyp har hittats eller ej.
+     * @param object Integer av språk som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -60,6 +81,10 @@ public class RoleType implements Serializable
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar en rolltyps ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.RoleType[ id=" + id + " ]";
