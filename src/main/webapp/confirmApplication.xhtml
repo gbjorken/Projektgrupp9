@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="titled">#{messages.confirmApplication}</ui:define>
+            <ui:define name="slide">
+                <h1>#{messages.confirmApplication}:</h1>
+                <h:form>
+                    <h3 style="text-decoration: underline;">#{messages.competence}:</h3>
+                    <ui:repeat value="#{applicationManager.competenceAndYearList}" var="comp" 
+                            rendered="#{applicationManager.competenceAndYearList != null}">
+                        <li><h:outputText value="#{comp}  #{messages.year}"/></li>
+                    </ui:repeat>
+                    
+                    <h3 style="text-decoration: underline;">#{messages.availablePeriod}:</h3>
+                    <ui:repeat value="#{applicationManager.startDateAndEndDateList}" var="date" 
+                            rendered="#{applicationManager.startDateAndEndDateList != null}">
+                        <li><h:outputText value="#{date}"/></li>
+                    </ui:repeat>
+                    <br/>
+                    <h:commandButton value="Skicka" 
+                                   action="#{applicationManager.confirmApplication
+                                             (loginManager.applicantUsername, 
+                                             loginManager.applicantPassword,
+                                             jobManager.currentJob)}"/>
+                    <h:commandButton value="Avbryt"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

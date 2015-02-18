@@ -15,9 +15,9 @@
                         <h:commandLink 
                             rendered="#{loginManager.loginAsApplicantSuccess or loginManager.loginAsRecruiterSuccess}"
                                        action="/logout">#{messages.logout}<br/></h:commandLink>
-                        <h:link outcome="/register" 
+                        <h:commandLink action="/register" 
                             rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
-                            #{messages.register}<br/></h:link>
+                            #{messages.register}<br/></h:commandLink>
                         <h:commandLink action="/jobs">#{messages.jobs}<br/></h:commandLink>
                         <h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
                                        >#{messages.completedApplications}<br/></h:commandLink>

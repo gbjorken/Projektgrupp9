@@ -11,24 +11,24 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 /**
- * The annotated target is checked to be a valid Email
+ * The annotated target is checked to be a valid Year
  */
-@Constraint(validatedBy = ValidEmail.EmailValidator.class)
+@Constraint(validatedBy = ValidYear.YearValidator.class)
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEmail {
+public @interface ValidYear {
 
-    String message() default "{invalidEmail}";
+    String message() default "{invalidYear}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    class EmailValidator implements ConstraintValidator<ValidEmail, String> 
+    class YearValidator implements ConstraintValidator<ValidYear, String> 
     {
         @Override
-        public void initialize(ValidEmail constraintAnnotation) {
+        public void initialize(ValidYear constraintAnnotation) {
         }
 
         @Override
@@ -36,16 +36,24 @@ public @interface ValidEmail {
         {
             if (isEmpty(value, context)) {
                 return false;
+            }            
+            try {
+                Double.parseDouble(value);
+            } catch (NumberFormatException nfe) {
+                return false;
             }
             
-            return value.matches("([a-z0-9]+?)@([a-z0-9]+?)\\.([a-z0-9]+?)") || 
-                    value.matches("([a-z0-9]+?)\\.([a-z0-9]+?)@([a-z0-9]+?)\\.([a-z0-9]+?)");
+            return value.matches("[0-9][0-9]\\.[0-9][0-9]") || 
+                    value.matches("[0-9]\\.[0-9][0-9]") ||
+                    value.matches("[0-9][0-9]\\.[0-9]") ||
+                    value.matches("[0-9]\\.[0-9]") ||
+                    value.matches("[0-9]");
         }
 
         private boolean isEmpty(String value, ConstraintValidatorContext context) {
             if (value.length() == 0) {
                 context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate("{noEmail}").addConstraintViolation();
+                context.buildConstraintViolationWithTemplate("{noYear}").addConstraintViolation();
                 return true;
             }
             return false;
