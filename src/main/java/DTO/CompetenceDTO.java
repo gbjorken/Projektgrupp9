@@ -1,7 +1,7 @@
 package DTO;
 
 /**
- * Interface för klassen kompetens.
+ * Interface för klassen Competens.
  */
 public interface CompetenceDTO 
 {
