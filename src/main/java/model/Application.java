@@ -53,10 +53,10 @@ public class Application implements Serializable {
     
     /**
      *  Metoden som kallas och inparametrar då en applikation görs.
-     * @param date_made Datumet applikationen gjordes.
-     * @param person Vem som gjorde applikationen.
-     * @param status Statusen på om applikationen blivit recenserad av rekryterare.
-     * @param job Vilken tjänst / typ av job.
+     * @param date_made Datumet då applikationen gjordes
+     * @param person Vem som gjorde applikationen
+     * @param status Statusen på om applikationen blivit recenserad av rekryterare
+     * @param job Vilken tjänst / typ av job
      */
     public Application(String date_made, Person person, Status status, Job job)
     {
@@ -69,7 +69,7 @@ public class Application implements Serializable {
     
     /**
      * Returnerar ett nummer av kolumnen ID från en applikation från en sökande.
-     * @return Raden ids nummer.
+     * @return Raden ID nummer
      */
     public Integer getId() {
         return id;
@@ -77,7 +77,7 @@ public class Application implements Serializable {
 
     /**
      * Returnerar datumet då applikationen från en sökande gjordes.
-     * @return skapande datum.
+     * @return Skapande datum
      */
     public String getDateMade(){
         return date_made;
@@ -85,7 +85,7 @@ public class Application implements Serializable {
     
     /**
      * Skriver in datumet i databasen då applikationen gjordes.
-     * @param date_made dåvarande datum
+     * @param date_made Dåvarande datum
      */
     public void setDateMade(String date_made){
         this.date_made = date_made;
@@ -93,7 +93,7 @@ public class Application implements Serializable {
     
     /**
      * Returnerar användarens ID av den som gjorde applikationen.
-     * @return personens id
+     * @return Personens ID
      */
     public Integer getPerson(){
         return person.getId();
@@ -101,7 +101,7 @@ public class Application implements Serializable {
     
     /**
      * Skriver in personen i databasen som gjorde applikationen.
-     * @param person själva personen
+     * @param person Själva personen
      */
     public void setPerson(Person person){
         this.person = person;
@@ -118,7 +118,7 @@ public class Application implements Serializable {
     /**
      * Skriver in status på applikationen i databasen om applikationen
      * eller recenserad eller ej.
-     * @param status på id:et.
+     * @param status På ID
      */
     public void setStatus(Status status){
         this.status = status;
@@ -134,7 +134,7 @@ public class Application implements Serializable {
     
     /**
      * Skriver in i databasen om en specifikt jobbtjänst.
-     * @param job Tjänst
+     * @param job Tjänstnamn
      */
     public void setJob(Job job){
         this.job = job;
