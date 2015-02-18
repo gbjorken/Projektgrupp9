@@ -13,8 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen skapar jobb (namn) och användarens preferens angående språk
- * väljs också.
+ * Klassen skapar jobbnamn och användarens preferens angående språk väljs.
  */
 @Entity
 public class Job_Localized implements Serializable, JobDTO 
@@ -69,7 +68,7 @@ public class Job_Localized implements Serializable, JobDTO
     
     /**
      * Väljer vilket språk jobbet ska presenteras på.
-     * @param locale språkID
+     * @param locale SpråkID
      */
     public void setLocale(Locale locale){
         this.locale = locale;
@@ -77,7 +76,7 @@ public class Job_Localized implements Serializable, JobDTO
     
     /**
      * Returnerar jobbets ID
-     * @return jobbID
+     * @return JobbID
      */
     public Integer getJob(){
         return job.getId();
@@ -85,7 +84,7 @@ public class Job_Localized implements Serializable, JobDTO
     
     /**
      * Skickar in jobbet.
-     * @param job jobbet
+     * @param job Jobbet
      */
     public void setJob(Job job){
         this.job = job;
@@ -93,7 +92,7 @@ public class Job_Localized implements Serializable, JobDTO
     
     /**
      * Returnerar typen av jobbets namn.
-     * @return typen av jobbnamnet
+     * @return Typen av jobbnamnet
      */
     public String getJobTypeName(){
         return jobName;
