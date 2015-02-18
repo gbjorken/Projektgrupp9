@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen locale bestämmer vilket språk användaren ska se hemsidan.
+ * Klassen locale bestämmer vilket språk användaren ska se hemsidan på.
  */
 @Entity
 public class Locale implements Serializable {
@@ -37,7 +37,7 @@ public class Locale implements Serializable {
     
     /**
      * Tar in språkets kod.
-     * @param lang_code 
+     * @param lang_code Språkkod
      */
     public Locale(String lang_code){
         this.lang_code = lang_code;
@@ -45,7 +45,7 @@ public class Locale implements Serializable {
     
     /**
      * Returnerar kolumnen IDs rad.
-     * @return rad av ID
+     * @return ID
      */
     public Integer getId() {
         return id;
@@ -61,7 +61,7 @@ public class Locale implements Serializable {
     
     /**
      * Skriver in språkets kod.
-     * @param lang_code Språk ID
+     * @param lang_code Språkets ID
      */
     public void setLangCode(String lang_code){
         this.lang_code = lang_code;
