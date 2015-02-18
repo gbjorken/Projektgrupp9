@@ -12,7 +12,7 @@ import javax.validation.Payload;
 
 /**
  * Klassen checkar om personnumret som skrivits in innehåller korrekta tecken.
- * The annotated target is checked to be a valid SSN
+ * The annotated target is checked to be a valid SSN.
  */
 @Constraint(validatedBy = ValidSSN.SSNValidator.class)
 @Documented
