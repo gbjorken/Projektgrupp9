@@ -194,8 +194,7 @@ public class RegisterManager implements Serializable
     }
     
     /**
-     * Är av typen boolean.
-     * Returnerar True om registreringen är godkänd.
+     * Är av typen boolean. Returnerar True om registreringen är godkänd.
      * @return TrueOrFalse
      */
     public Boolean getRegisterSuccess(){
