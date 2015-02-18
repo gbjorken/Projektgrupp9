@@ -30,7 +30,7 @@ public class Job implements Serializable {
     
     /**
      * Returnerar ID för job.
-     * @return job ID
+     * @return Job ID
      */
     public Integer getId() {
         return id;
