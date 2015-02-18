@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen Applikation. Applikationer skapas i denna klass.
+ * Applikationer skapas i denna klass.
  */
 @Entity
 public class Application implements Serializable {
