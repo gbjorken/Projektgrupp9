@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * Interface för klassen Application.
+ * Klassen Application skickar förfrågningar till databasen om applikationer.
  */
 @Stateless
 public class ApplicationDAO {
