@@ -11,6 +11,7 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 /**
+ * Klassen checkar om personnumret som skrivits in innehåller korrekta tecken.
  * The annotated target is checked to be a valid SSN
  */
 @Constraint(validatedBy = ValidSSN.SSNValidator.class)
@@ -27,10 +28,22 @@ public @interface ValidSSN {
 
     class SSNValidator implements ConstraintValidator<ValidSSN, String> 
     {
+        /**
+         * Okänt.
+         * @param constraintAnnotation 
+         */
         @Override
         public void initialize(ValidSSN constraintAnnotation) {
         }
 
+        /**
+        * Är av typen boolean. Om allt gått korrekt returneras True.
+        * Kontrollerar om tecknena i det inskrivna personnumret är av
+        * godkända tecken.
+        * @param value Okänt
+        * @param context Okänt
+        * @return TrueOrFalse
+        */
         @Override
         public boolean isValid(String value, ConstraintValidatorContext context) 
         {
@@ -43,6 +56,13 @@ public @interface ValidSSN {
                     value.matches("([0-9]{3})-([0-9]{2})-([0-9]{2})");
         }
 
+        /**
+        * Är av typen boolean. Returnerar True om _inget_ personnummer 
+        * skrivits in. Kontrollerar om en E-post skrivits in eller ej.
+        * @param value Okänt
+        * @param context Okänt
+        * @return TrueOrFalse
+        */
         private boolean isEmpty(String value, ConstraintValidatorContext context) {
             if (value.length() == 0) {
                 context.disableDefaultConstraintViolation();
