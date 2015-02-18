@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen person skapar personer med sinaa personliga attribut.
+ * Klassen person skapar personer med sina personliga attribut.
  */
 @Entity
 public class Person implements PersonDTO, Serializable {
