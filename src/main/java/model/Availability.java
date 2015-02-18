@@ -37,9 +37,9 @@ public class Availability implements Serializable {
     
     /**
      * Metoden som kallas och tar inparametrar då en tillgänglighet skapas.
-     * @param from_date Från vilket datum kan personen jobba.
-     * @param to_date Till vilket datum som personen kan jobba.
-     * @param application Vilka tider som tillhör applikation.
+     * @param from_date Från vilket datum kan personen jobba
+     * @param to_date Till vilket datum som personen kan jobba
+     * @param application Vilka tider som tillhör applikation
      */
     public Availability(String from_date, String to_date, Application application)
     {
@@ -50,15 +50,15 @@ public class Availability implements Serializable {
     
     /**
      * Returnerar ett nummer från kolumnen ID ur en specifik tillgänglighet från en sökande.
-     * @return 
+     * @return ID
      */
     public Integer getId() {
         return id;
     }
     
     /**
-     * Returerar ett start datum för en arbetande att arbeta.
-     * @return Start datum
+     * Returerar ett startdatum för en arbetande att arbeta.
+     * @return Startdatum
      */
     public String getFromDate(){
         return this.from_date;
@@ -66,7 +66,7 @@ public class Availability implements Serializable {
     
     /**
      * Skriver in i databasen vilket datum en sökande kan börja arbeta.
-     * @param from_date Start datum
+     * @param from_date Startdatum
      */
     public void setFromDate(String from_date){
         this.from_date = from_date;
@@ -74,7 +74,7 @@ public class Availability implements Serializable {
     
     /**
      * Returnerar datumet då sökande inte längre kan jobba.
-     * @return Slut datum
+     * @return Slutdatum
      */
     public String getToDate(){
         return this.to_date;
@@ -82,7 +82,7 @@ public class Availability implements Serializable {
     
     /**
      * Skriver in i databasen vilket datum sökande inte längre kan arbeta.
-     * @param to_date Slut datum
+     * @param to_date Slutdatum
      */
     public void setToDate(String to_date){
         this.to_date = to_date;
@@ -97,8 +97,8 @@ public class Availability implements Serializable {
     }
     
     /**
-     * Skriver in applikationen skrivs in i databasen.
-     * @param application 
+     * Skriver in applikationen i databasen.
+     * @param application Applikationen
      */
     public void setApplication(Application application){
         this.application = application;
@@ -106,7 +106,7 @@ public class Availability implements Serializable {
     
     /**
      * Hash-kod, producerare av hashish.
-     * @return 
+     * @return Hashen
      */
     @Override
     public int hashCode() {
