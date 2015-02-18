@@ -23,8 +23,8 @@ public class Controller
     private ApplicationDAO applicationDAO;
     
     /**
-     * Är av typen boolean och ger sant eller falskt beroende på om
-     * parametrarna är korrekta och är av typen ansökande.
+     * Är av typen boolean. Ger sant eller falskt beroende på om
+     * parametrarna är korrekta och är av en ansökande.
      * @param username Användarnamn
      * @param password Lösenord
      * @return TrueOrFalse
@@ -35,7 +35,7 @@ public class Controller
     }
     
     /**
-     * Är av typen boolean och ger sant eller falskt beroende på om
+     * Är av typen boolean. Ger sant eller falskt beroende på om
      * parametrarna är korrekta och är av typen rekryterare.
      * @param username Användarnamn
      * @param password Lösenord
@@ -47,7 +47,7 @@ public class Controller
     }
     
     /**
-     * Är av typen boolean och ger sant eller falskt beroende på om
+     * Är av typen boolean. Ger sant eller falskt beroende på om
      * parametrarna är korrekta.
      * @param name Förnamn
      * @param surname Efternamn
