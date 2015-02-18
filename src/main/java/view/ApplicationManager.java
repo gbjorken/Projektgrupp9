@@ -219,7 +219,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
+     * Returnerar tillgänglighet / från datum ur listan.
      * @return 
      */
     public ArrayList<String> getFromDateList(){
@@ -227,7 +227,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
+     * Returnerar tillgänglighet / till datum ur listan.
      * @return 
      */
     public ArrayList<String> getToDateList(){
@@ -235,8 +235,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
-     * @return 
+     * Är av typen boolean. Visar meddelanden om datum. 
+     * @return Meddelande
      */
     public Boolean getShowDateMessage(){
         return showDateMessage;
