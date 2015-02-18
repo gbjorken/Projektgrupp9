@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 
 /**
  * Klassen status returnerar endast en status kod för applikationer som
- * skickats in. Är de godkända eller inte (Hired or fired)?
+ * skickats in. Är de godkända eller inte / Hired or fired?
  */
 @Entity
 public class Status implements Serializable {
