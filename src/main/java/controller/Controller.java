@@ -5,6 +5,7 @@ import DTO.JobDTO;
 import integration.ApplicationDAO;
 import integration.JobDAO;
 import integration.LoginAndRegisterDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -47,5 +48,14 @@ public class Controller
     public List<CompetenceDTO> getAllCompetences(String lang)
     {
         return applicationDAO.getAllCompetences(lang);
-    }    
+    }
+    
+    public Boolean createApplication(ArrayList<String> competenceList, 
+                                     ArrayList<String> yearsList,
+                                     ArrayList<String> fromDateList,
+                                     ArrayList<String> toDateList,
+                                     String username, String password, String jobName)
+    {
+        return true;
+    }
 }

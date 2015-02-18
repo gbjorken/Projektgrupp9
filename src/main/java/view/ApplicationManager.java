@@ -259,6 +259,8 @@ public class ApplicationManager implements Serializable
     
     public String confirmApplication(String username, String password, String jobName)
     {
+        controller.createApplication
+          (competenceList, yearsList, fromDateList, toDateList, username, password, jobName);
         return "";
     }
 }
