@@ -1,5 +1,8 @@
 package DTO;
 
+/**
+ * Interface för klassen Person.
+ */
 public interface PersonDTO 
 {
     public Integer getId();
