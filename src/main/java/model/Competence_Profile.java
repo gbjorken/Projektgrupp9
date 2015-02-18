@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen skapar kompetens profiler.
+ * Klassen skapar kompetensprofiler.
  */
 @Entity
 public class Competence_Profile implements Serializable {
