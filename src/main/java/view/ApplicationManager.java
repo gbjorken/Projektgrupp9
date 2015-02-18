@@ -74,8 +74,8 @@ public class ApplicationManager implements Serializable
     private Competence[] comList;
     
     /**
-     * 
-     * @return 
+     * Utvecklas ännu
+     * @return Okänt.....
      */
     public Competence[] getCompetenceValue() 
     {
@@ -220,7 +220,7 @@ public class ApplicationManager implements Serializable
     
     /**
      * Returnerar tillgänglighet / från datum ur listan.
-     * @return 
+     * @return FrånDatum lista
      */
     public ArrayList<String> getFromDateList(){
         return fromDateList;
@@ -228,7 +228,7 @@ public class ApplicationManager implements Serializable
     
     /**
      * Returnerar tillgänglighet / till datum ur listan.
-     * @return 
+     * @return  TillDatum lista
      */
     public ArrayList<String> getToDateList(){
         return toDateList;
