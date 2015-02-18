@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen status localized lagrar "hired or fired" statusar på olika språk.
+ * Klassen status localized lagrar "Hired or fired" statusar på olika språk.
  */
 @Entity
 public class Status_Localized implements Serializable {
