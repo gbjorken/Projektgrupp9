@@ -8,6 +8,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Klassen är vyn för alla typer av registreringar.
+ */
 @Named("loginManager")
 @ConversationScoped
 public class LoginManager implements Serializable 
@@ -30,54 +33,103 @@ public class LoginManager implements Serializable
     @Inject
     private Conversation conversation; 
     
+    /**
+     * Conversation scoped bean start.
+     * Alla värden sparas.
+     */
     private void startConversation() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
     }
 
+    /**
+     * Conversation scoped bean stop.
+     * Alla sparade värden tas bort.
+     */
     private void stopConversation() {
         if (!conversation.isTransient()) {
             conversation.end();
         }
     }
 
+    /**
+     * JSF version 2.2 bug. Måste finnas med.
+     * @return 
+     */
     private String jsf22Bugfix() {
         return "";
     }
     
+    /**
+     * Skriver in sökandes användarnamn.
+     * @param username Användarnamn
+     */
     public void setApplicantUsername(String username){
         this.applicantUsername = username;
     }
     
+    /**
+     * Returnerar sökandes anvädarnamn.
+     * @return Användarnamn
+     */
     public String getApplicantUsername(){
         return applicantUsername;
     }
     
+    /**
+     * Skriver in sökandes lösenord.
+     * @param password Löenord
+     */
     public void setApplicantPassword(String password){
         this.applicantPassword = password;
     }
     
+    /**
+     * Returnerar sökandes lösenord.
+     * @return Lösenord
+     */
     public String getApplicantPassword(){
         return applicantPassword;
     }
     
+    /**
+     * Skriver in rekryterares användarnamn.
+     * @param username Användarnamn
+     */
     public void setRecruiterUsername(String username){
         this.recruiterUsername = username;
     }
     
+    /**
+     * Returnerar rekryterarens användarnamn.
+     * @return Användarnamn
+     */
     public String getRecruiterUsername(){
         return recruiterUsername;
     }
     
+    /**
+     * Skriver in rekryterarens lösenord.
+     * @param password Lösenord
+     */
     public void setRecruiterPassword(String password){
         this.recruiterPassword = password;
     }
     
+    /**
+     * Returnerar rekryterarens lösenord.
+     * @return Lösenord
+     */
     public String getRecruiterPassword(){
         return recruiterPassword;
     }
     
+    /**
+     * Loggar in den sökande med parametrarna användarnamn och lösenord.
+     * Vid misslyckad inloggning skrivs meddelande ut till användaren.
+     * Vid lyckad inloggning tas användaren vidare i systemet.
+     */
     public void loginAsApplicant(){
         startConversation();
         loginAsApplicantSuccess = controller.
@@ -94,20 +146,36 @@ public class LoginManager implements Serializable
         }
     }
     
+    /**
+     * Loggar ut en sökande.
+     */
     public void logoutAsApplicant(){
         loginAsApplicantSuccess = false;
         logoutSuccess = true;
         stopConversation();
     }
     
+    /**
+     * Är av typen boolean om login av sökande lyckats eller ej.
+     * @return TrueOrFalse
+     */
     public boolean getLoginAsApplicantSuccess(){
         return loginAsApplicantSuccess;
     }
     
+    /**
+     * Är av typen boolean om utloggning gått bra eller ej.
+     * @return TrueOrFalse
+     */
     public boolean getLogoutSuccess(){
         return logoutSuccess;
     }
     
+    /**
+     * Loggar in rekryteraren med parametrarna användarnamn och lösenord.
+     * Vid misslyckad inloggning skrivs meddelande ut till användaren.
+     * Vid lyckad inloggning tas användaren vidare i systemet.
+     */
     public void loginAsRecruiter(){
         startConversation();
         loginAsRecruiterSuccess = controller.
@@ -124,28 +192,51 @@ public class LoginManager implements Serializable
         }
     }
     
+    /**
+     * Loggar ut en rekryterare.
+     */
     public void logoutAsRecruiter(){
         loginAsRecruiterSuccess = false;
         logoutSuccess = true;
         stopConversation();
     }
     
+    /**
+     * Är av typen boolean om login av rekryteraren lyckats eller ej.
+     * @return TrueOrFalse
+     */
     public boolean getLoginAsRecruiterSuccess(){
         return loginAsRecruiterSuccess;
     }
     
+    /**
+     * Returnerar applikationsmeddelanden.
+     * @return Meddelande
+     */
     public String getApplicantMessage(){
         return applicantMessage;
     }
     
+    /**
+     * Skriver in applikationsmeddelanden.
+     * @param message Meddelande
+     */
     public void setApplicantMessage(String message){
         this.applicantMessage = message;
     }
     
+    /**
+     * Returnerar rekryterarnasmeddelande. 
+     * @return Meddelande
+     */
     public String getRecruiterMessage(){
         return recruiterMessage;
     }
     
+    /**
+     * Skriver in meddelande om rekryteraren.
+     * @param message Meddelande
+     */
     public void setRecruiterMessage(String message){
         this.recruiterMessage = message;
     }
