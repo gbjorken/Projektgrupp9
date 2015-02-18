@@ -37,7 +37,7 @@ public class Competence_Profile implements Serializable {
     /**
      * Metoden som kallas med inparametrar om år av erfarenhet, namn på tjänst
      * och applikation. Denna klass skapar en egen profil för varje användare.
-     * @param years_of_experience Antal år inom en viss tjänst.
+     * @param years_of_experience Antal år inom en viss tjänst
      * @param competence En viss tjänsts namn
      * @param application Applikationen som gjorts av sökande
      */
@@ -76,7 +76,7 @@ public class Competence_Profile implements Serializable {
     /**
      * Returnerar antalet år som en specifik person jobbat inom en
      * viss tjänst.
-     * @return antal år i en tjänst
+     * @return Antal år i en tjänst
      */
     public Double getYearsOfExperience(){
         return years_of_experience;
@@ -84,7 +84,7 @@ public class Competence_Profile implements Serializable {
     
     /**
      * Skriver in antalet år inom en viss tjänst.
-     * @param years_of_experience antal år i en tjänst 
+     * @param years_of_experience Antal år i en tjänst 
      */
     public void setYearsOfExperience(Double years_of_experience){
         this.years_of_experience = years_of_experience;
