@@ -62,7 +62,6 @@ public class ApplicationManager implements Serializable
      * Returnerar antal år för en kompetens.
      * @return Antal år för en kompetens
      */
-    public Double getYears(){
     public String getYears(){
         return years;
     }
@@ -71,7 +70,6 @@ public class ApplicationManager implements Serializable
      * Skriver in antal år för en kompetens.
      * @param years Antal år för en kompetens
      */
-    public void setYears(Double years){
     public void setYears(String years){
         this.years = years;
     }
@@ -135,6 +133,7 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+
     /**
      * Användaren väljer datum för tillgänglighet.
      * @param event Event lyssnare
@@ -165,7 +164,11 @@ public class ApplicationManager implements Serializable
         
         return competenceAndYearList;
     }
-    
+
+    /**
+     * Användaren väljer datum för tillgänglighet.
+     * @param event Event lyssnare
+     */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
