@@ -15,7 +15,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 /**
- * 
+ * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
  */
 @Named("applicationManager")
 @SessionScoped
@@ -40,32 +40,32 @@ public class ApplicationManager implements Serializable
     private Boolean enableButton;
     
     /**
-     * 
-     * @return 
+     * Returnerar en kompetens.
+     * @return Kompetens
      */
     public String getCompetence(){
         return competence;
     }
     
     /**
-     * 
-     * @param competence 
+     * Skriver in en kompetens.
+     * @param competence Kompetens
      */
     public void setCompetence(String competence){
         this.competence = competence;
     }
     
     /**
-     * 
-     * @return 
+     * Returnerar antal år för en kompetens.
+     * @return Antal år för en kompetens
      */
     public Double getYears(){
         return years;
     }
     
     /**
-     * 
-     * @param years 
+     * Skriver in antal år för en kompetens.
+     * @param years Antal år för en kompetens
      */
     public void setYears(Double years){
         this.years = years;
@@ -106,16 +106,20 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
-     * @return 
+     * Är av typen boolean. 
+     * Om nuvarande kompetenslista innehåller kompetenser kommer "Lägg till"
+     * knappen att vara aktiverad.
+     * Om nuvarande kompetenslista blir tom kommer
+     * "Lägg till" knappen att bli inaktiverad.
+     * @return Kompetenslistans längd
      */
     public Boolean getEnableButton(){
         return comList.length > 0;
     }
     
     /**
-     * 
-     * @return 
+     * Lägg till kompetens till kompetenslistan.
+     * @return JSF version 2.2 bug - Tom sträng
      */
     public String addCompetence()
     {
@@ -127,8 +131,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
-     * @param event 
+     * Användaren väljer datum för tillgänglighet.
+     * @param event Event lyssnare
      */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -137,40 +141,40 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
-     * @return 
+     * Returnerar startdatumet för tillgänglighet.
+     * @return Startdatum
      */
     public Date getStartDate() {
         return startDate;
     }
  
     /**
-     * 
-     * @param startDate 
+     * Skriver in startdatumet för tillgänglighet.
+     * @param startDate Startdatum
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
     /**
-     * 
-     * @return 
+     * Returnerar slutdatumet för tillgänglighet.
+     * @return Slutdatum
      */
     public Date getEndDate() {
         return endDate;
     }
  
     /**
-     * 
-     * @param endDate 
+     * * Returnerar slutdatumet för tillgänglighet.
+     * @param endDate Slutdatum
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     
     /**
-     * 
-     * @return 
+     * Lägg till datum.
+     * @return JSF version 2.2 bug - Tom sträng
      */
     public String addDates()
     {
@@ -190,8 +194,9 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * 
-     * @return 
+     * Checkar om det finns namn kvar i kompetenslistan eller inte.
+     * Används av "Lägg till" knappen som en "boolean hjälpare".
+     * @return Listans längd
      */
     public ArrayList<String> getCompetenceList(){
         ArrayList<String> al = new ArrayList<>();
