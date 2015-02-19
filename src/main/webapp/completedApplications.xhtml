@@ -7,7 +7,17 @@
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.completedApplications}</ui:define>
             <ui:define name="slide">
-                <h1>#{messages.completedApplications}:</h1>
+                <h1 style="text-decoration: underline;">#{messages.completedApplications}:</h1>
+                <ui:repeat value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" var="app" 
+                        rendered="#{applicationManager.getApplicationList(loginManager.applicantUsername) != null}">
+                    <li>
+                        <h:outputText value="#{applicationManager.getJobNameById(app.job)}"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{app.dateMade}"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{applicationManager.getStatusNameById(app.status)}"/>
+                    </li>
+                </ui:repeat>
             </ui:define>
         </ui:composition>
     </h:body>

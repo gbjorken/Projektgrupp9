@@ -1,5 +1,6 @@
 package model;
 
+import DTO.ApplicationDTO;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -15,7 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Application implements Serializable {
+public class Application implements Serializable, ApplicationDTO
+{
     @Id
     @SequenceGenerator(name = "applicationIdSeq", sequenceName = "APPLICATION_ID_SEQ", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "applicationIdSeq")
@@ -23,7 +25,7 @@ public class Application implements Serializable {
     private Integer id;
     
     @Basic(optional = false)
-    @Column(name = "date_made", length = 10, nullable = false)
+    @Column(name = "date_made", length = 16, nullable = false)
     private String date_made;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "application")

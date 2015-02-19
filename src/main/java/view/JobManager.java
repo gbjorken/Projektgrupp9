@@ -47,4 +47,8 @@ public class JobManager implements Serializable
             if (currentJob.equals(job.getJobTypeName())) 
                 currentJobId = job.getJob();
     }
+    
+    public String getCurrentJobId(){
+        return currentJobId.toString();
+    }
 }
