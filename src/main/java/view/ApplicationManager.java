@@ -33,6 +33,7 @@ public class ApplicationManager implements Serializable
     private ArrayList<String> toDateList = new ArrayList<>();
     private ArrayList<String> startDateAndEndDateList;
     private List<ApplicationDTO> applicationList;
+    private ApplicationDTO specificApplication;
     
     private String competence;
     @ValidYear
@@ -293,5 +294,13 @@ public class ApplicationManager implements Serializable
     {
         return controller.getStatusNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+    }
+    
+    public void setSpecificApplication(ApplicationDTO specificApplication){
+        this.specificApplication = specificApplication;
+    }
+    
+    public ApplicationDTO getSpecificApplication(){
+        return specificApplication;
     }
 }

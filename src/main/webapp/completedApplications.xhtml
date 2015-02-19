@@ -2,13 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.completedApplications}</ui:define>
             <ui:define name="slide">
                 <h1 style="text-decoration: underline;">#{messages.completedApplications}:</h1>
-                <ui:repeat value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" var="app" 
+                <h:form>
+                    <ui:repeat value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" var="app" 
                         rendered="#{applicationManager.getApplicationList(loginManager.applicantUsername) != null}">
                     <li>
                         <h:outputText value="#{applicationManager.getJobNameById(app.job)}"/>
@@ -16,8 +18,14 @@
                         <h:outputText value="#{app.dateMade}"/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <h:outputText value="#{applicationManager.getStatusNameById(app.status)}"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:commandButton value="#{messages.viewMore}" action="viewApplicationForApplicant">
+                            <f:setPropertyActionListener target="#{applicationManager.specificApplication}" 
+                                                         value="#{app}"/>
+                        </h:commandButton>
                     </li>
-                </ui:repeat>
+                    </ui:repeat>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
