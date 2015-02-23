@@ -34,13 +34,14 @@
                     <h:outputLabel for="startDate" value="#{messages.startDate}: "/>
                     <p:calendar id="startDate" value="#{applicationManager.startDate}" 
                                 pattern="yyyy-MM-dd" size="10" required="true"
-                                requiredMessage="#{messages.startDate} #{messages.oblig}." style="font-size: 10px"/>
+                                requiredMessage="#{messages.startDate} #{messages.oblig}." 
+                                converterMessage="#{messages.invalidDate}." style="font-size: 10px"/>
                     <h:message for="startDate" style="color:red"/>
                     <h:outputLabel for="endDate" value="#{messages.endDate}: "/>
                     <p:calendar id="endDate" value="#{applicationManager.endDate}" 
                                 pattern="yyyy-MM-dd" size="10" required="true"
                                 requiredMessage="#{messages.endDate} #{messages.oblig}." 
-                                style="font-size: 10px"/>
+                                converterMessage="#{messages.invalidDate}." style="font-size: 10px"/>
                     <h:message for="endDate" style="color:red"/>
                     <h:commandButton value="#{messages.add}" action="#{applicationManager.addDates}"/>
                     </h:panelGrid>
@@ -72,8 +73,8 @@
                 </h:form>
                 <h:form>
                     <h:panelGrid columns="2">
-                        <h:commandButton value="Fortsätt" action="confirmApplication"/>
-                        <h:commandButton value="Avbryt" action="#{applicationManager.clearAll}"/>
+                        <h:commandButton value="#{messages.continue}" action="confirmApplication"/>
+                        <h:commandButton value="#{messages.cancel}" action="#{applicationManager.clearAll}"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

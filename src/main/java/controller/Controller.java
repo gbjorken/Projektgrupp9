@@ -1,5 +1,6 @@
 package controller;
 
+import DTO.ApplicationDTO;
 import DTO.CompetenceDTO;
 import DTO.JobDTO;
 import integration.ApplicationDAO;
@@ -89,6 +90,11 @@ public class Controller
      * @param lang Språkkod
      * @return Namn på alla kompetenser på ett specifikt språk
      */
+    public String getStatusNameById(Integer id, String lang)
+    {
+        return applicationDAO.getStatusNameById(id, lang);
+    }
+    
     public List<CompetenceDTO> getAllCompetences(String lang)
     {
         return applicationDAO.getAllCompetences(lang);
@@ -98,8 +104,14 @@ public class Controller
                                      ArrayList<String> yearsList,
                                      ArrayList<String> fromDateList,
                                      ArrayList<String> toDateList,
-                                     String username, String password, String jobName)
+                                     String username, Integer jobId)
     {
-        return true;
+        return applicationDAO.createApplication(competenceList, yearsList, 
+                                   fromDateList, toDateList, username, jobId);
+    }
+    
+    public List<ApplicationDTO> getApplicationsByUsername(String username)
+    {
+        return applicationDAO.getApplicationsByUsername(username);
     }
 }

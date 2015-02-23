@@ -17,7 +17,8 @@
                     <li><h:commandLink action="/register" 
                         rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
                         #{messages.register}</h:commandLink></li>
-                    <li><h:commandLink action="/jobs">#{messages.jobs}</h:commandLink></li>
+                    <li><h:commandLink action="/jobs" rendered="#{loginManager.loginAsApplicantSuccess}">
+                                       #{messages.jobs}</h:commandLink></li>
                     <li><h:commandLink action="/completedApplications" rendered="#{loginManager.loginAsApplicantSuccess}"
                                    >#{messages.completedApplications}</h:commandLink></li>
                     <li><h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"

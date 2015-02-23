@@ -1,5 +1,6 @@
 package view;
 
+import DTO.ApplicationDTO;
 import DTO.CompetenceDTO;
 import controller.Controller;
 import java.io.Serializable;
@@ -34,6 +35,8 @@ public class ApplicationManager implements Serializable
     private ArrayList<String> fromDateList = new ArrayList<>();
     private ArrayList<String> toDateList = new ArrayList<>();
     private ArrayList<String> startDateAndEndDateList;
+    private List<ApplicationDTO> applicationList;
+    private ApplicationDTO specificApplication;
     
     private String competence;
     @ValidYear
@@ -41,6 +44,7 @@ public class ApplicationManager implements Serializable
     private Date startDate;
     private Date endDate;
     private Boolean showDateMessage;
+    private Boolean confirmSuccess;
     
     /**
      * Returnerar en kompetens.
@@ -140,6 +144,7 @@ public class ApplicationManager implements Serializable
      */
     public ArrayList<String> getCompetenceAndYearList()
     {
+        confirmSuccess = false;
         ArrayList<String> al = new ArrayList<>();
         competenceAndYearList = new ArrayList<>();
         
@@ -255,7 +260,7 @@ public class ApplicationManager implements Serializable
         arr = currentComp.split(" ");
         int j = 0;
         String y = "";
-        //Skapa kompetensens namn som en sträng samt plocka ut år
+        //Skapa kompetensens namn som en strÃ¤ng samt plocka ut Ã¥r
         while(true)
         {
             try 
@@ -318,14 +323,49 @@ public class ApplicationManager implements Serializable
         yearsList = new ArrayList<>();
         fromDateList = new ArrayList<>();
         toDateList = new ArrayList<>();
-        
+        confirmSuccess = false;
         return "";
     }
     
-    public String confirmApplication(String username, String password, String jobName)
+    public String confirmApplication()
     {
+        String username = 
+               FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
+        Integer jobId = Integer.parseInt(
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
         controller.createApplication
-          (competenceList, yearsList, fromDateList, toDateList, username, password, jobName);
+          (competenceList, yearsList, fromDateList, toDateList, username, jobId);
+        
+        confirmSuccess = true;
         return "";
+    }
+    
+    public Boolean getConfirmSuccess(){
+        return confirmSuccess;
+    }
+    
+    public List<ApplicationDTO> getApplicationList(String username)
+    {
+        return controller.getApplicationsByUsername(username);
+    }
+    
+    public String getJobNameById(Integer id)
+    {
+        return controller.getJobNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+    }
+    
+    public String getStatusNameById(Integer id)
+    {
+        return controller.getStatusNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+    }
+    
+    public void setSpecificApplication(ApplicationDTO specificApplication){
+        this.specificApplication = specificApplication;
+    }
+    
+    public ApplicationDTO getSpecificApplication(){
+        return specificApplication;
     }
 }
