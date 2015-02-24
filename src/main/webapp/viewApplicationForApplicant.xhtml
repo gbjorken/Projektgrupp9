@@ -10,6 +10,18 @@
                 <h1>#{messages.applicationForJob}: 
                     #{applicationManager.getJobNameById(applicationManager.specificApplication.job)}</h1>
                 <h:form>
+                    <h:outputText value="Date and time: #{applicationManager.specificApplication.dateMade}"/><br/>
+                    <h:outputText value="Status: #{applicationManager.getStatusNameById
+                                                   (applicationManager.specificApplication.status)}" /><br/>
+                    
+                    <h3 style="text-decoration: underline;">#{messages.competence}:</h3>
+                    <ui:repeat value="#{applicationManager.getCompetenceAndYearList
+                                        (applicationManager.specificApplication.id)}" var="cProf" 
+                            rendered="#{applicationManager.getCompetenceAndYearList
+                                        (applicationManager.specificApplication.id) != null}">
+                        <li><h:outputText value="#{cProf} #{messages.year}"/></li>
+                    </ui:repeat>
+                    
                     <h:commandButton value="#{messages.back}" action="completedApplications"/>
                 </h:form>
             </ui:define>

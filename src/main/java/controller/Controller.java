@@ -2,6 +2,7 @@ package controller;
 
 import DTO.ApplicationDTO;
 import DTO.CompetenceDTO;
+import DTO.CompetenceProfileDTO;
 import DTO.JobDTO;
 import integration.ApplicationDAO;
 import integration.JobDAO;
@@ -69,5 +70,15 @@ public class Controller
     public List<ApplicationDTO> getApplicationsByUsername(String username)
     {
         return applicationDAO.getApplicationsByUsername(username);
+    }
+    
+    public List<CompetenceProfileDTO> getCompetenceProfileByApplicationId(Integer id)
+    {
+        return applicationDAO.getCompetenceProfileByApplicationId(id);
+    }
+    
+    public String getCompetenceNameById(Integer id, String lang)
+    {
+        return applicationDAO.getCompetenceNameById(id, lang);
     }
 }

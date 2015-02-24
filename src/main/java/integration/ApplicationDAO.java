@@ -2,6 +2,7 @@ package integration;
 
 import DTO.ApplicationDTO;
 import DTO.CompetenceDTO;
+import DTO.CompetenceProfileDTO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +95,22 @@ public class ApplicationDAO {
                 + "AND sl.status = (SELECT s FROM Status AS s WHERE s.id = ?2)");
         query.setParameter(1, lang);
         query.setParameter(2, id);
+        return (String)query.getSingleResult();
+    }
+    
+    public List<CompetenceProfileDTO> getCompetenceProfileByApplicationId(Integer id){
+        Query query = em.createQuery("SELECT cp FROM Competence_Profile AS cp "
+                + "WHERE cp.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", CompetenceProfileDTO.class);
+        query.setParameter(1, id);
+        return query.getResultList();
+    }
+    
+    public String getCompetenceNameById(Integer id, String lang){
+        Query query = em.createQuery("SELECT cl.competenceName FROM Competence_Localized AS cl "
+                + "WHERE cl.competence = (SELECT c FROM Competence AS c WHERE c.id = ?1)"
+                + " AND cl.locale = (SELECT l FROM Locale AS l WHERE l.lang_code = ?2)");
+        query.setParameter(1, id);
+        query.setParameter(2, lang);
         return (String)query.getSingleResult();
     }
 }        

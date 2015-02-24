@@ -2,6 +2,7 @@ package view;
 
 import DTO.ApplicationDTO;
 import DTO.CompetenceDTO;
+import DTO.CompetenceProfileDTO;
 import controller.Controller;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -32,7 +33,6 @@ public class ApplicationManager implements Serializable
     private ArrayList<String> fromDateList = new ArrayList<>();
     private ArrayList<String> toDateList = new ArrayList<>();
     private ArrayList<String> startDateAndEndDateList;
-    private List<ApplicationDTO> applicationList;
     private ApplicationDTO specificApplication;
     
     private String competence;
@@ -302,5 +302,21 @@ public class ApplicationManager implements Serializable
     
     public ApplicationDTO getSpecificApplication(){
         return specificApplication;
+    }
+    
+    public ArrayList<String> getCompetenceAndYearList(Integer id)
+    {
+        List<CompetenceProfileDTO> cList = controller.getCompetenceProfileByApplicationId(id);
+        competenceAndYearList = new ArrayList<>();
+        
+        String c;
+        for(int i = 0; i < cList.size(); i++)
+        {
+            c = controller.getCompetenceNameById
+               (cList.get(i).getCompetence(), FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+            competenceAndYearList.add(c + " " + cList);
+        }
+        
+        return competenceAndYearList;
     }
 }
