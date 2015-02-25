@@ -138,7 +138,7 @@ public class ApplicationManager implements Serializable
 
     /**
      * Användaren väljer datum för tillgänglighet.
-     * @param event Event lyssnare
+     * @return ArrayList<String> asdf
      */
     public ArrayList<String> getCompetenceAndYearList()
     {
@@ -363,21 +363,5 @@ public class ApplicationManager implements Serializable
     
     public ApplicationDTO getSpecificApplication(){
         return specificApplication;
-    }
-    
-    public ArrayList<String> getCompetenceAndYearList(Integer id)
-    {
-        List<CompetenceProfileDTO> cList = controller.getCompetenceProfileByApplicationId(id);
-        competenceAndYearList = new ArrayList<>();
-        
-        String c;
-        for(int i = 0; i < cList.size(); i++)
-        {
-            c = controller.getCompetenceNameById
-               (cList.get(i).getCompetence(), FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-            competenceAndYearList.add(c + " " + cList);
-        }
-        
-        return competenceAndYearList;
     }
 }
