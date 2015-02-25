@@ -69,8 +69,8 @@ public class Application implements Serializable, ApplicationDTO
         this.date_made = date_made;
     }
     
-    public Integer getPerson(){
-        return person.getId();
+    public String getPerson(){
+        return person.getUsername();
     }
     
     public void setPerson(Person person){

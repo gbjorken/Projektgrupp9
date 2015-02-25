@@ -6,33 +6,21 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 public class RoleType implements Serializable 
-{    
+{        
     @Id
-    @SequenceGenerator(name = "roleTypeIdSeq", sequenceName = "ROLETYPE_ID_SEQ", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleTypeIdSeq")
-    @Column(name = "id")
-    private Integer id;
-    
     @Basic(optional = false)
-    @Column(name="name", nullable = false, unique = true)
+    @Column(name="name", nullable = false)
     private String name;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roletype")
-    private Collection<Person> persons;
+    private Collection<UserRole> userRoles;
 
     public RoleType() {
-    }
-
-    public Integer getId() {
-        return id;
     }
     
     public void setName(String name){
@@ -46,7 +34,7 @@ public class RoleType implements Serializable
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (name != null ? name.hashCode() : 0);
         return hash;
     }
 
@@ -57,11 +45,11 @@ public class RoleType implements Serializable
             return false;
         }
         RoleType other = (RoleType) object;
-        return this.id.equals(other.id);
+        return this.name.equals(other.name);
     }
 
     @Override
     public String toString() {
-        return "model.RoleType[ id=" + id + " ]";
+        return "model.RoleType[ name=" + name + " ]";
     }
 }

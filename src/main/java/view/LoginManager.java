@@ -78,7 +78,7 @@ public class LoginManager implements Serializable
         return recruiterPassword;
     }
     
-    public void loginAsApplicant(){
+    /*public void loginAsApplicant(){
         startConversation();
         loginAsApplicantSuccess = controller.
                 loginAsApplicant(applicantUsername, applicantPassword);
@@ -92,7 +92,7 @@ public class LoginManager implements Serializable
             applicantUsername = null;
             stopConversation();
         }
-    }
+    }*/
     
     public void logoutAsApplicant(){
         loginAsApplicantSuccess = false;
@@ -108,7 +108,7 @@ public class LoginManager implements Serializable
         return logoutSuccess;
     }
     
-    public void loginAsRecruiter(){
+    /*public void loginAsRecruiter(){
         startConversation();
         loginAsRecruiterSuccess = controller.
                 loginAsRecruiter(recruiterUsername, recruiterPassword);
@@ -122,7 +122,7 @@ public class LoginManager implements Serializable
             recruiterUsername = null;
             stopConversation();
         }
-    }
+    }*/
     
     public void logoutAsRecruiter(){
         loginAsRecruiterSuccess = false;

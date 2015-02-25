@@ -22,7 +22,7 @@ public class Controller
     @EJB
     private ApplicationDAO applicationDAO;
     
-    public Boolean loginAsApplicant(String username, String password)
+    /*public Boolean loginAsApplicant(String username, String password)
     {
         return loginAndRegisterDAO.loginAsApplicant(username, password);
     }
@@ -30,7 +30,7 @@ public class Controller
     public Boolean loginAsRecruiter(String username, String password)
     {
         return loginAndRegisterDAO.loginAsRecruiter(username, password);
-    }
+    }*/
     
     public Boolean register(String name, String surname, String ssn, String email, String username, String password)
     {

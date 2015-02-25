@@ -8,13 +8,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.Person;
 import model.RoleType;
+import model.UserRole;
 
 @Stateless
 public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
-    public Boolean loginAsApplicant(String username, String password)
+    /*public Boolean loginAsApplicant(String username, String password)
     {
         List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
         if(listPersons.size() > 0)
@@ -34,27 +35,30 @@ public class LoginAndRegisterDAO {
                 return true;
         }
         return false;
-    }
+    }*/
     
     public Boolean register(String name, String surname, String ssn, 
                             String email, String username, String password)
     {
-        Query query = em.createNativeQuery("SELECT * FROM Person WHERE username = ?");
+        Query query = em.createNativeQuery("SELECT p FROM Person AS p WHERE p.username = ?");
         query.setParameter(1, username);
         if(query.getResultList().size() > 0)
             return false;
         
-        query = em.createNativeQuery("SELECT id FROM RoleType WHERE name = 'applicant'");
-        Integer roleTypeId = (Integer)query.getSingleResult();
+        query = em.createQuery("SELECT rt FROM RoleType AS rt WHERE rt.name = 'applicant'");
+        RoleType roletype = (RoleType)query.getSingleResult();
         
-        Person person = new Person(name, surname, ssn, email, 
-                        username, password, em.find(RoleType.class, roleTypeId));
+        Person person = new Person(name, surname, ssn, email, username, password);
+        UserRole userRole = new UserRole(person, roletype);
+        em.persist(userRole);
+        
+        person.setUserRole(em.find(UserRole.class, userRole.getId()));
         em.persist(person);
         
         return true;
     }
     
-    private List<PersonDTO> checkUsernameAndPassword(String username, String password)
+    /*private List<PersonDTO> checkUsernameAndPassword(String username, String password)
     {
         Query query = em.createQuery("SELECT p FROM Person AS p "
                 + "WHERE p.username = ?1 AND p.password = ?2", PersonDTO.class);
@@ -71,5 +75,5 @@ public class LoginAndRegisterDAO {
         String roleTypeName = (String)query.getSingleResult();
         
         return roleTypeName;
-    }
+    }*/
 }        

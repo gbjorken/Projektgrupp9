@@ -7,21 +7,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Person implements PersonDTO, Serializable {
-    @Id
-    @SequenceGenerator(name = "personIdSeq", sequenceName = "PERSON_ID_SEQ", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personIdSeq")
-    @Column(name = "id")
-    private Integer id;
+public class Person implements PersonDTO, Serializable 
+{
     @Basic(optional = false)
     @Column(name = "name", nullable = false)
     private String name;
@@ -34,26 +28,27 @@ public class Person implements PersonDTO, Serializable {
     @Basic(optional = false)
     @Column(name = "email", nullable = false)
     private String email;
+    
+    @Id
     @Basic(optional = false)
-    @Column(name="username", unique = true, nullable = false)
+    @Column(name="username", nullable = false)
     private String username;
+    
     @Basic(optional = false)
     @Column(name="password", nullable = false)
     private String password;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "roletype", referencedColumnName = "id", nullable = false)
-    private RoleType roletype;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private Collection<Application> applications;
     
-    public Person() {
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
+    private UserRole userRole;
+    
+    public Person(){
     }
     
     public Person(String name, String surname, 
-            String ssn, String email, String username, String password,
-            RoleType roletype)
+            String ssn, String email, String username, String password)
     {
         this.name = name;
         this.surname = surname;
@@ -61,11 +56,6 @@ public class Person implements PersonDTO, Serializable {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.roletype = roletype;
-    }
-    
-    public Integer getId() {
-        return id;
     }
 
     public String getName(){
@@ -116,18 +106,18 @@ public class Person implements PersonDTO, Serializable {
         this.password = password;
     }
     
-    public Integer getRoleType(){
-        return roletype.getId();
+    public Integer getUserRole(){
+        return userRole.getId();
     }
     
-    public void setRoleType(RoleType roletype){
-        this.roletype = roletype;
+    public void setUserRole(UserRole userRole){
+        this.userRole = userRole;
     }
     
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (username != null ? username.hashCode() : 0);
         return hash;
     }
 
@@ -138,11 +128,11 @@ public class Person implements PersonDTO, Serializable {
             return false;
         }
         Person other = (Person) object;
-        return this.id.equals(other.id);
+        return this.username.equals(other.username);
     }
 
     @Override
     public String toString() {
-        return "model.Person[ id=" + id + " ]";
+        return "model.Person[ username=" + username + " ]";
     }
 }
