@@ -18,19 +18,44 @@ import javax.validation.Payload;
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidYear {
-
+    
+    /**
+     * Felmeddelande som visas om året inte är inskrivet men på fel format
+     * @return Okänt
+     */
     String message() default "{invalidYear}";
-
+    
+    /**
+     * Okänt
+     * @return 
+     */
     Class<?>[] groups() default {};
-
+    
+    /**
+     * Okänt
+     * @return 
+     */
     Class<? extends Payload>[] payload() default {};
-
+    
+    /**
+     *Valideringsklass för year 
+     */
     class YearValidator implements ConstraintValidator<ValidYear, String> 
     {
+        /**
+         * Okänt
+         * @param constraintAnnotation 
+         */
         @Override
         public void initialize(ValidYear constraintAnnotation) {
         }
-
+        
+        /**
+         * Kontrollerar att det inskriva året är korrekt.
+         * @param value Det inskrivna året
+         * @param context Okänt
+         * @return true om året är korrekt, annars false.
+         */
         @Override
         public boolean isValid(String value, ConstraintValidatorContext context) 
         {
@@ -49,7 +74,13 @@ public @interface ValidYear {
                     value.matches("[0-9]\\.[0-9]") ||
                     value.matches("[0-9]");
         }
-
+        
+        /**
+         * Kontrollerar om ett antal år är inskrivet eller ej.
+         * @param value Det inskrivna året
+         * @param context Okänt
+         * @return true om det inte skrivits in ett år, annars false
+         */
         private boolean isEmpty(String value, ConstraintValidatorContext context) {
             if (value.length() == 0) {
                 context.disableDefaultConstraintViolation();

@@ -12,20 +12,35 @@ import javax.validation.Payload;
 
 /**
  * Klassen checkar om E-post adressen som skrivits in innehåller korrekta 
- * tecken. The annotated target is checked to be a valid E-mail.
+ * tecken.
  */
 @Constraint(validatedBy = ValidEmail.EmailValidator.class)
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEmail {
-
+    
+    /**
+     * Felmeddelande som visas om eposten är inskriven men på fel format.
+     * @return Okänt
+     */
     String message() default "{invalidEmail}";
-
+    
+    /**
+     * Okänt
+     * @return 
+     */
     Class<?>[] groups() default {};
-
+    
+    /**
+     * Okänt
+     * @return 
+     */
     Class<? extends Payload>[] payload() default {};
-
+    
+    /**
+     *Valideringsklass för email 
+     */
     class EmailValidator implements ConstraintValidator<ValidEmail, String> 
     {
         /**
@@ -37,12 +52,10 @@ public @interface ValidEmail {
         }
         
         /**
-         * Är av typen boolean. Om allt gått korrekt returneras True.
-         * Kontrollerar om tecknena i den inskrivna E-post adressen är av
-         * godkända tecken.
-         * @param value Okänt
+         * Kontrollerar att den inskrivna email-adressen är korrekt.
+         * @param value Den inskrivna email-adressen
          * @param context Okänt
-         * @return TrueOrFalse
+         * @return true om email-adressen är korrekt, annars false.
          */
         @Override
         public boolean isValid(String value, ConstraintValidatorContext context) 
@@ -56,11 +69,10 @@ public @interface ValidEmail {
         }
         
         /**
-         * Är av typen boolean. Returnerar True om _ingen_ E-post skrivits in.
          * Kontrollerar om en E-post skrivits in eller ej.
-         * @param value Okänt
+         * @param value Den inskrivna email-adressen
          * @param context Okänt
-         * @return TrueOrFalse
+         * @return true om e-posten saknas annars false.
          */
         private boolean isEmpty(String value, ConstraintValidatorContext context) {
             if (value.length() == 0) {
