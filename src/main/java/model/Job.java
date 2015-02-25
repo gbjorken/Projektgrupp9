@@ -27,6 +27,11 @@ public class Job implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private Collection<Application> applications;
+
+    /**
+     * Default konstruktor.
+     */
+    public Job() {}
     
     /**
      * Returnerar ID för job.

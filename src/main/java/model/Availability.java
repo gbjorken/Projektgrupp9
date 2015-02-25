@@ -47,6 +47,11 @@ public class Availability implements Serializable {
         this.to_date = to_date;
         this.application = application;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Availability() {}
     
     /**
      * Returnerar ett nummer från kolumnen ID ur en specifik tillgänglighet från en sökande.

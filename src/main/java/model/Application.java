@@ -67,8 +67,12 @@ public class Application implements Serializable, ApplicationDTO
         this.status = status;
         this.job = job;
     }
-    
-    
+
+    /**
+     * Default konstruktor.
+     */
+    public Application() {}
+
     /**
      * Returnerar ett nummer av kolumnen ID från en applikation från en sökande.
      * @return Raden ID nummer

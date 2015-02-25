@@ -12,7 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Klassen status localized lagrar "Hired or fired" statusar på olika språk.
+ * Entitet "Status_Localized" lagrar "hired or fired" statusen på olika språk.
+ * Den är kopplad till "Status" och "Locale"-entiteternas "id"-kolumner och använder dessa främmande nycklar för att identifiera språket och statusen.
  */
 @Entity
 public class Status_Localized implements Serializable {
@@ -36,7 +37,7 @@ public class Status_Localized implements Serializable {
     private Status status;
     
     /**
-     * Metoden som kallas då statusen läggs in.
+     * Konstruktorn som används då vi lägger till något nytt.
      * @param statusName Namn på status
      * @param locale Typ av språk
      * @param status Statusen av typen av språk
@@ -46,9 +47,14 @@ public class Status_Localized implements Serializable {
         this.locale = locale;
         this.status = status;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Status_Localized() {}
         
     /**
-     * Returnerar en ID kod från kolumnen ID.
+     * Returnerar "id" (primärnyckeln) från kolumnen "id".
      * @return ID kod
      */
     public Integer getId() {
@@ -72,7 +78,7 @@ public class Status_Localized implements Serializable {
     }
     
     /**
-     * Returnerar koden för vilket språk som valts.
+     * Returnerar den främmande nyckeln för vilken status ordet motsvarar.
      * @return Språkkod
      */
     public Integer getStatus(){
@@ -80,21 +86,21 @@ public class Status_Localized implements Serializable {
     }
     
     /**
-     * Skriver in statusen om "hired or fired".
-     * @param status HiredOrFiredkod
+     * Skriver in vad statusen är på detta språk.
+     * @param status HiredOrFired på relevant språk
      */
     public void setStatus(Status status){
         this.status = status;
     }
-    
+
     /**
      * Returnerar namnet på statusen.
-     * @return Status namn
+     * @return status Namnet på statusen
      */
     public String getStatusName(){
         return statusName;
     }
-    
+
     /**
      * Skriver in statusens namn.
      * @param statusName Status namn

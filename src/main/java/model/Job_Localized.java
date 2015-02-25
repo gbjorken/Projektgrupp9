@@ -49,6 +49,11 @@ public class Job_Localized implements Serializable, JobDTO
         this.locale = locale;
         this.job = job;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Job_Localized() {}
     
     /**
      * Returnerar ID

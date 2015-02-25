@@ -42,6 +42,11 @@ public class Locale implements Serializable {
     public Locale(String lang_code){
         this.lang_code = lang_code;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Locale() {}
     
     /**
      * Returnerar kolumnen IDs rad.

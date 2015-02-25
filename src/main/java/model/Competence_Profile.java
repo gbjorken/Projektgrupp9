@@ -33,7 +33,12 @@ public class Competence_Profile implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "application", referencedColumnName = "id", nullable = false)
     private Application application;
-    
+
+    /**
+     * Default konstruktor.
+     */
+    public Competence_Profile() {}
+
     /**
      * Metoden som kallas med inparametrar om år av erfarenhet, namn på tjänst
      * och applikation. Denna klass skapar en egen profil för varje användare.

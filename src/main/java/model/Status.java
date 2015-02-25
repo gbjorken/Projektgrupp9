@@ -28,6 +28,11 @@ public class Status implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
     private Collection<Application> applications;
+
+    /**
+     * Default konstruktor.
+     */
+    public Status() {}
     
     /**
      * Returnerar en ID kod från kolumnen ID.

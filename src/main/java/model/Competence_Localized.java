@@ -50,6 +50,11 @@ public class Competence_Localized implements Serializable, CompetenceDTO {
         this.locale = locale;
         this.competence = competence;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Competence_Localized() {}
     
     /**
      * Returnerar id som berättar vilken rad som ska användas.

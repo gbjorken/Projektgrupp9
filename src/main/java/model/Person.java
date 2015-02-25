@@ -73,7 +73,12 @@ public class Person implements PersonDTO, Serializable {
         this.password = password;
         this.roletype = roletype;
     }
-    
+
+    /**
+     * Default konstruktor.
+     */
+    public Person() {}
+
     /**
      * Returnerar ett ID nummer från kolumnen ID.
      * @return ID kod

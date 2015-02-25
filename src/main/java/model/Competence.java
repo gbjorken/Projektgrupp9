@@ -28,6 +28,11 @@ public class Competence implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "competence")
     private Collection<Competence_Profile> competenceProfile;
+
+    /**
+     * Default konstruktor.
+     */
+    public Competence() {}
     
     /**
      * Returnerar ett värde på ID som berättar om vilken

@@ -32,6 +32,11 @@ public class RoleType implements Serializable
     private Collection<Person> persons;
 
     /**
+     * Default konstruktor.
+     */
+    public RoleType() {}
+
+    /**
      * Returnerar en ID kod från kolumnen ID.
      * @return ID kod
      */
