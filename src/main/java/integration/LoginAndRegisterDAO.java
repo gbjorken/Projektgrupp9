@@ -16,6 +16,7 @@ import model.RoleType;
  * databasen.
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;

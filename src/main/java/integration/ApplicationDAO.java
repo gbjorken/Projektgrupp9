@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -23,6 +25,7 @@ import model.Status;
  * Klassen Application skickar förfrågningar till databasen om applikationer.
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ApplicationDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
