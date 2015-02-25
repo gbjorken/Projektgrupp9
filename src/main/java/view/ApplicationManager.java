@@ -43,42 +43,39 @@ public class ApplicationManager implements Serializable
     private Boolean showDateMessage;
     private Boolean confirmSuccess;
     
-    public String getCompetence(){
+    public String getCompetence() {
         return competence;
     }
     
-    public void setCompetence(String competence){
+    public void setCompetence(String competence) {
         this.competence = competence;
     }
     
-    public String getYears(){
+    public String getYears() {
         return years;
     }
     
-    public void setYears(String years){
+    public void setYears(String years) {
         this.years = years;
     }
     
     private Competence[] comList;
-    public Competence[] getCompetenceValue() 
-    {
+    public Competence[] getCompetenceValue() {
         compList = controller.
                 getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-        
         comList = new Competence[compList.size()];
         String comName, comId;
         Boolean skip = false;
         ArrayList<Competence> alComp = new ArrayList<>();
-        for (CompetenceDTO compList1 : compList) 
-        {
+        for(CompetenceDTO compList1 : compList) {
             comId = compList1.getCompetence().toString();
-            for (String competenceList1 : competenceList) {
-                if (comId.equals(competenceList1)) {
+            for(String competenceList1 : competenceList) {
+                if(comId.equals(competenceList1)) {
                     skip = true;
                     break;
                 }
             }
-            if (!skip) {
+            if(!skip) {
                 comName = compList1.getCompetenceName();
                 alComp.add(new Competence(comName, comId));
             }
@@ -88,12 +85,11 @@ public class ApplicationManager implements Serializable
         return comList;
     }
     
-    public Boolean getEnableButton(){
+    public Boolean getEnableButton() {
         return comList.length > 0;
     }
     
-    public String addCompetence()
-    {
+    public String addCompetence() {
         competenceList.add(competence);
         yearsList.add(years);
         competence = null;
@@ -101,15 +97,13 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
-    public ArrayList<String> getCompetenceAndYearList()
-    {
+    public ArrayList<String> getCompetenceAndYearList() {
         confirmSuccess = false;
         ArrayList<String> al = new ArrayList<>();
         competenceAndYearList = new ArrayList<>();
         
         String c;
-        for(int i = 0; i < competenceList.size(); i++)
-        {
+        for(int i = 0; i < competenceList.size(); i++) {
             c = competenceList.get(i);
             for(int j = 0; j < compList.size(); j++)
             {
@@ -121,8 +115,7 @@ public class ApplicationManager implements Serializable
             }
         }
         
-        for(int i = 0; i < al.size(); i++)
-        {
+        for(int i = 0; i < al.size(); i++) {
             competenceAndYearList.add(al.get(i) + " " + yearsList.get(i));
         }
         

@@ -3,6 +3,8 @@ package integration;
 import DTO.PersonDTO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,9 +15,8 @@ import model.RoleType;
 public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
-    
-    public Boolean loginAsApplicant(String username, String password)
-    {
+
+    public Boolean loginAsApplicant(String username, String password) {
         List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
         if(listPersons.size() > 0)
         {
@@ -53,7 +54,8 @@ public class LoginAndRegisterDAO {
         
         return true;
     }
-    
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     private List<PersonDTO> checkUsernameAndPassword(String username, String password)
     {
         Query query = em.createQuery("SELECT p FROM Person AS p "

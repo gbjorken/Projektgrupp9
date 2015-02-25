@@ -78,7 +78,7 @@ public class LoginManager implements Serializable
         return recruiterPassword;
     }
     
-    public void loginAsApplicant(){
+    public void loginAsApplicant() {
         startConversation();
         loginAsApplicantSuccess = controller.
                 loginAsApplicant(applicantUsername, applicantPassword);

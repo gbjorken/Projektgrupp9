@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class Controller 
 {
     @EJB
@@ -21,7 +24,7 @@ public class Controller
     private JobDAO jobDAO;
     @EJB
     private ApplicationDAO applicationDAO;
-    
+
     public Boolean loginAsApplicant(String username, String password)
     {
         return loginAndRegisterDAO.loginAsApplicant(username, password);
