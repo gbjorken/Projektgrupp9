@@ -2,14 +2,17 @@ package view;
 
 import controller.Controller;
 import java.io.Serializable;
+import java.security.Principal;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Named("loginManager")
-@ConversationScoped
+@ManagedBean
 public class LoginManager implements Serializable 
 {
     private static final long serialVersionUID = 16247164405L;
@@ -17,87 +20,36 @@ public class LoginManager implements Serializable
     @EJB
     private Controller controller;
     
-    private String applicantUsername;
-    private String applicantPassword;
-    private String recruiterUsername;
-    private String recruiterPassword;
+    private String username;
+    private String password;
     private Boolean loginAsApplicantSuccess = false;
     private Boolean loginAsRecruiterSuccess = false;
     private Boolean logoutSuccess = true;
-    private String applicantMessage;
-    private String recruiterMessage;
-        
-    @Inject
-    private Conversation conversation; 
+    private Boolean showApplicantMessage = false;
+    private Boolean showRecruiterMessage = false;
     
-    private void startConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
+    public LoginManager()
+    {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if(session != null){
+            session.invalidate();
         }
     }
-
-    private void stopConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
-
-    private String jsf22Bugfix() {
-        return "";
+    
+    public void setUsername(String username){
+        this.username = username;
     }
     
-    public void setApplicantUsername(String username){
-        this.applicantUsername = username;
+    public String getUsername(){
+        return username;
     }
     
-    public String getApplicantUsername(){
-        return applicantUsername;
+    public void setPassword(String password){
+        this.password = password;
     }
     
-    public void setApplicantPassword(String password){
-        this.applicantPassword = password;
-    }
-    
-    public String getApplicantPassword(){
-        return applicantPassword;
-    }
-    
-    public void setRecruiterUsername(String username){
-        this.recruiterUsername = username;
-    }
-    
-    public String getRecruiterUsername(){
-        return recruiterUsername;
-    }
-    
-    public void setRecruiterPassword(String password){
-        this.recruiterPassword = password;
-    }
-    
-    public String getRecruiterPassword(){
-        return recruiterPassword;
-    }
-    
-    /*public void loginAsApplicant(){
-        startConversation();
-        loginAsApplicantSuccess = controller.
-                loginAsApplicant(applicantUsername, applicantPassword);
-        
-        if(loginAsApplicantSuccess)
-            logoutSuccess = false;
-        
-        if(!loginAsApplicantSuccess)
-        {
-            applicantMessage = "Inloggningen misslyckades";
-            applicantUsername = null;
-            stopConversation();
-        }
-    }*/
-    
-    public void logoutAsApplicant(){
-        loginAsApplicantSuccess = false;
-        logoutSuccess = true;
-        stopConversation();
+    public String getPassword(){
+        return password;
     }
     
     public boolean getLoginAsApplicantSuccess(){
@@ -108,45 +60,69 @@ public class LoginManager implements Serializable
         return logoutSuccess;
     }
     
-    /*public void loginAsRecruiter(){
-        startConversation();
-        loginAsRecruiterSuccess = controller.
-                loginAsRecruiter(recruiterUsername, recruiterPassword);
-        
-        if(loginAsRecruiterSuccess)
-            logoutSuccess = false;
-        
-        if(!loginAsRecruiterSuccess)
-        {
-            recruiterMessage = "Inloggningen misslyckades";
-            recruiterUsername = null;
-            stopConversation();
-        }
-    }*/
-    
-    public void logoutAsRecruiter(){
-        loginAsRecruiterSuccess = false;
-        logoutSuccess = true;
-        stopConversation();
-    }
-    
     public boolean getLoginAsRecruiterSuccess(){
         return loginAsRecruiterSuccess;
     }
     
-    public String getApplicantMessage(){
-        return applicantMessage;
+    public Boolean getShowApplicantMessage(){
+        return showApplicantMessage;
     }
     
-    public void setApplicantMessage(String message){
-        this.applicantMessage = message;
+    public void setShowApplicantMessage(Boolean showApplicantMessage){
+        this.showApplicantMessage = showApplicantMessage;
     }
     
-    public String getRecruiterMessage(){
-        return recruiterMessage;
+    public Boolean getShowRecruiterMessage(){
+        return showRecruiterMessage;
     }
     
-    public void setRecruiterMessage(String message){
-        this.recruiterMessage = message;
+    public void setShowRecruiterMessage(Boolean showRecruiterMessage){
+        this.showRecruiterMessage = showRecruiterMessage;
+    }
+    
+    public String login()
+    {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        try 
+        {
+            //Login via the Servlet Context
+            request.login(username, password);
+
+            if(request.isUserInRole("applicant"))
+            {
+                loginAsApplicantSuccess = true;
+            }
+            else if(request.isUserInRole("recruiter"))
+            {
+                loginAsRecruiterSuccess = true;
+            }
+            logoutSuccess = false;
+        } 
+        catch (ServletException e) 
+        {   
+            showApplicantMessage = true;
+            username = null;
+            e.printStackTrace();
+        }
+        return "";
+    }
+    
+    public void logout()
+    {
+        if(loginAsApplicantSuccess)
+        {
+            loginAsApplicantSuccess = false;
+        }
+        else if(loginAsRecruiterSuccess)
+        {
+            loginAsRecruiterSuccess = false;
+        }
+        
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if(session != null){
+                session.invalidate();
+        }
+        
+        logoutSuccess = true;
     }
 }

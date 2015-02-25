@@ -40,7 +40,7 @@ public class LoginAndRegisterDAO {
     public Boolean register(String name, String surname, String ssn, 
                             String email, String username, String password)
     {
-        Query query = em.createNativeQuery("SELECT p FROM Person AS p WHERE p.username = ?");
+        Query query = em.createQuery("SELECT p FROM Person AS p WHERE p.username = ?1");
         query.setParameter(1, username);
         if(query.getResultList().size() > 0)
             return false;
