@@ -17,6 +17,9 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import view.validators.ValidYear;
 
+/**
+ * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
+ */
 @Named("applicationManager")
 @SessionScoped
 public class ApplicationManager implements Serializable 
@@ -43,24 +46,46 @@ public class ApplicationManager implements Serializable
     private Boolean showDateMessage;
     private Boolean confirmSuccess;
     
-    public String getCompetence() {
+    /**
+     * Returnerar en kompetens.
+     * @return Kompetens
+     */
+    public String getCompetence(){
         return competence;
     }
     
-    public void setCompetence(String competence) {
+    /**
+     * Skriver in en kompetens.
+     * @param competence Kompetens
+     */
+    public void setCompetence(String competence){
         this.competence = competence;
     }
     
-    public String getYears() {
+    /**
+     * Returnerar antal år för en kompetens.
+     * @return Antal år för en kompetens
+     */
+    public String getYears(){
         return years;
     }
     
-    public void setYears(String years) {
+    /**
+     * Skriver in antal år för en kompetens.
+     * @param years Antal år för en kompetens
+     */
+    public void setYears(String years){
         this.years = years;
     }
     
     private Competence[] comList;
-    public Competence[] getCompetenceValue() {
+    
+    /**
+     * Utvecklas ännu
+     * @return Okänt.....
+     */
+    public Competence[] getCompetenceValue() 
+    {
         compList = controller.
                 getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         comList = new Competence[compList.size()];
@@ -85,11 +110,24 @@ public class ApplicationManager implements Serializable
         return comList;
     }
     
-    public Boolean getEnableButton() {
+    /**
+     * Är av typen boolean. 
+     * Om nuvarande kompetenslista innehåller kompetenser kommer "Lägg till"
+     * knappen att vara aktiverad.
+     * Om nuvarande kompetenslista blir tom kommer
+     * "Lägg till" knappen att bli inaktiverad.
+     * @return Kompetenslistans längd
+     */
+    public Boolean getEnableButton(){
         return comList.length > 0;
     }
     
-    public String addCompetence() {
+    /**
+     * Lägg till kompetens till kompetenslistan.
+     * @return JSF version 2.2 bug - Tom sträng
+     */
+    public String addCompetence()
+    {
         competenceList.add(competence);
         yearsList.add(years);
         competence = null;
@@ -97,7 +135,13 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
-    public ArrayList<String> getCompetenceAndYearList() {
+
+    /**
+     * Användaren väljer datum för tillgänglighet.
+     * @param event Event lyssnare
+     */
+    public ArrayList<String> getCompetenceAndYearList()
+    {
         confirmSuccess = false;
         ArrayList<String> al = new ArrayList<>();
         competenceAndYearList = new ArrayList<>();
@@ -121,7 +165,11 @@ public class ApplicationManager implements Serializable
         
         return competenceAndYearList;
     }
-    
+
+    /**
+     * Användaren väljer datum för tillgänglighet.
+     * @param event Event lyssnare
+     */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,22 +177,42 @@ public class ApplicationManager implements Serializable
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
+    /**
+     * Returnerar startdatumet för tillgänglighet.
+     * @return Startdatum
+     */
     public Date getStartDate() {
         return startDate;
     }
  
+    /**
+     * Skriver in startdatumet för tillgänglighet.
+     * @param startDate Startdatum
+     */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
+    /**
+     * Returnerar slutdatumet för tillgänglighet.
+     * @return Slutdatum
+     */
     public Date getEndDate() {
         return endDate;
     }
  
+    /**
+     * * Returnerar slutdatumet för tillgänglighet.
+     * @param endDate Slutdatum
+     */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     
+    /**
+     * Lägg till datum.
+     * @return JSF version 2.2 bug - Tom sträng
+     */
     public String addDates()
     {
         if(startDate.after(endDate))

@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen skapar jobbnamn och användarens preferens angående språk väljs.
+ */
 @Entity
 public class Job_Localized implements Serializable, JobDTO 
 {
@@ -33,9 +36,12 @@ public class Job_Localized implements Serializable, JobDTO
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
 
-    public Job_Localized(){
-    }
-    
+    /**
+     * Metoden som kallas då jobbet skrivs in. 
+     * @param jobName Tjänstens namn
+     * @param locale Språket
+     * @param job Jobbet
+     */
     public Job_Localized(String jobName, Locale locale,
                           Job job)
     {
@@ -44,34 +50,66 @@ public class Job_Localized implements Serializable, JobDTO
         this.job = job;
     }
     
+    /**
+     * Returnerar ID
+     * @return ID
+     */
     public Integer getId() {
         return id;
     }
     
+    /**
+     * Returnerar vilket språk som valts.
+     * @return SpråkID
+     */
     public String getLocale(){
         return locale.getLangCode();
     }
     
+    /**
+     * Väljer vilket språk jobbet ska presenteras på.
+     * @param locale SpråkID
+     */
     public void setLocale(Locale locale){
         this.locale = locale;
     }
     
+    /**
+     * Returnerar jobbets ID
+     * @return JobbID
+     */
     public Integer getJob(){
         return job.getId();
     }
     
+    /**
+     * Skickar in jobbet.
+     * @param job Jobbet
+     */
     public void setJob(Job job){
         this.job = job;
     }
     
+    /**
+     * Returnerar typen av jobbets namn.
+     * @return Typen av jobbnamnet
+     */
     public String getJobTypeName(){
         return jobName;
     }
     
+    /**
+     * Skriver in jobbets namn.
+     * @param jobName Jobbets namn
+     */
     public void setJobName(String jobName){
         this.jobName = jobName;
     }
-    
+
+    /**
+     * Det är hash överallt.
+     * @return Hashkoden
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -79,6 +117,11 @@ public class Job_Localized implements Serializable, JobDTO
         return hash;
     }
 
+    /**
+     * Check om rätt kompetensprofil har hittats eller ej.
+     * @param object Kompetensens profil som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Job_Localized)) {
@@ -88,6 +131,10 @@ public class Job_Localized implements Serializable, JobDTO
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar en kompetens profils ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Job_Localized[ id=" + id + " ]";

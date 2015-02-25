@@ -19,11 +19,19 @@ import model.Job;
 import model.Person;
 import model.Status;
 
+/**
+ * Klassen Application skickar förfrågningar till databasen om applikationer.
+ */
 @Stateless
 public class ApplicationDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
+    /**
+     * Lista av alla kompetenser.
+     * @param lang Språkkod
+     * @return Lista av kompetenser
+     */
     public List<CompetenceDTO> getAllCompetences(String lang)
     {
         Query query = em.createQuery("SELECT cl FROM Competence_Localized AS cl "

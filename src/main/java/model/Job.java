@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen skapar ett ID som används av klassen Job_Localized.
+ */
 @Entity
 public class Job implements Serializable {
     @Id
@@ -25,13 +28,18 @@ public class Job implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private Collection<Application> applications;
     
-    public Job(){
-    }
-    
+    /**
+     * Returnerar ID för job.
+     * @return Job ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Det är hash överallt.
+     * @return Hashkoden
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -39,6 +47,11 @@ public class Job implements Serializable {
         return hash;
     }
 
+    /**
+     * Check om rätt kompetensprofil har hittats eller ej.
+     * @param object Kompetensens profil som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Job)) {
@@ -48,6 +61,10 @@ public class Job implements Serializable {
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar en kompetens profils ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Job[ id=" + id + " ]";

@@ -1,5 +1,8 @@
 package DTO;
 
+/**
+ * Interface för klassen Competens.
+ */
 public interface CompetenceDTO 
 {
     public String getLocale();

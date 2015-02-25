@@ -10,6 +10,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+/**
+ * Klassen behandlar allt som har med jobb att göra via vyn.
+ */
 @Named("jobManager")
 @SessionScoped
 public class JobManager implements Serializable 
@@ -23,6 +26,10 @@ public class JobManager implements Serializable
     private String currentJob;
     private Integer currentJobId;
     
+    /**
+     * Returnerar en lista med jobb typer.
+     * @return Jobblista
+     */
     public List getJobs(){
         jobs = controller.getJobs(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         
@@ -34,6 +41,10 @@ public class JobManager implements Serializable
         return list;
     }
     
+    /**
+     * Returnerar nuvarande jobb.
+     * @return Nuvarande jobb
+     */
     public String getCurrentJob()
     {
         currentJob = controller.getJobNameById(currentJobId, 
@@ -41,6 +52,10 @@ public class JobManager implements Serializable
         return currentJob;
     }
     
+    /**
+     * Skriver in nuvarande jobb.
+     * @param currentJob Nuvarande jobb
+     */
     public void setCurrentJobId(String currentJob)
     {
         for (JobDTO job : jobs) 

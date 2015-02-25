@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen tar in värden för hur lång tid en ansökande
+ * har jobbat inom en specifik tjänst.
+ */
 @Entity
 public class Competence implements Serializable {
     @Id
@@ -25,13 +29,19 @@ public class Competence implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "competence")
     private Collection<Competence_Profile> competenceProfile;
     
-    public Competence(){
-    }
-    
+    /**
+     * Returnerar ett värde på ID som berättar om vilken
+     * rad kompentensens värde ligger på.
+     * @return ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Hashassins creed.
+     * @return Hashen
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -39,6 +49,11 @@ public class Competence implements Serializable {
         return hash;
     }
 
+    /**
+     * Check om rätt värde har hittats eller ej.
+     * @param object Värdet som inparameter.
+     * @return Boolean om true eller false
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -49,6 +64,10 @@ public class Competence implements Serializable {
         return this.id.equals(other.id);
     }
 
+    /**
+     * Konverterar ett ID till en sträng i en mening.
+     * @return ID som sträng
+     */
     @Override
     public String toString() {
         return "model.Competence[ id=" + id + " ]";

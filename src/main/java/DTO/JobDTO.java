@@ -1,5 +1,8 @@
 package DTO;
 
+/**
+ * Interface för klassen Job.
+ */
 public interface JobDTO 
 {
     public String getLocale();
