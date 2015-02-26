@@ -2,7 +2,6 @@ package view;
 
 import controller.Controller;
 import java.io.Serializable;
-import java.security.Principal;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -102,7 +101,6 @@ public class LoginManager implements Serializable
         {   
             showApplicantMessage = true;
             username = null;
-            e.printStackTrace();
         }
         return "";
     }

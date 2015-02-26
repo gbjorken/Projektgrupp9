@@ -8,7 +8,7 @@
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.login}</ui:define>
             <ui:define name="slide">
-                <form  method="POST" action="#{loginManager.login()}">
+                <form  method="POST" action="j_security_check">
                     <h:panelGrid columns="2">
                     <h:outputLabel value="User Name"/>
                     <input type="text" name="j_username" value="#{loginManager.username}"/>
