@@ -52,14 +52,6 @@ public class LoginManager implements Serializable
             conversation.end();
         }
     }
-
-    /**
-     * JSF version 2.2 bug. Måste finnas med.
-     * @return 
-     */
-    private String jsf22Bugfix() {
-        return "";
-    }
     
     /**
      * Skriver in sökandes användarnamn.
@@ -125,6 +117,9 @@ public class LoginManager implements Serializable
         return recruiterPassword;
     }
     
+    /**
+     * Logga in som sökande
+     */
     public void loginAsApplicant() {
         startConversation();
         loginAsApplicantSuccess = controller.

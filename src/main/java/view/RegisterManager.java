@@ -58,14 +58,6 @@ public class RegisterManager implements Serializable
     }
 
     /**
-     * JSF version 2.2 bug. Måste finnas med.
-     * @return Tom sträng
-     */
-    private String jsf22Bugfix() {
-        return "";
-    }
-    
-    /**
      * Skriver in användarens förnamn.
      * @param name Namn
      */

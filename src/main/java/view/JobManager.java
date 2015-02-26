@@ -63,6 +63,10 @@ public class JobManager implements Serializable
                 currentJobId = job.getJob();
     }
     
+    /**
+     * Hämtar id:t för det valda jobbet
+     * @return Id:t för det valda jobbet
+     */
     public String getCurrentJobId(){
         return currentJobId.toString();
     }
