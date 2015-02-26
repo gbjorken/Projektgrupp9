@@ -72,7 +72,7 @@ public @interface ValidYear {
                     value.matches("[0-9]\\.[0-9][0-9]") ||
                     value.matches("[0-9][0-9]\\.[0-9]") ||
                     value.matches("[0-9]\\.[0-9]") ||
-                    value.matches("[0-9]");
+                    value.matches("[0-9]") || value.matches("[0-9][0-9]");
         }
         
         /**
