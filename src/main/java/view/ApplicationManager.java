@@ -62,29 +62,37 @@ public class ApplicationManager implements Serializable
     private Competence[] comList;
     public Competence[] getCompetenceValue() 
     {
-        compList = controller.
-                getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-        
-        comList = new Competence[compList.size()];
-        String comName, comId;
-        Boolean skip = false;
-        ArrayList<Competence> alComp = new ArrayList<>();
-        for (CompetenceDTO compList1 : compList) 
+        comList = new Competence[0];
+        try
         {
-            comId = compList1.getCompetence().toString();
-            for (String competenceList1 : competenceList) {
-                if (comId.equals(competenceList1)) {
-                    skip = true;
-                    break;
+            compList = controller.
+                    getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+
+            comList = new Competence[compList.size()];
+            String comName, comId;
+            Boolean skip = false;
+            ArrayList<Competence> alComp = new ArrayList<>();
+            for (CompetenceDTO compList1 : compList) 
+            {
+                comId = compList1.getCompetence().toString();
+                for (String competenceList1 : competenceList) {
+                    if (comId.equals(competenceList1)) {
+                        skip = true;
+                        break;
+                    }
                 }
+                if (!skip) {
+                    comName = compList1.getCompetenceName();
+                    alComp.add(new Competence(comName, comId));
+                }
+                skip = false;
             }
-            if (!skip) {
-                comName = compList1.getCompetenceName();
-                alComp.add(new Competence(comName, comId));
-            }
-            skip = false;
+            comList = alComp.toArray(new Competence[alComp.size()]);
         }
-        comList = alComp.toArray(new Competence[alComp.size()]);
+        catch(Exception e)
+        {     
+            
+        }
         return comList;
     }
     
@@ -108,14 +116,11 @@ public class ApplicationManager implements Serializable
         competenceAndYearList = new ArrayList<>();
         
         String c;
-        for(int i = 0; i < competenceList.size(); i++)
-        {
-            c = competenceList.get(i);
-            for(int j = 0; j < compList.size(); j++)
-            {
-                if(c.equals(compList.get(j).getCompetence().toString()))
-                {
-                    al.add(compList.get(j).getCompetenceName());
+        for (String competenceList1 : competenceList) {
+            c = competenceList1;
+            for (CompetenceDTO compList1 : compList) {
+                if (c.equals(compList1.getCompetence().toString())) {
+                    al.add(compList1.getCompetenceName());
                     break;
                 }
             }
@@ -175,7 +180,6 @@ public class ApplicationManager implements Serializable
     
     public ArrayList<String> getStartDateAndEndDateList()
     {
-        ArrayList<String> al = new ArrayList<>();
         startDateAndEndDateList = new ArrayList<>(); 
         
         for(int i = 0; i < fromDateList.size(); i++)
@@ -264,14 +268,21 @@ public class ApplicationManager implements Serializable
     
     public String confirmApplication()
     {
-        String username = 
-               FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
-        Integer jobId = Integer.parseInt(
-                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
-        controller.createApplication
-          (competenceList, yearsList, fromDateList, toDateList, username, jobId);
-        
-        confirmSuccess = true;
+        try
+        {
+            String username = 
+                   FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
+            Integer jobId = Integer.parseInt(
+                    FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
+            controller.createApplication
+              (competenceList, yearsList, fromDateList, toDateList, username, jobId);
+
+            confirmSuccess = true;
+        }
+        catch(Exception e)
+        {
+            
+        }
         return "";
     }
     
@@ -281,19 +292,46 @@ public class ApplicationManager implements Serializable
     
     public List<ApplicationDTO> getApplicationList(String username)
     {
-        return controller.getApplicationsByUsername(username);
+        List<ApplicationDTO> list = new ArrayList<>();
+        try
+        {
+            list = controller.getApplicationsByUsername(username);
+        }
+        catch(Exception e)
+        {
+            
+        }
+        return list;
     }
     
     public String getJobNameById(Integer id)
     {
-        return controller.getJobNameById(id, 
+        String s = "";
+        try
+        {
+            s = controller.getJobNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {
+            
+        }
+        return s;  
     }
     
     public String getStatusNameById(Integer id)
     {
-        return controller.getStatusNameById(id, 
-                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        String s = "";
+        try
+        {
+            s = controller.getStatusNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage()); 
+        }
+        catch(Exception e)
+        {
+            
+        }
+        return s;
     }
     
     public void setSpecificApplication(ApplicationDTO specificApplication){
@@ -306,17 +344,22 @@ public class ApplicationManager implements Serializable
     
     public ArrayList<String> getCompetenceAndYearList(Integer id)
     {
-        List<CompetenceProfileDTO> cList = controller.getCompetenceProfileByApplicationId(id);
         competenceAndYearList = new ArrayList<>();
-        
-        String c;
-        for(int i = 0; i < cList.size(); i++)
+        try
         {
-            c = controller.getCompetenceNameById
-               (cList.get(i).getCompetence(), FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-            competenceAndYearList.add(c + " " + cList);
+            List<CompetenceProfileDTO> cList = controller.getCompetenceProfileByApplicationId(id);
+
+            String c;
+            for (CompetenceProfileDTO cList1 : cList) {
+                c = controller.getCompetenceNameById(cList1.getCompetence(), 
+                        FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+                competenceAndYearList.add(c + " " + cList);
+            }
+        }    
+        catch(Exception e)
+        {
+            
         }
-        
         return competenceAndYearList;
     }
 }

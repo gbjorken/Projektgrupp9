@@ -134,14 +134,21 @@ public class RegisterManager implements Serializable
             return "";
         }
         
-        if(!controller.register(name, surname, ssn, email, username, password))
+        try
         {
-            showMessage = true;
-            registerSuccess = false;
-            return "";
+            if(!controller.register(name, surname, ssn, email, username, password))
+            {
+                showMessage = true;
+                registerSuccess = false;
+                return "";
+            }
+            
+            registerSuccess = true;
         }
-        
-        registerSuccess = true;
+        catch(Exception e)
+        {
+            
+        }
         return "";
     }
 }
