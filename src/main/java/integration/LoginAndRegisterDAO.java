@@ -15,7 +15,7 @@ public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
-    /*public Boolean loginAsApplicant(String username, String password)
+    public Boolean loginAsApplicant(String username, String password)
     {
         List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
         if(listPersons.size() > 0)
@@ -35,7 +35,7 @@ public class LoginAndRegisterDAO {
                 return true;
         }
         return false;
-    }*/
+    }
     
     public Boolean register(String name, String surname, String ssn, 
                             String email, String username, String password)
@@ -58,7 +58,7 @@ public class LoginAndRegisterDAO {
         return true;
     }
     
-    /*private List<PersonDTO> checkUsernameAndPassword(String username, String password)
+    private List<PersonDTO> checkUsernameAndPassword(String username, String password)
     {
         Query query = em.createQuery("SELECT p FROM Person AS p "
                 + "WHERE p.username = ?1 AND p.password = ?2", PersonDTO.class);
@@ -75,5 +75,5 @@ public class LoginAndRegisterDAO {
         String roleTypeName = (String)query.getSingleResult();
         
         return roleTypeName;
-    }*/
+    }
 }
