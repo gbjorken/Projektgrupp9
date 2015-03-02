@@ -3,32 +3,19 @@ package integration;
 import DTO.PersonDTO;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.Person;
 import model.RoleType;
+import model.UserRole;
 
-/**
- * Klassen behandlar inloggning och registreringar för användarna mot
- * databasen.
- */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
-    /**
-     * Är av typen boolean. Om parametrarna matchar med databasen loggas 
-     * användaren in som sökande.
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return TrueOrFalse
-     */
-    public Boolean loginAsApplicant(String username, String password)
+    /*public Boolean loginAsApplicant(String username, String password)
     {
         List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
         if(listPersons.size() > 0)
@@ -39,13 +26,6 @@ public class LoginAndRegisterDAO {
         return false;
     }
     
-    /**
-     * Är av typen boolean. Om parametrarna matchar med databasen loggas 
-     * användaren in som rekryterare.
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return TrueOrFalse
-     */
     public Boolean loginAsRecruiter(String username, String password)
     {
         List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
@@ -55,44 +35,30 @@ public class LoginAndRegisterDAO {
                 return true;
         }
         return false;
-    }
+    }*/
     
-    /**
-     * Är av typen boolean. Registrerar användare i databasen och returnerar
-     * True or false baserat på om det gått bra eller ej.
-     * @param name Förnamn
-     * @param surname Efternamn
-     * @param ssn Personnummer
-     * @param email E-post
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return TrueOrFalse
-     */
     public Boolean register(String name, String surname, String ssn, 
                             String email, String username, String password)
     {
-        Query query = em.createNativeQuery("SELECT * FROM Person WHERE username = ?");
+        Query query = em.createQuery("SELECT p FROM Person AS p WHERE p.username = ?1");
         query.setParameter(1, username);
         if(query.getResultList().size() > 0)
             return false;
         
-        query = em.createNativeQuery("SELECT id FROM RoleType WHERE name = 'applicant'");
-        Integer roleTypeId = (Integer)query.getSingleResult();
+        query = em.createQuery("SELECT rt FROM RoleType AS rt WHERE rt.name = 'applicant'");
+        RoleType roletype = (RoleType)query.getSingleResult();
         
-        Person person = new Person(name, surname, ssn, email, 
-                        username, password, em.find(RoleType.class, roleTypeId));
+        Person person = new Person(name, surname, ssn, email, username, password);
+        UserRole userRole = new UserRole(person, roletype);
+        em.persist(userRole);
+        
+        person.setUserRole(em.find(UserRole.class, userRole.getId()));
         em.persist(person);
         
         return true;
     }
     
-    /**
-     * Checkar om användarnamn och lösenord av en person finns.
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return Lista av resultat
-     */
-    private List<PersonDTO> checkUsernameAndPassword(String username, String password)
+    /*private List<PersonDTO> checkUsernameAndPassword(String username, String password)
     {
         Query query = em.createQuery("SELECT p FROM Person AS p "
                 + "WHERE p.username = ?1 AND p.password = ?2", PersonDTO.class);
@@ -101,12 +67,6 @@ public class LoginAndRegisterDAO {
         return query.getResultList();
     }
     
-    /**
-     * Returnerar rolltyp genom en förfrågan till databasen med hjälp av
-     * en ID kod.
-     * @param roleTypeId Rolltypens ID
-     * @return Rolltypens namn
-     */
     private String getRoleTypeName(int roleTypeId)
     {
         Query query = em.createNativeQuery("SELECT name FROM RoleType "
@@ -115,5 +75,5 @@ public class LoginAndRegisterDAO {
         String roleTypeName = (String)query.getSingleResult();
         
         return roleTypeName;
-    }
-}        
+    }*/
+}
