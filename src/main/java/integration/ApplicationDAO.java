@@ -1,6 +1,7 @@
 package integration;
 
 import DTO.ApplicationDTO;
+import DTO.AvailabilityDTO;
 import DTO.CompetenceDTO;
 import DTO.CompetenceProfileDTO;
 import java.text.DateFormat;
@@ -109,7 +110,7 @@ public class ApplicationDAO {
     public List<ApplicationDTO> getApplicationsByUsername(String username)
     {
         Query query = em.createQuery("SELECT a FROM Application AS a WHERE "
-                + "a.person = (SELECT p.id FROM Person AS p WHERE p.username = ?1)", ApplicationDTO.class);
+                + "a.person = (SELECT p FROM Person AS p WHERE p.username = ?1)", ApplicationDTO.class);
         query.setParameter(1, username);
         return query.getResultList();
     }
@@ -137,7 +138,21 @@ public class ApplicationDAO {
      */
     public List<CompetenceProfileDTO> getCompetenceProfileByApplicationId(Integer id){
         Query query = em.createQuery("SELECT cp FROM Competence_Profile AS cp "
-                + "WHERE cp.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", CompetenceProfileDTO.class);
+                + "WHERE cp.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", 
+                        CompetenceProfileDTO.class);
+        query.setParameter(1, id);
+        return query.getResultList();
+    }
+    
+    /**
+     * Hämtar en lista med tillgänglighetsperioder för en ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return En lista med tillgänglighetsperioder angivna för den specifika ansökan
+     */
+    public List<AvailabilityDTO> getAvailabilityByApplicationId(Integer id){
+        Query query = em.createQuery("SELECT av FROM Availability AS av "
+                + "WHERE av.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", 
+                        AvailabilityDTO.class);
         query.setParameter(1, id);
         return query.getResultList();
     }

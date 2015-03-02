@@ -22,6 +22,7 @@
                         <li><h:outputText value="#{date}"/></li>
                     </ui:repeat>
                     <br/>
+                    <h:commandButton value="#{messages.back}" action="application"/>
                     <h:commandButton value="#{messages.send}" 
                                    action="#{applicationManager.confirmApplication}">
                         <f:param name="username" value="#{loginManager.applicantUsername}" />

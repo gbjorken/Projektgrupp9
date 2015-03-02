@@ -111,10 +111,6 @@ public class Competence_Profile implements Serializable {
         this.application = application;
     }
 
-    /**
-     * Det är hash överallt.
-     * @return Hashkoden
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,11 +118,6 @@ public class Competence_Profile implements Serializable {
         return hash;
     }
 
-    /**
-     * Check om rätt kompetensprofil har hittats eller ej.
-     * @param object Kompetensens profil som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -137,10 +128,6 @@ public class Competence_Profile implements Serializable {
         return this.id.equals(other.id);
     }
     
-    /**
-     * Konverterar en kompetens profils ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Competence_profile[ id=" + id + " ]";

@@ -1,6 +1,7 @@
 package view;
 
 import DTO.ApplicationDTO;
+import DTO.AvailabilityDTO;
 import DTO.CompetenceDTO;
 import DTO.CompetenceProfileDTO;
 import controller.Controller;
@@ -167,6 +168,23 @@ public class ApplicationManager implements Serializable
     }
 
     /**
+     * Hämtar en lista med kompetenser för en specifik ansökan
+     * @param id Id:t för den specifika ansökan
+     * @return Lista med kompetenser och år för respektive
+     */
+    public List<CompetenceProfileDTO> getCompetenceAndYearList(Integer id)
+    {
+        List<CompetenceProfileDTO> l = null;
+        try
+        {
+            l = controller.getCompetenceProfileByApplicationId(id);
+        }
+        catch(Exception e)
+        {}
+        return l;
+    }
+    
+    /**
      * Händelselyssnare för när användaren väljer datum för tillgänglighet.
      * @param event Event lyssnare
      */
@@ -253,6 +271,23 @@ public class ApplicationManager implements Serializable
         }
         
         return startDateAndEndDateList;
+    }
+    
+    /**
+     * Hämtar en lista med tillgänglighetsperioder för en specifik ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return Lista med tillgänglighetsperioder
+     */
+    public List<AvailabilityDTO> getStartDateAndEndDateList(Integer id)
+    {
+        List<AvailabilityDTO> l = null;
+        try
+        {
+            l = controller.getAvailabilityByApplicationId(id);
+        }
+        catch(Exception e)
+        {}
+        return l;
     }
     
     /**
@@ -377,6 +412,7 @@ public class ApplicationManager implements Serializable
      */
     public List<ApplicationDTO> getApplicationList(String username)
     {
+        
         return controller.getApplicationsByUsername(username);
     }
     
@@ -388,6 +424,17 @@ public class ApplicationManager implements Serializable
     public String getJobNameById(Integer id)
     {
         return controller.getJobNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+    }
+    
+    /**
+     * Hämtar en kompetens namn via id
+     * @param id En specifik kompetens id
+     * @return Den specifika kompetensens namn
+     */
+    public String getCompetenceNameById(Integer id)
+    {
+        return controller.getCompetenceNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
     }
     

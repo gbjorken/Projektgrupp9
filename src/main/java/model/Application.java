@@ -38,7 +38,7 @@ public class Application implements Serializable, ApplicationDTO
     private Collection<Availability> availability;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "person", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "person", referencedColumnName = "username", nullable = false)
     private Person person;
     
     @ManyToOne(optional = false)
@@ -49,12 +49,14 @@ public class Application implements Serializable, ApplicationDTO
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
     
-    //@ManyToOne(optional = false)
-   // @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
-    //private Job job;
+    /**
+     * Default-konstruktor.
+     */
+    public Application(){
+    }
     
     /**
-     *  Metoden som kallas och inparametrar då en applikation görs.
+     * Konstruktor för en applikation.
      * @param date_made Datumet då applikationen gjordes
      * @param person Vem som gjorde applikationen
      * @param status Statusen på om applikationen blivit recenserad av rekryterare
@@ -67,16 +69,7 @@ public class Application implements Serializable, ApplicationDTO
         this.status = status;
         this.job = job;
     }
-
-    /**
-     * Default konstruktor.
-     */
-    public Application() {}
-
-    /**
-     * Returnerar ett nummer av kolumnen ID från en applikation från en sökande.
-     * @return Raden ID nummer
-     */
+    
     public Integer getId() {
         return id;
     }
@@ -87,7 +80,7 @@ public class Application implements Serializable, ApplicationDTO
      */
     public String getDateMade(){
         return date_made;
-    } 
+    }
     
     /**
      * Skriver in datumet i databasen då applikationen gjordes.
@@ -98,11 +91,11 @@ public class Application implements Serializable, ApplicationDTO
     }
     
     /**
-     * Returnerar användarens ID av den som gjorde applikationen.
-     * @return Personens ID
+     * Hämtar namnet för en användare.
+     * @return Användarnamnet för en användare
      */
-    public Integer getPerson(){
-        return person.getId();
+    public String getPerson(){
+        return person.getUsername();
     }
     
     /**
@@ -146,10 +139,6 @@ public class Application implements Serializable, ApplicationDTO
         this.job = job;
     }
 
-    /**
-     * Hash du vet.
-     * @return Hashen
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -157,11 +146,6 @@ public class Application implements Serializable, ApplicationDTO
         return hash;
     }
 
-    /**
-     * Check om rätt applikation hittats eller ej.
-     * @param object Applikationen som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) 
     {
@@ -172,10 +156,6 @@ public class Application implements Serializable, ApplicationDTO
         return this.id.equals(other.id);
     }
 
-    /**
-     * Konverterar ett ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Application[ id=" + id + " ]";

@@ -42,10 +42,6 @@ public class Status implements Serializable {
         return id;
     }
 
-    /**
-     * Det är hash överallt.
-     * @return Hashkoden
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -53,14 +49,8 @@ public class Status implements Serializable {
         return hash;
     }
 
-    /**
-     * Check om rätt status har hittats eller ej.
-     * @param object Integer av språk som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Status)) {
             return false;
         }
@@ -68,10 +58,6 @@ public class Status implements Serializable {
         return this.id.equals(other.id);
     }
 
-    /**
-     * Konverterar en status ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Status[ id=" + id + " ]";

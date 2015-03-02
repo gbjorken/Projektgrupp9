@@ -1,6 +1,7 @@
 package controller;
 
 import DTO.ApplicationDTO;
+import DTO.AvailabilityDTO;
 import DTO.CompetenceDTO;
 import DTO.CompetenceProfileDTO;
 import DTO.JobDTO;
@@ -156,5 +157,15 @@ public class Controller {
     public String getCompetenceNameById(Integer id, String lang)
     {
         return applicationDAO.getCompetenceNameById(id, lang);
+    }
+    
+    /**
+     * Hämtar en lista med tillgänglighetsperioder för en specifik ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return Lista med tillgänglighetsperioder
+     */
+    public List<AvailabilityDTO> getAvailabilityByApplicationId(Integer id)
+    {
+        return applicationDAO.getAvailabilityByApplicationId(id);
     }
 }

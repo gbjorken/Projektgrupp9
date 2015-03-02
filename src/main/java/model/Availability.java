@@ -1,5 +1,6 @@
 package model;
 
+import DTO.AvailabilityDTO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ import javax.persistence.SequenceGenerator;
  * under vissa perioder på arbetsplatsen.
  */
 @Entity
-public class Availability implements Serializable {
+public class Availability implements Serializable, AvailabilityDTO 
+{
     @Id
     @SequenceGenerator(name = "availabilityIdSeq", sequenceName = "AVAILABILITY_ID_SEQ", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "availabilityIdSeq")
@@ -109,10 +111,6 @@ public class Availability implements Serializable {
         this.application = application;
     }
     
-    /**
-     * Hash-kod, producerare av hashish.
-     * @return Hashen
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,14 +118,8 @@ public class Availability implements Serializable {
         return hash;
     }
 
-    /**
-     * Check om rätt tider har hittats eller ej.
-     * @param object Tillgänglighets tiden som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Availability)) {
             return false;
         }
@@ -135,10 +127,6 @@ public class Availability implements Serializable {
         return this.id.equals(other.id);
     }
 
-    /**
-     * Konverterar ett ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Availability[ id=" + id + " ]";

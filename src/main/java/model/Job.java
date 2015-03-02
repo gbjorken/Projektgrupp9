@@ -41,10 +41,6 @@ public class Job implements Serializable {
         return id;
     }
 
-    /**
-     * Det är hash överallt.
-     * @return Hashkoden
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -52,11 +48,6 @@ public class Job implements Serializable {
         return hash;
     }
 
-    /**
-     * Check om rätt kompetensprofil har hittats eller ej.
-     * @param object Kompetensens profil som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Job)) {
@@ -66,10 +57,6 @@ public class Job implements Serializable {
         return this.id.equals(other.id);
     }
 
-    /**
-     * Konverterar en kompetens profils ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Job[ id=" + id + " ]";

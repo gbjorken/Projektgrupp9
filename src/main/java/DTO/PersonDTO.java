@@ -4,13 +4,7 @@ package DTO;
  * Gränssnitt som är DTO för person.
  */
 public interface PersonDTO 
-{
-    /**
-     * Hämtar id:t för personen.
-     * @return Id:t för personen
-     */
-    public Integer getId();
-    
+{    
     /**
      * Hämtar personens förnamn.
      * @return Personens förnamn
@@ -46,10 +40,4 @@ public interface PersonDTO
      * @return Personens lösenord
      */
     public String getPassword();
-    
-    /**
-     * Hämtar id:t för personens rolltyp.
-     * @return Id:t för personens rolltyp
-     */
-    public Integer getRoleType();
 }

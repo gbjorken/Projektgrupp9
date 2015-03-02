@@ -21,7 +21,7 @@ public interface ApplicationDTO
      * Hämtar användarnamnet för den sökande som gjorde ansökan.
      * @return Användarnamnet för den sökande
      */
-    public Integer getPerson();
+    public String getPerson();
     
     /**
      * Hämtar id:t för statusen på ansökan.

@@ -114,10 +114,6 @@ public class Competence_Localized implements Serializable, CompetenceDTO {
         this.competenceName = competenceName;
     }
     
-    /**
-     * Hashishas
-     * @return Hashen
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -125,11 +121,6 @@ public class Competence_Localized implements Serializable, CompetenceDTO {
         return hash;
     }
 
-    /**
-     * Check om rätt kompetens har hittats eller ej.
-     * @param object Kompetensen som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -140,10 +131,6 @@ public class Competence_Localized implements Serializable, CompetenceDTO {
         return this.id.equals(other.id);    
     }
 
-    /**
-     * Konverterar ett språk ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Competence_Localized[ id=" + id + " ]";

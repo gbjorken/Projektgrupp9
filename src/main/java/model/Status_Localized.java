@@ -109,10 +109,6 @@ public class Status_Localized implements Serializable {
         this.statusName = statusName;
     }
 
-    /**
-     * Det är hash överallt.
-     * @return Hashkoden
-     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,14 +116,8 @@ public class Status_Localized implements Serializable {
         return hash;
     }
 
-    /**
-     * Check om rätt språkkod har hittats eller ej.
-     * @param object Integer av språk som inparameter.
-     * @return Boolean om true eller false
-     */
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Status_Localized)) {
             return false;
         }
@@ -135,10 +125,6 @@ public class Status_Localized implements Serializable {
         return this.id.equals(other.id);
     }
 
-    /**
-     * Konverterar ett språkkods ID till en sträng i en mening.
-     * @return ID som sträng
-     */
     @Override
     public String toString() {
         return "model.Status_Localized[ id=" + id + " ]";
