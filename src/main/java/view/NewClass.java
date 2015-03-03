@@ -8,6 +8,10 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Gammal kod ifrån LoginManager. Låt vara!
+ * @author gabeN
+ */
 @Named("loginManager2")
 @ConversationScoped
 public class NewClass implements Serializable 
