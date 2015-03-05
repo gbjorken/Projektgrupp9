@@ -10,21 +10,22 @@
             <ui:define name="slide">
                 <h1 style="text-decoration: underline;">#{messages.completedApplications}:</h1>
                 <h:form>
-                    <ui:repeat value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" var="app" 
-                        rendered="#{applicationManager.getApplicationList(loginManager.applicantUsername) != null}">
-                    <li>
-                        <h:outputText value="#{applicationManager.getJobNameById(app.job)}"/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:outputText value="#{app.dateMade}"/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:outputText value="#{applicationManager.getStatusNameById(app.status)}"/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:commandButton value="#{messages.viewMore}" action="viewApplicationForApplicant">
+                    <h:dataTable value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" 
+                            var="app" 
+                            rendered="#{applicationManager.getApplicationList(loginManager.applicantUsername) != null}">
+                        <h:column>#{applicationManager.getJobNameById(app.job)}</h:column>
+                        <h:column>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:column>
+                        <h:column>#{app.dateMade}</h:column>
+                        <h:column>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:column>
+                        <h:column>#{applicationManager.getStatusNameById(app.status)}</h:column>
+                        <h:column>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:column>
+                        <h:column>
+                            <h:commandButton value="#{messages.viewMore}" action="viewApplicationForApplicant">
                             <f:setPropertyActionListener target="#{applicationManager.specificApplication}" 
                                                          value="#{app}"/>
-                        </h:commandButton>
-                    </li>
-                    </ui:repeat>
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>

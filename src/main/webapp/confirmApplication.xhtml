@@ -28,7 +28,9 @@
                         <f:param name="username" value="#{loginManager.applicantUsername}" />
                         <f:param name="jobId" value="#{jobManager.currentJobId}" />
                     </h:commandButton>    
-                    <h:commandButton value="#{messages.cancel}"/>
+                    <h:commandButton value="#{messages.cancel}" action="jobs">
+                        <f:actionListener binding="#{applicationManager.clearAll()}"/>
+                    </h:commandButton>
                 </h:form>
             </ui:define>
         </ui:composition>

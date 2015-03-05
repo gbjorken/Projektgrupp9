@@ -40,10 +40,32 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/application.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{applicationManager.goToConfirm and applicationManager.clickOnConfirm}</if>
+            <to-view-id>/confirmApplication.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>/confirmApplication.xhtml</from-view-id>
         <navigation-case>
             <if>#{applicationManager.confirmSuccess}</if>
             <to-view-id>/completedApplications.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{registerManager.registrationFailed}</if>
+            <to-view-id>/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/confirmApplication.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{applicationManager.confirmFailed}</if>
+            <to-view-id>/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

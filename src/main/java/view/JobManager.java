@@ -31,13 +31,17 @@ public class JobManager implements Serializable
      * @return Jobblista
      */
     public List getJobs(){
-        jobs = controller.getJobs(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-        
         List<String> list = new ArrayList();
-        for (JobDTO job : jobs) {
-            list.add(job.getJobTypeName());
-        }
+        try
+        {
+            jobs = controller.getJobs(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         
+            for (JobDTO job : jobs) {
+                list.add(job.getJobTypeName());
+            }
+        }
+        catch(Exception e)
+        {}
         return list;
     }
     
@@ -47,8 +51,13 @@ public class JobManager implements Serializable
      */
     public String getCurrentJob()
     {
-        currentJob = controller.getJobNameById(currentJobId, 
+        try
+        {
+            currentJob = controller.getJobNameById(currentJobId, 
                 FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
         return currentJob;
     }
     

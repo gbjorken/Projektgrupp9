@@ -33,7 +33,9 @@ public class RegisterManager implements Serializable
     private String repeatPassword;
     private Boolean registerSuccess = false;
     private Boolean showPasswordMessage;
-    private Boolean showMessage;     
+    private Boolean showMessage;
+    private Boolean registrationFailed = false;
+    
     @Inject
     private Conversation conversation; 
     
@@ -224,14 +226,39 @@ public class RegisterManager implements Serializable
             return "";
         }
         
-        if(!controller.register(name, surname, ssn, email, username, password))
+        try
         {
-            showMessage = true;
-            registerSuccess = false;
-            return "";
+            if(!controller.register(name, surname, ssn, email, username, password))
+            {
+                showMessage = true;
+                registerSuccess = false;
+                return "";
+            }
+            registerSuccess = true;
         }
-        
-        registerSuccess = true;
+        catch(Exception e)
+        {
+            registrationFailed = true;
+            registerSuccess = false;
+        }
         return "";
+    }
+    
+    /**
+     * Meddelar om registreringen lyckades eller inte.
+     * @return true om registreringen lyckades, annars false
+     */
+    public Boolean getRegistrationFailed()
+    {
+        return registrationFailed;
+    }
+    
+    /**
+     * Anger om registreringen lyckades eller inte.
+     * @param regFailed true om registreringen lyckades, annars false
+     */
+    public void setRegistrationFailed(Boolean regFailed)
+    {
+        this.registrationFailed = regFailed;
     }
 }

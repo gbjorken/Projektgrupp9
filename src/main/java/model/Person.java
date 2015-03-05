@@ -20,8 +20,8 @@ import javax.persistence.OneToOne;
 public class Person implements PersonDTO, Serializable 
 {
     @Basic(optional = false)
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "fname", nullable = false)
+    private String fname;
     @Basic(optional = false)
     @Column(name = "surname", nullable = false)
     private String surname;
@@ -55,17 +55,17 @@ public class Person implements PersonDTO, Serializable
     
     /**
      * Metoden som kallas vid skapande av en ny person.
-     * @param name Förnamn
+     * @param fname Förnamn
      * @param surname Efternamn
      * @param ssn Personnummer
      * @param email E-post
      * @param username Användarnamn
      * @param password Lösenord
      */
-    public Person(String name, String surname, 
+    public Person(String fname, String surname, 
             String ssn, String email, String username, String password)
     {
-        this.name = name;
+        this.fname = fname;
         this.surname = surname;
         this.ssn = ssn;
         this.email = email;
@@ -78,7 +78,7 @@ public class Person implements PersonDTO, Serializable
      * @return Förnamn
      */
     public String getName(){
-        return name;
+        return fname;
     }
     
     /**
@@ -86,7 +86,7 @@ public class Person implements PersonDTO, Serializable
      * @param name Förnamn
      */
     public void setName(String name){
-        this.name = name;
+        this.fname = name;
     }
     
      /**

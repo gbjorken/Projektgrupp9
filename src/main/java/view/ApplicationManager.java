@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import view.validators.ValidYear;
@@ -22,7 +24,7 @@ import view.validators.ValidYear;
  * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
  */
 @Named("applicationManager")
-@SessionScoped
+@ConversationScoped
 public class ApplicationManager implements Serializable 
 {
     private static final long serialVersionUID = 16247164405L;
@@ -46,6 +48,41 @@ public class ApplicationManager implements Serializable
     private Date endDate;
     private Boolean showDateMessage;
     private Boolean confirmSuccess;
+    private Boolean goToConfirm = false;
+    private Boolean clickOnConfirm = false;
+    private Boolean confirmFailed = false;
+    
+    @Inject
+    private Conversation conversation;
+    
+    /**
+    * Conversation scoped bean start.
+    * Alla värden sparas.
+    */
+    private void startConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+
+    /**
+     * Conversation scoped bean stop.
+     * Alla sparade värden tas bort.
+     */
+    private void stopConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
+    
+    /**
+     * Är till för att avsluta en session. Anropas vid utloggning.
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
+    public String endConversation(){
+        stopConversation();
+        return "";
+    }
     
     /**
      * Returnerar en kompetens.
@@ -88,27 +125,33 @@ public class ApplicationManager implements Serializable
      */
     public Competence[] getCompetenceValue() 
     {
-        compList = controller.
+        comList = null;
+        try
+        {
+            compList = controller.
                 getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-        comList = new Competence[compList.size()];
-        String comName, comId;
-        Boolean skip = false;
-        ArrayList<Competence> alComp = new ArrayList<>();
-        for(CompetenceDTO compList1 : compList) {
-            comId = compList1.getCompetence().toString();
-            for(String competenceList1 : competenceList) {
-                if(comId.equals(competenceList1)) {
-                    skip = true;
-                    break;
+            comList = new Competence[compList.size()];
+            String comName, comId;
+            Boolean skip = false;
+            ArrayList<Competence> alComp = new ArrayList<>();
+            for(CompetenceDTO compList1 : compList) {
+                comId = compList1.getCompetence().toString();
+                for(String competenceList1 : competenceList) {
+                    if(comId.equals(competenceList1)) {
+                        skip = true;
+                        break;
+                    }
                 }
+                if(!skip) {
+                    comName = compList1.getCompetenceName();
+                    alComp.add(new Competence(comName, comId));
+                }
+                skip = false;
             }
-            if(!skip) {
-                comName = compList1.getCompetenceName();
-                alComp.add(new Competence(comName, comId));
-            }
-            skip = false;
+            comList = alComp.toArray(new Competence[alComp.size()]);
         }
-        comList = alComp.toArray(new Competence[alComp.size()]);
+        catch(Exception e)
+        {}
         return comList;
     }
     
@@ -136,14 +179,16 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
-
     /**
      * Används för att visa en lista med den privata kompetensen i vyn.
      * @return en lista med den valda kompetensen 
      */
     public ArrayList<String> getCompetenceAndYearList()
     {
+        startConversation();
+        clickOnConfirm = false;
         confirmSuccess = false;
+        
         ArrayList<String> al = new ArrayList<>();
         competenceAndYearList = new ArrayList<>();
         
@@ -262,6 +307,8 @@ public class ApplicationManager implements Serializable
      */
     public ArrayList<String> getStartDateAndEndDateList()
     {
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
+        
         ArrayList<String> al = new ArrayList<>();
         startDateAndEndDateList = new ArrayList<>(); 
         
@@ -304,7 +351,7 @@ public class ApplicationManager implements Serializable
         arr = currentComp.split(" ");
         int j = 0;
         String y = "";
-        //Skapa kompetensens namn som en strÃ¤ng samt plocka ut Ã¥r
+        //Skapa kompetensens namn som en sträng samt plocka ut år
         while(true)
         {
             try 
@@ -363,6 +410,8 @@ public class ApplicationManager implements Serializable
                 break;
             }
         }
+        
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
         return "";
     }
     
@@ -377,7 +426,38 @@ public class ApplicationManager implements Serializable
         fromDateList = new ArrayList<>();
         toDateList = new ArrayList<>();
         confirmSuccess = false;
+        goToConfirm = false;
+        clickOnConfirm = false;
         return "";
+    }
+    
+    /**
+     * Kollar att den sökande har angett minst en tillgänglighetsperiod.
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
+    public String checkValues()
+    {
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
+        clickOnConfirm = true;
+        return "";
+    }
+    
+    /**
+     * Anger om den sökande kan gå vidare till confirm.
+     * @return true vid ja, annars flase
+     */
+    public Boolean getGoToConfirm()
+    {
+        return goToConfirm;
+    }
+    
+    /**
+     * Anger om den sökande har klickat på confirm-knappen.
+     * @return true om knappen har tryckts, annars false
+     */
+    public Boolean getClickOnConfirm()
+    {
+        return clickOnConfirm;
     }
     
     /**
@@ -390,10 +470,22 @@ public class ApplicationManager implements Serializable
                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
         Integer jobId = Integer.parseInt(
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
-        controller.createApplication
-          (competenceList, yearsList, fromDateList, toDateList, username, jobId);
-        
-        confirmSuccess = true;
+        try
+        {
+            controller.createApplication
+                (competenceList, yearsList, fromDateList, toDateList, username, jobId);
+            confirmSuccess = true;
+            competenceList = new ArrayList<>();
+            yearsList = new ArrayList<>();
+            fromDateList = new ArrayList<>();
+            toDateList = new ArrayList<>();
+            goToConfirm = false;
+            clickOnConfirm = false;
+        }
+        catch(Exception e)
+        {
+            confirmFailed = true;
+        }        
         return "";
     }
     
@@ -412,8 +504,14 @@ public class ApplicationManager implements Serializable
      */
     public List<ApplicationDTO> getApplicationList(String username)
     {
-        
-        return controller.getApplicationsByUsername(username);
+        List<ApplicationDTO> l = null;
+        try
+        {
+            l = controller.getApplicationsByUsername(username);
+        }
+        catch(Exception e)
+        {}
+        return l;
     }
     
     /**
@@ -423,8 +521,15 @@ public class ApplicationManager implements Serializable
      */
     public String getJobNameById(Integer id)
     {
-        return controller.getJobNameById(id, 
+        String s = null;
+        try
+        {
+            s = controller.getJobNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
+        return s;
     }
     
     /**
@@ -434,8 +539,15 @@ public class ApplicationManager implements Serializable
      */
     public String getCompetenceNameById(Integer id)
     {
-        return controller.getCompetenceNameById(id, 
+        String s = null;
+        try
+        {
+            s = controller.getCompetenceNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
+        return s;
     }
     
     /**
@@ -445,8 +557,15 @@ public class ApplicationManager implements Serializable
      */
     public String getStatusNameById(Integer id)
     {
-        return controller.getStatusNameById(id, 
+        String s = null;
+        try
+        {
+            s = controller.getStatusNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
+        return s;
     }
     
     /**
@@ -463,5 +582,23 @@ public class ApplicationManager implements Serializable
      */
     public ApplicationDTO getSpecificApplication(){
         return specificApplication;
+    }
+    
+    /**
+     * Meddelar om ansökan lyckades.
+     * @return true om ansökan lyckades, annars false
+     */
+    public Boolean getConfirmFailed()
+    {
+        return confirmFailed;
+    }
+    
+    /**
+     * Anger om ansökan lyckades.
+     * @param confirmFailed true om ansökan lyckades, annars false.
+     */
+    public void setConfirmFailed(Boolean confirmFailed)
+    {
+        this.confirmFailed = confirmFailed;
     }
 }
