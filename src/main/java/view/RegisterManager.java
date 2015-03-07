@@ -228,16 +228,12 @@ public class RegisterManager implements Serializable
         
         try
         {
-            if(!controller.register(name, surname, ssn, email, username, password))
-            {
-                showMessage = true;
-                registerSuccess = false;
-                return "";
-            }
+            controller.register(name, surname, ssn, email, username, password);
             registerSuccess = true;
         }
         catch(Exception e)
         {
+            showMessage = true;
             registrationFailed = true;
             registerSuccess = false;
         }
