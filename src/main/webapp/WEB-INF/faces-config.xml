@@ -1,11 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
-<!-- =========== FULL CONFIGURATION FILE ================================== -->
-
 <faces-config version="2.0"
     xmlns="http://java.sun.com/xml/ns/javaee" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
     <application>
         <resource-bundle>
             <base-name>view.Messages</base-name>
@@ -17,14 +15,15 @@
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <if>#{loginManager.loginAsApplicantSuccess}</if>
-            <to-view-id>/applicant.xhtml</to-view-id>
+            <to-view-id>/applicant/applicant.xhtml</to-view-id>
         </navigation-case>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <if>#{loginManager.loginAsRecruiterSuccess}</if>
-            <to-view-id>/recruiter.xhtml</to-view-id>
+            <to-view-id>/recruiter/recruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
@@ -32,6 +31,7 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/logout.xhtml</from-view-id>
         <navigation-case>
@@ -39,11 +39,12 @@
             <to-view-id>/welcome.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
-        <from-view-id>/confirmApplication.xhtml</from-view-id>
+        <from-view-id>/applicant/confirmApplication.xhtml</from-view-id>
         <navigation-case>
             <if>#{applicationManager.confirmSuccess}</if>
-            <to-view-id>/completedApplications.xhtml</to-view-id>
+            <to-view-id>/applicant/completedApplications.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

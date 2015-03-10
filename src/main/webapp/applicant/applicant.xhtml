@@ -4,10 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:body>
-        <ui:composition template="template.xhtml">
-            <ui:define name="titled">#{messages.welcome} #{loginManager.recruiterUsername}!</ui:define>
+        <ui:composition template="/resources/view/template.xhtml">
+            <ui:define name="titled">#{messages.welcome} #{loginManager.username}!</ui:define>
             <ui:define name="slide">
-                <h1>#{messages.hello} #{messages.recruiter}: #{loginManager.recruiterUsername}!</h1>
+                <h1>#{messages.hello} #{messages.applicant}: #{loginManager.username}!</h1>
             </ui:define>
         </ui:composition>
     </h:body>

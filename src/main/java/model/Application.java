@@ -35,7 +35,7 @@ public class Application implements Serializable, ApplicationDTO
     private Collection<Availability> availability;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "person", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "person", referencedColumnName = "username", nullable = false)
     private Person person;
     
     @ManyToOne(optional = false)

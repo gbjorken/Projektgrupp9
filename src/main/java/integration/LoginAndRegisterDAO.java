@@ -14,32 +14,9 @@ import model.UserRole;
 public class LoginAndRegisterDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
-    
-    /*public Boolean loginAsApplicant(String username, String password)
-    {
-        List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
-        if(listPersons.size() > 0)
-        {
-            if(getRoleTypeName(listPersons.get(0).getRoleType()).equals("applicant"))
-                return true;
-        }
-        return false;
-    }
-    
-    public Boolean loginAsRecruiter(String username, String password)
-    {
-        List<PersonDTO> listPersons = checkUsernameAndPassword(username, password);
-        if(listPersons.size() > 0)
-        {
-            if(getRoleTypeName(listPersons.get(0).getRoleType()).equals("recruiter"))
-                return true;
-        }
-        return false;
-    }*/
-    
+
     public Boolean register(String name, String surname, String ssn, 
-                            String email, String username, String password)
-    {
+                            String email, String username, String password) {
         Query query = em.createQuery("SELECT p FROM Person AS p WHERE p.username = ?1");
         query.setParameter(1, username);
         if(query.getResultList().size() > 0)
@@ -48,7 +25,7 @@ public class LoginAndRegisterDAO {
         query = em.createQuery("SELECT rt FROM RoleType AS rt WHERE rt.name = 'applicant'");
         RoleType roletype = (RoleType)query.getSingleResult();
         
-        Person person = new Person(name, surname, ssn, email, username, password);
+        Person person = new Person(name, surname, ssn, email, username, encrypt(password));
         UserRole userRole = new UserRole(person, roletype);
         em.persist(userRole);
         
@@ -57,7 +34,22 @@ public class LoginAndRegisterDAO {
         
         return true;
     }
-    
+
+    private String encrypt(String password) {
+        String encrypted="";
+        try {
+            java.security.MessageDigest digestion = java.security.MessageDigest.getInstance("SHA-256");
+            digestion.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+            byte[] digest = digestion.digest();
+            java.math.BigInteger bigInt = new java.math.BigInteger(1, digest);
+            encrypted = bigInt.toString(16);
+System.out.println("c: "+encrypted);
+        } catch (java.security.NoSuchAlgorithmException | java.io.UnsupportedEncodingException ex) {
+            System.out.println("e: "+ex.getMessage());
+        }
+        return encrypted;
+    }
+
     /*private List<PersonDTO> checkUsernameAndPassword(String username, String password)
     {
         Query query = em.createQuery("SELECT p FROM Person AS p "

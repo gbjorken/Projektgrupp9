@@ -31,8 +31,6 @@
             <web-resource-name>recruiter</web-resource-name>
             <description/>
             <url-pattern>/faces/recruiter/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
             <role-name>recruiter</role-name>
@@ -46,9 +44,8 @@
         <display-name>ApplicantConstraint</display-name>
         <web-resource-collection>
             <web-resource-name>applicant</web-resource-name>
+            <description/>
             <url-pattern>/faces/applicant/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -59,9 +56,21 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>SSL</display-name>
+        <web-resource-collection>
+            <web-resource-name>CalcWebResource</web-resource-name>
+            <description>Enforce HTTPS</description>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>ProjektRealm</realm-name>
         <form-login-config>
             <form-login-page>/faces/login.xhtml</form-login-page>
             <form-error-page>/faces/login.xhtml</form-error-page>

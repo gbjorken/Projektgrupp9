@@ -9,10 +9,10 @@
             <div id="top">
                 <h:form id="locale">
                     <h:outputLabel rendered="#{loginManager.loginAsApplicantSuccess}">
-                        #{messages.loggedApplicant}: #{loginManager.applicantUsername}
+                        #{messages.loggedApplicant}: #{loginManager.username}
                     </h:outputLabel>
                     <h:outputLabel rendered="#{loginManager.loginAsRecruiterSuccess}">
-                        #{messages.loggedRecruiter}: #{loginManager.recruiterUsername}
+                        #{messages.loggedRecruiter}: #{loginManager.username}
                     </h:outputLabel>
                     <h:commandLink action="#{locale.changeLocale}">
                         <f:setPropertyActionListener target="#{locale.lang}" value="sv"/>

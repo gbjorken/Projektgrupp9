@@ -83,7 +83,7 @@ public class ApplicationDAO {
     public List<ApplicationDTO> getApplicationsByUsername(String username)
     {
         Query query = em.createQuery("SELECT a FROM Application AS a WHERE "
-                + "a.person = (SELECT p.id FROM Person AS p WHERE p.username = ?1)", ApplicationDTO.class);
+                + "a.person = (SELECT p FROM Person AS p WHERE p.username = ?1)", ApplicationDTO.class);
         query.setParameter(1, username);
         return query.getResultList();
     }

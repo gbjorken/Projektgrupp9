@@ -5,13 +5,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
-        <ui:composition template="template.xhtml">
+        <ui:composition template="/resources/view/template.xhtml">
             <ui:define name="titled">#{messages.completedApplications}</ui:define>
             <ui:define name="slide">
                 <h1 style="text-decoration: underline;">#{messages.completedApplications}:</h1>
                 <h:form>
-                    <ui:repeat value="#{applicationManager.getApplicationList(loginManager.applicantUsername)}" var="app" 
-                        rendered="#{applicationManager.getApplicationList(loginManager.applicantUsername) != null}">
+                    <ui:repeat value="#{applicationManager.getApplicationList(loginManager.username)}" var="app" 
+                        rendered="#{applicationManager.getApplicationList(loginManager.username)!=null}">
                     <li>
                         <h:outputText value="#{applicationManager.getJobNameById(app.job)}"/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

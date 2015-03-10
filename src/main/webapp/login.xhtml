@@ -5,20 +5,20 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:body>
-        <ui:composition template="template.xhtml">
+        <ui:composition template="/resources/view/template.xhtml">
             <ui:define name="titled">#{messages.login}</ui:define>
             <ui:define name="slide">
-                <form  method="POST" action="#{loginManager.login()}">
+                <h:form>
                     <h:panelGrid columns="2">
-                    <h:outputLabel value="User Name"/>
-                    <input type="text" name="j_username" value="#{loginManager.username}"/>
-                    <h:outputLabel value="Password"/>
-                    <input type="password" name="j_password" value="#{loginManager.password}"/>
-                    <input type="submit" value="Login"/>
+                        <h:outputLabel value="User Name"/>
+                        <h:inputText id="j_username" value="#{loginManager.username}"/>
+                        <h:outputLabel value="Password"/>
+                        <h:inputSecret id="j_password" value="#{loginManager.password}"/>
+                        <h:commandButton action="#{loginManager.loged()}" value="Login"/>
                     </h:panelGrid>
-                    <h:outputLabel rendered="#{loginManager.showApplicantMessage}"  
+                    <h:outputLabel rendered="#{loginManager.showApplicantMessage}"
                                         value="#{messages.loginFailed}" style="color:red"/>
-                </form>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
