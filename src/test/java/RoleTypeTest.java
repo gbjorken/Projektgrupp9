@@ -16,7 +16,7 @@ public class RoleTypeTest {
                 .addClass(RoleType.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
-
+    
     RoleType instance;
 
     @org.junit.Test

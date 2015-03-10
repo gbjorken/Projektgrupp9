@@ -233,10 +233,10 @@ public class RegisterManager implements Serializable
         }
         catch(Exception e)
         {
-            showMessage = true;
             registrationFailed = true;
             registerSuccess = false;
         }
+        
         return "";
     }
     
