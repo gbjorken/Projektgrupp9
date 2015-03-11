@@ -10,13 +10,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Klassen tar hand om in- och utloggning av användare, och sparar flaggor för XHTML-sidor.
+ */
 @ManagedBean(name="loginManager")
 @SessionScoped
 public class LoginManager implements Serializable {
     private static final long serialVersionUID=16247164405L;
-
-    @EJB
-    private Controller controller;
 
     private String username;
     private String password;
@@ -26,8 +26,11 @@ public class LoginManager implements Serializable {
     private Boolean showApplicantMessage=false;
     private Boolean showRecruiterMessage=false;
 
-
-    public String loged() {
+    /**
+     * Skapar en egen HTTPServlet-förfrågan för att logga in via JDBC-realmen på Glassfish-servern.
+     * Sätter flaggorna lämpligt angåene
+     */
+    public void login() {
         HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         try {
             request.login(username, password);
@@ -37,9 +40,9 @@ public class LoginManager implements Serializable {
         } catch(ServletException se) {
             showApplicantMessage=true;
             username=null;
-        } return "";
+        }
     }
-    public void unlog() {
+    public void logout() {
         HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         if(loginAsApplicantSuccess) { loginAsApplicantSuccess=false; }
         else if(loginAsRecruiterSuccess) { loginAsRecruiterSuccess=false; }

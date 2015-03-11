@@ -11,11 +11,11 @@
                 <h1>#{messages.logout}:</h1>
                 <h:form>
                     <h:commandButton rendered="#{loginManager.loginAsApplicantSuccess}" 
-                                     action="#{loginManager.logoutAsApplicant}" value="#{messages.logout}">
+                                     action="#{loginManager.logout}" value="#{messages.logout}">
                         <f:actionListener binding="#{applicationManager.endConversation()}"/>
                     </h:commandButton>
                     <h:commandButton rendered="#{loginManager.loginAsRecruiterSuccess}"  
-                                     action="#{loginManager.logoutAsRecruiter}" value="#{messages.logout}"/>
+                                     action="#{loginManager.logout}" value="#{messages.logout}"/>
                 </h:form>
             </ui:define>
         </ui:composition>
