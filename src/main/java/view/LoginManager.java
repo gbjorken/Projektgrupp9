@@ -1,22 +1,20 @@
 package view;
 
-import controller.Controller;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Klassen tar hand om in- och utloggning av användare, och sparar flaggor för XHTML-sidor.
+ */
 @ManagedBean(name="loginManager")
 @SessionScoped
 public class LoginManager implements Serializable {
     private static final long serialVersionUID=16247164405L;
-
-    @EJB
-    private Controller controller;
 
     private String username;
     private String password;
@@ -26,8 +24,11 @@ public class LoginManager implements Serializable {
     private Boolean showApplicantMessage=false;
     private Boolean showRecruiterMessage=false;
 
-
-    public String loged() {
+    /**
+     * Hämtar HTTPServlet-förfrågan för att logga in via JDBC-realmen på Glassfish-servern.
+     * Sätter flaggorna lämpligt efter användarens roll.
+     */
+    public void login() {
         HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         try {
             request.login(username, password);
@@ -37,9 +38,14 @@ public class LoginManager implements Serializable {
         } catch(ServletException se) {
             showApplicantMessage=true;
             username=null;
-        } return "";
+        }
     }
-    public void unlog() {
+
+    /**
+     * Hämtar HTTP-sessionen för att invalidera inloggningen.
+     * Sätter flaggorna lämpligt efter användarens roll.
+     */
+    public void logout() {
         HttpSession session=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         if(loginAsApplicantSuccess) { loginAsApplicantSuccess=false; }
         else if(loginAsRecruiterSuccess) { loginAsRecruiterSuccess=false; }
@@ -47,32 +53,75 @@ public class LoginManager implements Serializable {
         logoutSuccess = true;
     }
 
+    /**
+     * Hämtar användarens namn.
+     * @return Användarens namn
+     */
     public String getUsername() {
         return username;
-    } public void setUsername(String username) {
+    }
+
+    /**
+     * Ställer användarnamnet. Används för inloggning.
+     * @param username Nytt användarnamn
+     */
+    public void setUsername(String username) {
         this.username=username;
     }
+
+    /**
+     * Hämtar användarens lösenord.
+     * @return Lösenordet för användaren
+     */
     public String getPassword() {
         return password;
-    } public void setPassword(String password) {
+    }
+
+    /**
+     * Ställer användaren lösenord. Används för inloggning.
+     * @param password Nytt lösenord
+     */
+    public void setPassword(String password) {
         this.password=password;
     }
+
+
+    /**
+     * Hämtar flaggan för visning av felaktig inloggning för ansökande.
+     * @return Flagga angående felaktig inloggning
+     */
     public Boolean getShowApplicantMessage() {
         return showApplicantMessage;
-    } public void setShowApplicantMessage(Boolean showApplicantMessage) {
-        this.showApplicantMessage = showApplicantMessage;
     }
+
+    /**
+     * Hämtar flaggan för visning av felaktig inloggning för rekryterande.
+     * @return Flagga angående felaktig inloggning
+     */
     public Boolean getShowRecruiterMessage() {
         return showRecruiterMessage;
-    } public void setShowRecruiterMessage(Boolean showRecruiterMessage) {
-        this.showRecruiterMessage=showRecruiterMessage;
     }
+
+    /**
+     * Hämtar flaggan för lyckad inloggning av ansökande.
+     * @return Flagga angående lyckad inloggning av ansökande
+     */
     public boolean getLoginAsApplicantSuccess() {
         return loginAsApplicantSuccess;
     }
+
+    /**
+     * Hämtar flaggan för lyckad inloggning av rekryterande.
+     * @return Flagga angående lyckad inloggning av rekryterande
+     */
     public boolean getLoginAsRecruiterSuccess() {
         return loginAsRecruiterSuccess;
     }
+
+    /**
+     * Hämtar flaggan för lyckad utloggning av användare.
+     * @return Flagga angående lyckad utloggning
+     */
     public boolean getLogoutSuccess() {
         return logoutSuccess;
     }

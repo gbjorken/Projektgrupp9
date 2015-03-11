@@ -40,5 +40,10 @@ public interface PersonDTO
      * @return Personens lösenord
      */
     public String getPassword();
+
+    /**
+     * Hämtar personens användarroll
+     * @return Personens roll
+     */
     public Integer getUserRole();
 }

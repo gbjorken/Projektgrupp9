@@ -14,7 +14,7 @@
                         <h:inputText id="j_username" value="#{loginManager.username}"/>
                         <h:outputLabel value="Password"/>
                         <h:inputSecret id="j_password" value="#{loginManager.password}"/>
-                        <h:commandButton action="#{loginManager.loged()}" value="Login"/>
+                        <h:commandButton action="#{loginManager.login()}" value="Login"/>
                     </h:panelGrid>
                     <h:outputLabel rendered="#{loginManager.showApplicantMessage}"
                                         value="#{messages.loginFailed}" style="color:red"/>

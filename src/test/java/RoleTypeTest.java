@@ -7,18 +7,28 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import static org.junit.Assert.assertEquals;
 import org.junit.runner.RunWith;
 
+/**
+ * Dummy för enhetstestning av rolltyper med Arquillian.
+ */
 @RunWith(Arquillian.class)
 public class RoleTypeTest {
 
+    RoleType instance;
+
+    /**
+     * Konstruktor för skapandet av enhetstest för rolltyper (RoleType).
+     * @return JavaArchive
+     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(RoleType.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
-    
-    RoleType instance;
 
+    /**
+     * Testmetod för att lägga till och hämta en rolltyp.
+     */
     @org.junit.Test
     public void testSetAndGetName() {
         instance = new RoleType();
