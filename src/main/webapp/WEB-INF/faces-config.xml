@@ -33,13 +33,28 @@
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/logout.xhtml</from-view-id>
+        <from-view-id>/applicant/logout.xhtml</from-view-id>
         <navigation-case>
             <if>#{loginManager.logoutSuccess}</if>
             <to-view-id>/welcome.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-
+    <navigation-rule>
+        <from-view-id>/recruiter/logout.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{loginManager.logoutSuccess}</if>
+            <to-view-id>/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/applicant/application.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{applicationManager.goToConfirm and applicationManager.clickOnConfirm}</if>
+            <to-view-id>/applicant/confirmApplication.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/applicant/confirmApplication.xhtml</from-view-id>
         <navigation-case>
@@ -56,10 +71,10 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/confirmApplication.xhtml</from-view-id>
+        <from-view-id>/applicant/confirmApplication.xhtml</from-view-id>
         <navigation-case>
             <if>#{applicationManager.confirmFailed}</if>
-            <to-view-id>/applicationError.xhtml</to-view-id>
+            <to-view-id>/applicant/applicationError.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

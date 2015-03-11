@@ -10,14 +10,14 @@
             <ui:define name="slide">
                 <h:form rendered="#{applicationManager.confirmFailed}">
                     <h1><h:outputText value="#{messages.confirmFailed}!"/></h1>
-                    <h:commandButton value="#{messages.backToApplication}" action="/application.xhtml">                                
+                    <h:commandButton value="#{messages.backToApplication}" action="/applicant/application">                                
                         <f:setPropertyActionListener target="#{applicationManager.confirmFailed}" 
                                                      value="false"/>
                     </h:commandButton>
                 </h:form>
                 <h:form rendered="#{!applicationManager.confirmFailed}">
                     <h:commandButton value="#{messages.backToWelcome}" 
-                                     action="/applicant.xhtml"/>
+                                     action="/applicant/applicant"/>
                 </h:form>
             </ui:define>
         </ui:composition>

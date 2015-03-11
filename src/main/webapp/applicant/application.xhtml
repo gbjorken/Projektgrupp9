@@ -73,12 +73,13 @@
                 </h:form>
                 <h:form>
                     <h:panelGrid columns="2">
-                        <h:commandButton value="#{messages.continue}" action="confirmApplication"/>
-                        <h:commandButton value="#{messages.cancel}" action="#{applicationManager.clearAll}"/>
+                        <h:commandButton value="#{messages.continue}" action="#{applicationManager.checkValues()}"/>
+                        <h:commandButton value="#{messages.cancel}" action="#{applicationManager.clearAll()}"/>
                     </h:panelGrid>
+                    <h:outputText rendered="#{!applicationManager.goToConfirm}" 
+                                  value="#{messages.noAvailabilityPeriod}!"/>
                 </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
 </html>
-

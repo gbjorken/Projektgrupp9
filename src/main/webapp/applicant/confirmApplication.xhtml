@@ -22,12 +22,15 @@
                         <li><h:outputText value="#{date}"/></li>
                     </ui:repeat>
                     <br/>
-                    <h:commandButton value="#{messages.send}" 
+                    <h:commandButton value="#{messages.back}" action="application"/>
+                    <h:commandButton value="#{messages.send}"
                                    action="#{applicationManager.confirmApplication}">
-                        <f:param name="username" value="#{loginManager.applicantUsername}" />
+                        <f:param name="username" value="#{loginManager.username}" />
                         <f:param name="jobId" value="#{jobManager.currentJobId}" />
                     </h:commandButton>    
-                    <h:commandButton value="#{messages.cancel}"/>
+                    <h:commandButton value="#{messages.cancel}" action="jobs">
+                        <f:actionListener binding="#{applicationManager.clearAll()}"/>
+                    </h:commandButton>
                 </h:form>
             </ui:define>
         </ui:composition>

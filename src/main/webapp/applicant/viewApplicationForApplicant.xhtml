@@ -10,18 +10,27 @@
                 <h1>#{messages.applicationForJob}: 
                     #{applicationManager.getJobNameById(applicationManager.specificApplication.job)}</h1>
                 <h:form>
-                    <h:outputText value="Date and time: #{applicationManager.specificApplication.dateMade}"/><br/>
-                    <h:outputText value="Status: #{applicationManager.getStatusNameById
-                                                   (applicationManager.specificApplication.status)}" /><br/>
-                    
+                    <h:outputText value="#{messages.dateAndTime}: #{applicationManager.specificApplication.dateMade}"/><br/>
+                    <h:outputText value="#{messages.status}: #{applicationManager.getStatusNameById
+                                                   (applicationManager.specificApplication.status)}" />
+                    <br/>
                     <h3 style="text-decoration: underline;">#{messages.competence}:</h3>
                     <ui:repeat value="#{applicationManager.getCompetenceAndYearList
                                         (applicationManager.specificApplication.id)}" var="cProf" 
                             rendered="#{applicationManager.getCompetenceAndYearList
                                         (applicationManager.specificApplication.id) != null}">
-                        <li><h:outputText value="#{cProf} #{messages.year}"/></li>
+                        <li><h:outputText value="#{applicationManager.getCompetenceNameById(cProf.competence)} 
+                                          #{cProf.yearsOfExperience} #{messages.year}"/></li>
                     </ui:repeat>
                     
+                    <h3 style="text-decoration: underline;">#{messages.availablePeriod}:</h3>
+                    <ui:repeat value="#{applicationManager.getStartDateAndEndDateList
+                                        (applicationManager.specificApplication.id)}" var="aPer" 
+                            rendered="#{applicationManager.getStartDateAndEndDateList
+                                        (applicationManager.specificApplication.id) != null}">
+                        <li><h:outputText value="#{aPer.fromDate} --- #{aPer.toDate}"/></li>
+                    </ui:repeat>
+                    <br/>
                     <h:commandButton value="#{messages.back}" action="completedApplications"/>
                 </h:form>
             </ui:define>

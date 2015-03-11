@@ -9,13 +9,8 @@
             <ui:define name="titled">#{messages.logout}</ui:define>
             <ui:define name="slide">
                 <h1>#{messages.logout}:</h1>
-                <h:form>
-                    <h:commandButton rendered="#{loginManager.loginAsApplicantSuccess}" 
-                                     action="#{loginManager.logoutAsApplicant}" value="#{messages.logout}">
-                        <f:actionListener binding="#{applicationManager.endConversation()}"/>
-                    </h:commandButton>
-                    <h:commandButton rendered="#{loginManager.loginAsRecruiterSuccess}"  
-                                     action="#{loginManager.logoutAsRecruiter}" value="#{messages.logout}"/>
+                <h:form>                    
+                    <h:commandButton action="#{loginManager.unlog}" value="#{messages.logout}"/>
                 </h:form>
             </ui:define>
         </ui:composition>

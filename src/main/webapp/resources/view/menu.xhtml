@@ -7,13 +7,22 @@
         <ui:composition>
             <div id="menubox">
                 <h:form id="nav">
-                    <h:commandLink action="/welcome"><li>#{messages.welcome}</li></h:commandLink>
+                    <h:commandLink action="/welcome"
+                        rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
+                        <li>#{messages.welcome}</li></h:commandLink>
+                    <h:commandLink rendered="#{loginManager.loginAsApplicantSuccess}" 
+                                   action="/applicant/applicant"><li>#{messages.welcome}</li></h:commandLink>
+                    <h:commandLink rendered="#{loginManager.loginAsRecruiterSuccess}"
+                                   action="/recruiter/recruiter"><li>#{messages.welcome}</li></h:commandLink>
                     <h:commandLink action="/login"
                         rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
                         <li>#{messages.login}</li></h:commandLink>
                     <h:commandLink 
-                        rendered="#{loginManager.loginAsApplicantSuccess or loginManager.loginAsRecruiterSuccess}"
-                                   action="/logout"><li>#{messages.logout}</li></h:commandLink>
+                        rendered="#{loginManager.loginAsApplicantSuccess}" action="/applicant/logout">
+                        <li>#{messages.logout}</li></h:commandLink>
+                    <h:commandLink 
+                        rendered="#{loginManager.loginAsRecruiterSuccess}" action="/recruiter/logout">
+                        <li>#{messages.logout}</li></h:commandLink>
                     <h:commandLink action="/register" 
                         rendered="#{!loginManager.loginAsApplicantSuccess and !loginManager.loginAsRecruiterSuccess}">
                         <li>#{messages.register}</li></h:commandLink>
