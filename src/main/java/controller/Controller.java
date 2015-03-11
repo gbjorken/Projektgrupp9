@@ -7,7 +7,7 @@ import DTO.CompetenceProfileDTO;
 import DTO.JobDTO;
 import integration.ApplicationDAO;
 import integration.JobDAO;
-import integration.LoginAndRegisterDAO;
+import integration.RegisterDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,34 +23,12 @@ import javax.ejb.TransactionAttributeType;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class Controller {
     @EJB
-    private LoginAndRegisterDAO loginAndRegisterDAO;
+    private RegisterDAO registerDAO;
     @EJB
     private JobDAO jobDAO;
     @EJB
     private ApplicationDAO applicationDAO;
 
-    /**
-     * Anropar loginAndRegisterDAO för att testa logga in som ansökande.
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return Boolean angående det gick utan problem eller inte
-     */
-    public Boolean loginAsApplicant(String username, String password)
-    {
-        return loginAndRegisterDAO.loginAsApplicant(username, password);
-    }
-    
-    /**
-     * Anropar loginAndRegisterDAO för att testa logga in som rekryterare.
-     * @param username Användarnamn
-     * @param password Lösenord
-     * @return Boolean angående det gick utan problem eller inte
-     */
-    public Boolean loginAsRecruiter(String username, String password)
-    {
-        return loginAndRegisterDAO.loginAsRecruiter(username, password);
-    }
-    
     /**
      * Anropar loginAndRegisterDAO för att registrera ny sökande.
      * @param name Förnamn
@@ -63,7 +41,7 @@ public class Controller {
      */
     public Boolean register(String name, String surname, String ssn, String email, String username, String password)
     {
-        return loginAndRegisterDAO.register(name, surname, ssn, email, username, password);
+        return registerDAO.register(name, surname, ssn, email, username, password);
     }
     
     /**

@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
-        <ui:composition template="template.xhtml">
+        <ui:composition template="/resources/view/template.xhtml">
             <ui:define name="titled">#{messages.errorTitle}</ui:define>
             <ui:define name="slide">
                 <h:form rendered="#{applicationManager.confirmFailed}">
