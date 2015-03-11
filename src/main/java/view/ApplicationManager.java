@@ -62,6 +62,7 @@ public class ApplicationManager implements Serializable
     private void startConversation() {
         if (conversation.isTransient()) {
             conversation.begin();
+            System.out.println("Ny konversation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 
@@ -152,9 +153,7 @@ public class ApplicationManager implements Serializable
             System.out.println("comList: " + comList.length);
         }
         catch(Exception e)
-        {
-            System.out.println("Här blev det fel!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+        {}
         return comList;
     }
     

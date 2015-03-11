@@ -22,9 +22,9 @@
                         <h:outputLabel for="years" value="#{messages.years}: "/>
                         <h:inputText id="years" label="Years" 
                                      value="#{applicationManager.years}" size="5"
-                                     disabled="#{!applicationManager.enableButton}" />
+                                      />
                         <h:message for="years" style="color:red"/>
-                        <h:commandButton disabled="#{!applicationManager.enableButton}" 
+                        <h:commandButton 
                                          value="#{messages.add}" action="#{applicationManager.addCompetence}"/>
                     </h:panelGrid>
                 </h:form>

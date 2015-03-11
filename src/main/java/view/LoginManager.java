@@ -21,8 +21,7 @@ public class LoginManager implements Serializable {
     private Boolean loginAsApplicantSuccess=false;
     private Boolean loginAsRecruiterSuccess=false;
     private Boolean logoutSuccess=true;
-    private Boolean showApplicantMessage=false;
-    private Boolean showRecruiterMessage=false;
+    private Boolean showMessage=false;
 
     /**
      * Hämtar HTTPServlet-förfrågan för att logga in via JDBC-realmen på Glassfish-servern.
@@ -36,7 +35,7 @@ public class LoginManager implements Serializable {
             if(request.isUserInRole("applicant")) { loginAsApplicantSuccess=true; }
             else if(request.isUserInRole("recruiter")) { loginAsRecruiterSuccess=true; }
         } catch(ServletException se) {
-            showApplicantMessage=true;
+            showMessage=true;
             username=null;
         }
     }
@@ -90,16 +89,8 @@ public class LoginManager implements Serializable {
      * Hämtar flaggan för visning av felaktig inloggning för ansökande.
      * @return Flagga angående felaktig inloggning
      */
-    public Boolean getShowApplicantMessage() {
-        return showApplicantMessage;
-    }
-
-    /**
-     * Hämtar flaggan för visning av felaktig inloggning för rekryterande.
-     * @return Flagga angående felaktig inloggning
-     */
-    public Boolean getShowRecruiterMessage() {
-        return showRecruiterMessage;
+    public Boolean getShowMessage() {
+        return showMessage;
     }
 
     /**
