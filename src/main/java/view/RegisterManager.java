@@ -59,6 +59,10 @@ public class RegisterManager implements Serializable
         }
     }
     
+    /**
+     * Conversation scoped bean end.
+     * Anropar stopConversation och avbryter registreringen.
+     */
     public void endConversation()
     {
         stopConversation();
