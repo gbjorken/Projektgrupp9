@@ -149,9 +149,12 @@ public class ApplicationManager implements Serializable
                 skip = false;
             }
             comList = alComp.toArray(new Competence[alComp.size()]);
+            System.out.println("comList: " + comList.length);
         }
         catch(Exception e)
-        {}
+        {
+            System.out.println("Här blev det fel!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
         return comList;
     }
     
@@ -163,6 +166,8 @@ public class ApplicationManager implements Serializable
      * @return true om det finns icke valda kompetenser, annars false
      */
     public Boolean getEnableButton(){
+        if(comList == null)
+            System.out.println("comList är null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return comList.length > 0;
     }
     
