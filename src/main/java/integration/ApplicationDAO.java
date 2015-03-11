@@ -1,6 +1,7 @@
 package integration;
 
 import DTO.ApplicationDTO;
+import DTO.AvailabilityDTO;
 import DTO.CompetenceDTO;
 import DTO.CompetenceProfileDTO;
 import java.text.DateFormat;
@@ -8,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -19,11 +22,20 @@ import model.Job;
 import model.Person;
 import model.Status;
 
+/**
+ * Klassen Application skickar förfrågningar till databasen om applikationer.
+ */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ApplicationDAO {
     @PersistenceContext(unitName = "Projektgrupp9PU")
     private EntityManager em;
     
+    /**
+     * Lista av alla kompetenser.
+     * @param lang Språkkod
+     * @return Lista av kompetenser
+     */
     public List<CompetenceDTO> getAllCompetences(String lang)
     {
         Query query = em.createQuery("SELECT cl FROM Competence_Localized AS cl "
@@ -32,6 +44,16 @@ public class ApplicationDAO {
         return query.getResultList();
     }
     
+    /**
+     * Matar in all info för en ansökan in i databasen
+     * @param competenceList Lista över användarens kompetenser
+     * @param yearsList Lista över år för kompetenserna
+     * @param fromDateList Lista med startdatum
+     * @param toDateList Lista med slutdatum
+     * @param username Sökandes användarnamn
+     * @param jobId Jobbets id-nr
+     * @return true om ansökan lyckas
+     */
     public Boolean createApplication(ArrayList<String> competenceList, 
                                      ArrayList<String> yearsList,
                                      ArrayList<String> fromDateList,
@@ -80,6 +102,11 @@ public class ApplicationDAO {
         return true;
     }
     
+    /**
+     * Hämtargenomförda ansökningar för en specifik sökande
+     * @param username  Sökandes användarnamn
+     * @return En lista med genomförda ansökningar
+     */
     public List<ApplicationDTO> getApplicationsByUsername(String username)
     {
         Query query = em.createQuery("SELECT a FROM Application AS a WHERE "
@@ -88,6 +115,12 @@ public class ApplicationDAO {
         return query.getResultList();
     }
     
+    /**
+     * Hämtar namnet för en status via id
+     * @param id Statusens id-nr
+     * @param lang Språkkod
+     * @return Namnet på statusen
+     */
     public String getStatusNameById(Integer id, String lang)
     {
         Query query = em.createQuery("SELECT sl.statusName FROM Status_Localized AS sl "
@@ -98,13 +131,38 @@ public class ApplicationDAO {
         return (String)query.getSingleResult();
     }
     
+    /**
+     * Hämtar en lista med kompetensprofiler för en ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return En lista med kompetensprofiler angivna för den specifika ansökan
+     */
     public List<CompetenceProfileDTO> getCompetenceProfileByApplicationId(Integer id){
         Query query = em.createQuery("SELECT cp FROM Competence_Profile AS cp "
-                + "WHERE cp.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", CompetenceProfileDTO.class);
+                + "WHERE cp.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", 
+                        CompetenceProfileDTO.class);
         query.setParameter(1, id);
         return query.getResultList();
     }
     
+    /**
+     * Hämtar en lista med tillgänglighetsperioder för en ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return En lista med tillgänglighetsperioder angivna för den specifika ansökan
+     */
+    public List<AvailabilityDTO> getAvailabilityByApplicationId(Integer id){
+        Query query = em.createQuery("SELECT av FROM Availability AS av "
+                + "WHERE av.application = (SELECT a FROM Application AS a WHERE a.id = ?1)", 
+                        AvailabilityDTO.class);
+        query.setParameter(1, id);
+        return query.getResultList();
+    }
+    
+    /**
+     * Hämtar namnet för en specifik kompetens.
+     * @param id Id för en specifik kompetens
+     * @param lang Språkkod
+     * @return Namnet på kompetensen
+     */
     public String getCompetenceNameById(Integer id, String lang){
         Query query = em.createQuery("SELECT cl.competenceName FROM Competence_Localized AS cl "
                 + "WHERE cl.competence = (SELECT c FROM Competence AS c WHERE c.id = ?1)"

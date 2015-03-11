@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen skapar jobbnamn och användarens preferens angående språk väljs.
+ */
 @Entity
 public class Job_Localized implements Serializable, JobDTO 
 {
@@ -33,9 +36,12 @@ public class Job_Localized implements Serializable, JobDTO
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
 
-    public Job_Localized(){
-    }
-    
+    /**
+     * Metoden som kallas då jobbet skrivs in. 
+     * @param jobName Tjänstens namn
+     * @param locale Språket
+     * @param job Jobbet
+     */
     public Job_Localized(String jobName, Locale locale,
                           Job job)
     {
@@ -43,35 +49,68 @@ public class Job_Localized implements Serializable, JobDTO
         this.locale = locale;
         this.job = job;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Job_Localized() {}
     
+    /**
+     * Returnerar ID
+     * @return ID
+     */
     public Integer getId() {
         return id;
     }
     
+    /**
+     * Returnerar vilket språk som valts.
+     * @return SpråkID
+     */
     public String getLocale(){
         return locale.getLangCode();
     }
     
+    /**
+     * Väljer vilket språk jobbet ska presenteras på.
+     * @param locale SpråkID
+     */
     public void setLocale(Locale locale){
         this.locale = locale;
     }
     
+    /**
+     * Returnerar jobbets ID
+     * @return JobbID
+     */
     public Integer getJob(){
         return job.getId();
     }
     
+    /**
+     * Skickar in jobbet.
+     * @param job Jobbet
+     */
     public void setJob(Job job){
         this.job = job;
     }
     
+    /**
+     * Returnerar typen av jobbets namn.
+     * @return Typen av jobbnamnet
+     */
     public String getJobTypeName(){
         return jobName;
     }
     
+    /**
+     * Skriver in jobbets namn.
+     * @param jobName Jobbets namn
+     */
     public void setJobName(String jobName){
         this.jobName = jobName;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

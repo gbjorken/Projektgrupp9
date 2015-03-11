@@ -68,6 +68,18 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>SSL</display-name>
+        <web-resource-collection>
+            <web-resource-name>CalcWebResource</web-resource-name>
+            <description>Enforce SSL (HTTPS-protocol) for security</description>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>ProjektRealm</realm-name>

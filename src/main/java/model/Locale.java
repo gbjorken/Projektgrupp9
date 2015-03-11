@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen locale bestämmer vilket språk användaren ska se hemsidan på.
+ */
 @Entity
 public class Locale implements Serializable {
     @Id
@@ -32,21 +35,39 @@ public class Locale implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locale")
     private Collection<Job_Localized> jobLocalized;
     
-    public Locale(){
-    }
-    
+    /**
+     * Tar in språkets kod.
+     * @param lang_code Språkkod
+     */
     public Locale(String lang_code){
         this.lang_code = lang_code;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Locale() {}
     
+    /**
+     * Returnerar kolumnen IDs rad.
+     * @return ID
+     */
     public Integer getId() {
         return id;
     }
   
+    /**
+     * Returnerar språkets kod.
+     * @return ID språk
+     */
     public String getLangCode(){
         return lang_code;
     }
     
+    /**
+     * Skriver in språkets kod.
+     * @param lang_code Språkets ID
+     */
     public void setLangCode(String lang_code){
         this.lang_code = lang_code;
     }

@@ -1,6 +1,7 @@
 package view;
 
 import DTO.ApplicationDTO;
+import DTO.AvailabilityDTO;
 import DTO.CompetenceDTO;
 import DTO.CompetenceProfileDTO;
 import controller.Controller;
@@ -10,15 +11,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import view.validators.ValidYear;
 
+/**
+ * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
+ */
 @Named("applicationManager")
-@SessionScoped
+@ConversationScoped
 public class ApplicationManager implements Serializable 
 {
     private static final long serialVersionUID = 16247164405L;
@@ -42,46 +48,101 @@ public class ApplicationManager implements Serializable
     private Date endDate;
     private Boolean showDateMessage;
     private Boolean confirmSuccess;
+    private Boolean goToConfirm = false;
+    private Boolean clickOnConfirm = false;
+    private Boolean confirmFailed = false;
     
+    @Inject
+    private Conversation conversation;
+    
+    /**
+    * Conversation scoped bean start.
+    * Alla värden sparas.
+    */
+    private void startConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+
+    /**
+     * Conversation scoped bean stop.
+     * Alla sparade värden tas bort.
+     */
+    private void stopConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
+    
+    /**
+     * Är till för att avsluta en session. Anropas vid utloggning.
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
+    public String endConversation(){
+        stopConversation();
+        return "";
+    }
+    
+    /**
+     * Returnerar en kompetens.
+     * @return Kompetens
+     */
     public String getCompetence(){
         return competence;
     }
     
+    /**
+     * Skriver in en kompetens.
+     * @param competence Kompetens
+     */
     public void setCompetence(String competence){
         this.competence = competence;
     }
     
+    /**
+     * Returnerar antal år för en kompetens.
+     * @return Antal år för en kompetens
+     */
     public String getYears(){
         return years;
     }
     
+    /**
+     * Skriver in antal år för en kompetens.
+     * @param years Antal år för en kompetens
+     */
     public void setYears(String years){
         this.years = years;
     }
     
     private Competence[] comList;
+    
+    /**
+     * Hämtar alla möjliga kompetenser och skapar en lista med dem.
+     * Denna lista visas sedan i en dropbox i vyn för ny ansökan.
+     * @return En lista med olika kompetenser
+     */
     public Competence[] getCompetenceValue() 
     {
-        comList = new Competence[0];
+        comList = null;
         try
         {
             compList = controller.
-                    getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-
+                getAllCompetences(FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
             comList = new Competence[compList.size()];
             String comName, comId;
             Boolean skip = false;
             ArrayList<Competence> alComp = new ArrayList<>();
-            for (CompetenceDTO compList1 : compList) 
-            {
+            for(CompetenceDTO compList1 : compList) {
                 comId = compList1.getCompetence().toString();
-                for (String competenceList1 : competenceList) {
-                    if (comId.equals(competenceList1)) {
+                for(String competenceList1 : competenceList) {
+                    if(comId.equals(competenceList1)) {
                         skip = true;
                         break;
                     }
                 }
-                if (!skip) {
+                if(!skip) {
                     comName = compList1.getCompetenceName();
                     alComp.add(new Competence(comName, comId));
                 }
@@ -90,16 +151,25 @@ public class ApplicationManager implements Serializable
             comList = alComp.toArray(new Competence[alComp.size()]);
         }
         catch(Exception e)
-        {     
-            
-        }
+        {}
         return comList;
     }
     
+    /** 
+     * Om nuvarande kompetenslista innehåller kompetenser kommer "Lägg till"
+     * knappen att vara aktiverad.
+     * Om nuvarande kompetenslista blir tom kommer
+     * "Lägg till" knappen att bli inaktiverad.
+     * @return true om det finns icke valda kompetenser, annars false
+     */
     public Boolean getEnableButton(){
         return comList.length > 0;
     }
     
+    /**
+     * Lägg till kompetens till den privata kompetenslistan.
+     * @return JSF version 2.2 bug - Tom sträng
+     */
     public String addCompetence()
     {
         competenceList.add(competence);
@@ -109,31 +179,60 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+    /**
+     * Används för att visa en lista med den privata kompetensen i vyn.
+     * @return en lista med den valda kompetensen 
+     */
     public ArrayList<String> getCompetenceAndYearList()
     {
+        startConversation();
+        clickOnConfirm = false;
         confirmSuccess = false;
+        
         ArrayList<String> al = new ArrayList<>();
         competenceAndYearList = new ArrayList<>();
         
         String c;
-        for (String competenceList1 : competenceList) {
-            c = competenceList1;
-            for (CompetenceDTO compList1 : compList) {
-                if (c.equals(compList1.getCompetence().toString())) {
-                    al.add(compList1.getCompetenceName());
+        for(int i = 0; i < competenceList.size(); i++) {
+            c = competenceList.get(i);
+            for(int j = 0; j < compList.size(); j++)
+            {
+                if(c.equals(compList.get(j).getCompetence().toString()))
+                {
+                    al.add(compList.get(j).getCompetenceName());
                     break;
                 }
             }
         }
         
-        for(int i = 0; i < al.size(); i++)
-        {
+        for(int i = 0; i < al.size(); i++) {
             competenceAndYearList.add(al.get(i) + " " + yearsList.get(i));
         }
         
         return competenceAndYearList;
     }
+
+    /**
+     * Hämtar en lista med kompetenser för en specifik ansökan
+     * @param id Id:t för den specifika ansökan
+     * @return Lista med kompetenser och år för respektive
+     */
+    public List<CompetenceProfileDTO> getCompetenceAndYearList(Integer id)
+    {
+        List<CompetenceProfileDTO> l = null;
+        try
+        {
+            l = controller.getCompetenceProfileByApplicationId(id);
+        }
+        catch(Exception e)
+        {}
+        return l;
+    }
     
+    /**
+     * Händelselyssnare för när användaren väljer datum för tillgänglighet.
+     * @param event Event lyssnare
+     */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,22 +240,42 @@ public class ApplicationManager implements Serializable
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
+    /**
+     * Returnerar startdatumet för tillgänglighet.
+     * @return Startdatum
+     */
     public Date getStartDate() {
         return startDate;
     }
  
+    /**
+     * Skriver in startdatumet för tillgänglighet.
+     * @param startDate Startdatum
+     */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
+    /**
+     * Returnerar slutdatumet för tillgänglighet.
+     * @return Slutdatum
+     */
     public Date getEndDate() {
         return endDate;
     }
  
+    /**
+     * * Returnerar slutdatumet för tillgänglighet.
+     * @param endDate Slutdatum
+     */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     
+    /**
+     * Lägg till datum i tillgänglighetslistan.
+     * @return JSF version 2.2 bug - Tom sträng
+     */
     public String addDates()
     {
         if(startDate.after(endDate))
@@ -174,12 +293,23 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+    /**
+     * Anger om ett felmeddellande ska visas för start- och slutdatum
+     * @return true om ett fel har uppstått vid valet av start och slutdatum
+     */
     public Boolean getShowDateMessage(){
         return showDateMessage;
     }
     
+    /**
+     * Skapar en lista av start och slutdatumena, för att visa denna lista i vyn.
+     * @return En lista med de valda start och slutdatumena.
+     */
     public ArrayList<String> getStartDateAndEndDateList()
     {
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
+        
+        ArrayList<String> al = new ArrayList<>();
         startDateAndEndDateList = new ArrayList<>(); 
         
         for(int i = 0; i < fromDateList.size(); i++)
@@ -190,6 +320,28 @@ public class ApplicationManager implements Serializable
         return startDateAndEndDateList;
     }
     
+    /**
+     * Hämtar en lista med tillgänglighetsperioder för en specifik ansökan.
+     * @param id Id:t för den specifika ansökan
+     * @return Lista med tillgänglighetsperioder
+     */
+    public List<AvailabilityDTO> getStartDateAndEndDateList(Integer id)
+    {
+        List<AvailabilityDTO> l = null;
+        try
+        {
+            l = controller.getAvailabilityByApplicationId(id);
+        }
+        catch(Exception e)
+        {}
+        return l;
+    }
+    
+    /**
+     * Tar bort en kompetens som man tidigare har valt.
+     * @param currentComp Den valda kompetensen som ska tas bort
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
     public String removeCurrentComp(String currentComp)
     {
         String[] arr;
@@ -199,7 +351,7 @@ public class ApplicationManager implements Serializable
         arr = currentComp.split(" ");
         int j = 0;
         String y = "";
-        //Skapa kompetensens namn som en strÃ¤ng samt plocka ut Ã¥r
+        //Skapa kompetensens namn som en sträng samt plocka ut år
         while(true)
         {
             try 
@@ -241,6 +393,11 @@ public class ApplicationManager implements Serializable
         return "";
     }
     
+    /**
+     * Ta bort en specifik period.
+     * @param currentPeriod Den period som ska tas bort
+     * @return JSF version 2.2 bug - Tom sträng
+     */
     public String removeCurrentPeriod(String currentPeriod)
     {
         String[] arr = currentPeriod.split(" ");
@@ -253,9 +410,15 @@ public class ApplicationManager implements Serializable
                 break;
             }
         }
+        
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
         return "";
     }
     
+    /**
+     * Rensar alla valda kompetenser och perioder.
+     * @return JSF version 2.2 bug - Tom sträng
+     */
     public String clearAll()
     {
         competenceList = new ArrayList<>();
@@ -263,103 +426,179 @@ public class ApplicationManager implements Serializable
         fromDateList = new ArrayList<>();
         toDateList = new ArrayList<>();
         confirmSuccess = false;
+        goToConfirm = false;
+        clickOnConfirm = false;
         return "";
     }
     
+    /**
+     * Kollar att den sökande har angett minst en tillgänglighetsperiod.
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
+    public String checkValues()
+    {
+        goToConfirm = !(fromDateList.isEmpty() || fromDateList == null);
+        clickOnConfirm = true;
+        return "";
+    }
+    
+    /**
+     * Anger om den sökande kan gå vidare till confirm.
+     * @return true vid ja, annars flase
+     */
+    public Boolean getGoToConfirm()
+    {
+        return goToConfirm;
+    }
+    
+    /**
+     * Anger om den sökande har klickat på confirm-knappen.
+     * @return true om knappen har tryckts, annars false
+     */
+    public Boolean getClickOnConfirm()
+    {
+        return clickOnConfirm;
+    }
+    
+    /**
+     * Är till för att godkänna ansökan, skickar ansökan till databasen.
+     * @return JSF version 2.2 bug - Tom sträng 
+     */
     public String confirmApplication()
     {
+        String username = 
+               FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
+        Integer jobId = Integer.parseInt(
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
         try
         {
-            String username = 
-                   FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("username");
-            Integer jobId = Integer.parseInt(
-                    FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
             controller.createApplication
-              (competenceList, yearsList, fromDateList, toDateList, username, jobId);
-
+                (competenceList, yearsList, fromDateList, toDateList, username, jobId);
             confirmSuccess = true;
+            competenceList = new ArrayList<>();
+            yearsList = new ArrayList<>();
+            fromDateList = new ArrayList<>();
+            toDateList = new ArrayList<>();
+            goToConfirm = false;
+            clickOnConfirm = false;
         }
         catch(Exception e)
         {
-            
-        }
+            confirmFailed = true;
+        }        
         return "";
     }
     
+    /**
+     * Visar om ansökan lyckades eller inte
+     * @return true om ansökan lyckades, annars false
+     */
     public Boolean getConfirmSuccess(){
         return confirmSuccess;
     }
     
+    /**
+     * Hämtar en lista med genomförda ansökningar för en specifik användare
+     * @param username Den specifika användaren
+     * @return En lista med alla genomförda ansökningar
+     */
     public List<ApplicationDTO> getApplicationList(String username)
     {
-        List<ApplicationDTO> list = new ArrayList<>();
+        List<ApplicationDTO> l = null;
         try
         {
-            list = controller.getApplicationsByUsername(username);
+            l = controller.getApplicationsByUsername(username);
         }
         catch(Exception e)
-        {
-            
-        }
-        return list;
+        {}
+        return l;
     }
     
+    /**
+     * Hämtar ett jobbs namn via id
+     * @param id Ett specifikt jobbs id
+     * @return Det specifika jobbets namn
+     */
     public String getJobNameById(Integer id)
     {
-        String s = "";
+        String s = null;
         try
         {
             s = controller.getJobNameById(id, 
                     FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
         }
         catch(Exception e)
-        {
-            
-        }
-        return s;  
-    }
-    
-    public String getStatusNameById(Integer id)
-    {
-        String s = "";
-        try
-        {
-            s = controller.getStatusNameById(id, 
-                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage()); 
-        }
-        catch(Exception e)
-        {
-            
-        }
+        {}
         return s;
     }
     
+    /**
+     * Hämtar en kompetens namn via id
+     * @param id En specifik kompetens id
+     * @return Den specifika kompetensens namn
+     */
+    public String getCompetenceNameById(Integer id)
+    {
+        String s = null;
+        try
+        {
+            s = controller.getCompetenceNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
+        return s;
+    }
+    
+    /**
+     * Hämtar namnet på en status via id 
+     * @param id Ett specifikt status id
+     * @return Statusens namn
+     */
+    public String getStatusNameById(Integer id)
+    {
+        String s = null;
+        try
+        {
+            s = controller.getStatusNameById(id, 
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
+        }
+        catch(Exception e)
+        {}
+        return s;
+    }
+    
+    /**
+     * Anger en specifik ansökan, för att visa den
+     * @param specificApplication Den specifika ansökan
+     */
     public void setSpecificApplication(ApplicationDTO specificApplication){
         this.specificApplication = specificApplication;
     }
     
+    /**
+     * Hämtar den specifika ansökan
+     * @return Den specifika ansökan
+     */
     public ApplicationDTO getSpecificApplication(){
         return specificApplication;
     }
     
-    public ArrayList<String> getCompetenceAndYearList(Integer id)
+    /**
+     * Meddelar om ansökan lyckades.
+     * @return true om ansökan lyckades, annars false
+     */
+    public Boolean getConfirmFailed()
     {
-        competenceAndYearList = new ArrayList<>();
-        try
-        {
-            List<CompetenceProfileDTO> cList = controller.getCompetenceProfileByApplicationId(id);
-
-            String c;
-            for (CompetenceProfileDTO cList1 : cList) {
-                c = controller.getCompetenceNameById(cList1.getCompetence(), 
-                        FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage());
-                competenceAndYearList.add(c + " " + cList);
-            }
-        }    
-        catch(Exception e)
-        {
-            
-        }
-        return competenceAndYearList;
+        return confirmFailed;
+    }
+    
+    /**
+     * Anger om ansökan lyckades.
+     * @param confirmFailed true om ansökan lyckades, annars false.
+     */
+    public void setConfirmFailed(Boolean confirmFailed)
+    {
+        this.confirmFailed = confirmFailed;
     }
 }

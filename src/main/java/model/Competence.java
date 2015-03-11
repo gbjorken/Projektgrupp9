@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen tar in värden för hur lång tid en ansökande
+ * har jobbat inom en specifik tjänst.
+ */
 @Entity
 public class Competence implements Serializable {
     @Id
@@ -24,10 +28,17 @@ public class Competence implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "competence")
     private Collection<Competence_Profile> competenceProfile;
+
+    /**
+     * Default konstruktor.
+     */
+    public Competence() {}
     
-    public Competence(){
-    }
-    
+    /**
+     * Returnerar ett värde på ID som berättar om vilken
+     * rad kompentensens värde ligger på.
+     * @return ID
+     */
     public Integer getId() {
         return id;
     }
@@ -41,7 +52,6 @@ public class Competence implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Competence)) {
             return false;
         }

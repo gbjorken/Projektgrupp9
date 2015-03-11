@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen skapar ett ID som används av klassen Job_Localized.
+ */
 @Entity
 public class Job implements Serializable {
     @Id
@@ -24,10 +27,16 @@ public class Job implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private Collection<Application> applications;
+
+    /**
+     * Default konstruktor.
+     */
+    public Job() {}
     
-    public Job(){
-    }
-    
+    /**
+     * Returnerar ID för job.
+     * @return Job ID
+     */
     public Integer getId() {
         return id;
     }

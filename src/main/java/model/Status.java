@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klassen status returnerar endast en status kod för applikationer som
+ * skickats in. Är de godkända eller inte / Hired or fired?
+ */
 @Entity
 public class Status implements Serializable {
     @Id
@@ -24,10 +28,16 @@ public class Status implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
     private Collection<Application> applications;
+
+    /**
+     * Default konstruktor.
+     */
+    public Status() {}
     
-    public Status(){
-    }
-    
+    /**
+     * Returnerar en ID kod från kolumnen ID.
+     * @return ID kod
+     */
     public Integer getId() {
         return id;
     }
@@ -41,7 +51,6 @@ public class Status implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Status)) {
             return false;
         }

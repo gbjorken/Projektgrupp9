@@ -11,6 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Entitet "Status_Localized" lagrar "hired or fired" statusen på olika språk.
+ * Den är kopplad till "Status" och "Locale"-entiteternas "id"-kolumner och använder dessa främmande nycklar för att identifiera språket och statusen.
+ */
 @Entity
 public class Status_Localized implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,39 +36,75 @@ public class Status_Localized implements Serializable {
     @JoinColumn(name = "status", referencedColumnName = "id", nullable = false)
     private Status status;
     
-    public Status_Localized(){
-    }
-    
+    /**
+     * Konstruktorn som används då vi lägger till något nytt.
+     * @param statusName Namn på status
+     * @param locale Typ av språk
+     * @param status Statusen av typen av språk
+     */
     public Status_Localized(String statusName, Locale locale, Status status){
         this.statusName = statusName;
         this.locale = locale;
         this.status = status;
     }
+
+    /**
+     * Default konstruktor.
+     */
+    public Status_Localized() {}
         
+    /**
+     * Returnerar "id" (primärnyckeln) från kolumnen "id".
+     * @return ID kod
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Returnerar kod för vilket språk som används.
+     * @return Språkkod
+     */
     public String getLocale(){
         return locale.getLangCode();
     }
     
+    /**
+     * Skriver in koden för valt språk.
+     * @param locale Språkkod
+     */
     public void setLocale(Locale locale){
         this.locale = locale;
     }
     
+    /**
+     * Returnerar den främmande nyckeln för vilken status ordet motsvarar.
+     * @return Språkkod
+     */
     public Integer getStatus(){
         return status.getId();
     }
     
+    /**
+     * Skriver in vad statusen är på detta språk.
+     * @param status HiredOrFired på relevant språk
+     */
     public void setStatus(Status status){
         this.status = status;
     }
-    
+
+    /**
+     * Returnerar namnet på statusen.
+     * @return status Namnet på statusen
+     */
     public String getStatusName(){
         return statusName;
     }
-    
+
+    /**
+     * Skriver in statusens namn.
+     * @param statusName Status namn
+     */
     public void setStatusName(String statusName){
         this.statusName = statusName;
     }
@@ -78,7 +118,6 @@ public class Status_Localized implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Status_Localized)) {
             return false;
         }

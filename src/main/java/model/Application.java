@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Applikationer skapas i denna klass.
+ */
 @Entity
 public class Application implements Serializable, ApplicationDTO
 {
@@ -46,9 +49,19 @@ public class Application implements Serializable, ApplicationDTO
     @JoinColumn(name = "job", referencedColumnName = "id", nullable = false)
     private Job job;
     
+    /**
+     * Default-konstruktor.
+     */
     public Application(){
     }
     
+    /**
+     * Konstruktor för en applikation.
+     * @param date_made Datumet då applikationen gjordes
+     * @param person Vem som gjorde applikationen
+     * @param status Statusen på om applikationen blivit recenserad av rekryterare
+     * @param job Vilken tjänst / typ av job
+     */
     public Application(String date_made, Person person, Status status, Job job)
     {
         this.date_made = date_made;
@@ -61,34 +74,67 @@ public class Application implements Serializable, ApplicationDTO
         return id;
     }
 
+    /**
+     * Returnerar datumet då applikationen från en sökande gjordes.
+     * @return Skapande datum
+     */
     public String getDateMade(){
         return date_made;
     }
     
+    /**
+     * Skriver in datumet i databasen då applikationen gjordes.
+     * @param date_made Dåvarande datum
+     */
     public void setDateMade(String date_made){
         this.date_made = date_made;
     }
     
+    /**
+     * Hämtar namnet för en användare.
+     * @return Användarnamnet för en användare
+     */
     public String getPerson(){
         return person.getUsername();
     }
     
+    /**
+     * Skriver in personen i databasen som gjorde applikationen.
+     * @param person Själva personen
+     */
     public void setPerson(Person person){
         this.person = person;
     }
     
+    /**
+     * Returnerar applikationsens ID status.
+     * @return Statusens ID
+     */
     public Integer getStatus(){
         return status.getId();
     }
     
+    /**
+     * Skriver in status på applikationen i databasen om applikationen
+     * eller recenserad eller ej.
+     * @param status På ID
+     */
     public void setStatus(Status status){
         this.status = status;
     }
     
+    /**
+     * Returnerar ett ID från databasen om ett specifikt jobb.
+     * @return ID om jobb
+     */
     public Integer getJob(){
         return job.getId();
     }
     
+    /**
+     * Skriver in i databasen om en specifikt jobbtjänst.
+     * @param job Tjänstnamn
+     */
     public void setJob(Job job){
         this.job = job;
     }

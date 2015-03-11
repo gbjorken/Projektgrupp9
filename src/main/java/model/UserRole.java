@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * Klass för att skapa och lagra användarroller.
+ */
 @Entity
 public class UserRole implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,30 +32,58 @@ public class UserRole implements Serializable {
     @JoinColumn(name = "roletype", referencedColumnName = "name", nullable = false)
     private RoleType roletype;  
     
+    /**
+     * Default konstruktor
+     */
     public UserRole(){
     }
     
+    /**
+     * Konstruktor för UserRole
+     * @param person Den person denna UserRole berör
+     * @param roletype Den rolltyp som personen ska ha
+     */
     public UserRole(Person person, RoleType roletype){
         this.person = person;
         this.roletype = roletype;
     }
     
+    /**
+     * Sätter id:t för användarrollen.
+     * @return Id:t för användarrollen
+     */
     public Integer getId() {
         return id;
     }
     
+    /**
+     * Hämtar användarnamnet för personen.
+     * @return Användarnamnet för den person som denna UserRole berör
+     */
     public String getPerson(){
         return person.getUsername();
     }
     
+    /**
+     * Anger person för denna UserRole
+     * @param person Person
+     */
     public void setPerson(Person person){
         this.person = person;
     }
     
+    /**
+     * Hämtar rolltypen för denna UserRole.
+     * @return Rolltypen som denna UserRole berör
+     */
     public String getRoleType(){
         return roletype.getName();
     }
     
+    /**
+     * Sätter rolltypen för denna UserRole.
+     * @param roletype Rolltyp för denna UserRole
+     */
     public void setRoleType(RoleType roletype){
         this.roletype = roletype;
     }
@@ -66,20 +97,15 @@ public class UserRole implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof UserRole)) {
             return false;
         }
         UserRole other = (UserRole) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
         return "model.UserRole[ id=" + id + " ]";
-    }
-    
+    }   
 }
