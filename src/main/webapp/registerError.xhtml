@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="titled">#{messages.errorTitle}</ui:define>
+            <ui:define name="slide">
+                <h:form rendered="#{registerManager.registrationFailed}">
+                    <h1><h:outputText value="#{messages.regFailed}!"/></h1>
+                    <h:commandButton value="#{messages.backToRegistration}" 
+                                     action="/register.xhtml">
+                        <f:actionListener binding="#{registerManager.endConversation()}"/>
+                    </h:commandButton>
+                </h:form>
+                <h:form rendered="#{!registerManager.registrationFailed}">
+                    <h:commandButton value="#{messages.backToRegistration}" 
+                                     action="/register.xhtml"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

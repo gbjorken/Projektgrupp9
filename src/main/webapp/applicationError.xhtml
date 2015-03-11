@@ -8,19 +8,16 @@
         <ui:composition template="template.xhtml">
             <ui:define name="titled">#{messages.errorTitle}</ui:define>
             <ui:define name="slide">
-                <h:form rendered="#{registerManager.registrationFailed}">
-                    <h1><h:outputText value="#{messages.regFailed}!"/></h1>
-                    <h:commandButton value="#{messages.backToRegistration}" action="/register.xhtml">                                
-                        <f:setPropertyActionListener target="#{registerManager.registrationFailed}" 
-                                                     value="false"/>
-                    </h:commandButton>
-                </h:form>
                 <h:form rendered="#{applicationManager.confirmFailed}">
                     <h1><h:outputText value="#{messages.confirmFailed}!"/></h1>
                     <h:commandButton value="#{messages.backToApplication}" action="/application.xhtml">                                
                         <f:setPropertyActionListener target="#{applicationManager.confirmFailed}" 
                                                      value="false"/>
                     </h:commandButton>
+                </h:form>
+                <h:form rendered="#{!applicationManager.confirmFailed}">
+                    <h:commandButton value="#{messages.backToWelcome}" 
+                                     action="/applicant.xhtml"/>
                 </h:form>
             </ui:define>
         </ui:composition>

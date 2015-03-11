@@ -58,14 +58,14 @@
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
             <if>#{registerManager.registrationFailed}</if>
-            <to-view-id>/error.xhtml</to-view-id>
+            <to-view-id>/registerError.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/confirmApplication.xhtml</from-view-id>
         <navigation-case>
             <if>#{applicationManager.confirmFailed}</if>
-            <to-view-id>/error.xhtml</to-view-id>
+            <to-view-id>/applicationError.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

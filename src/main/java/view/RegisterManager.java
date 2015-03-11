@@ -58,7 +58,13 @@ public class RegisterManager implements Serializable
             conversation.end();
         }
     }
-
+    
+    public void endConversation()
+    {
+        stopConversation();
+        registrationFailed = false;
+    }
+    
     /**
      * Skriver in användarens förnamn.
      * @param name Namn
@@ -230,9 +236,16 @@ public class RegisterManager implements Serializable
         {
             controller.register(name, surname, ssn, email, username, password);
             registerSuccess = true;
+            registrationFailed = false;
         }
         catch(Exception e)
         {
+            startConversation();
+            name = null;
+            surname = null;
+            username = null;
+            email = null;
+            ssn = null;
             registrationFailed = true;
             registerSuccess = false;
         }
