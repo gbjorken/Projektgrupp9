@@ -11,20 +11,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import view.validators.ValidYear;
 
 /**
- * Klassen ApplicationManager tar hand om allt som rör applikationer i vyn.
+ * Klassen ApplicationManager tar hand om allt som rÃ¶r applikationer i vyn.
  */
 @Named("applicationManager")
-@ConversationScoped
+@SessionScoped
 public class ApplicationManager implements Serializable 
 {
     private static final long serialVersionUID = 16247164405L;
@@ -52,39 +50,6 @@ public class ApplicationManager implements Serializable
     private Boolean clickOnConfirm = false;
     private Boolean confirmFailed = false;
     
-    @Inject
-    private Conversation conversation;
-    
-    /**
-    * Conversation scoped bean start.
-    * Alla värden sparas.
-    */
-    private void startConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-            System.out.println("Ny konversation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-    }
-
-    /**
-     * Conversation scoped bean stop.
-     * Alla sparade värden tas bort.
-     */
-    private void stopConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
-    }
-    
-    /**
-     * Är till för att avsluta en session. Anropas vid utloggning.
-     * @return JSF version 2.2 bug - Tom sträng 
-     */
-    public String endConversation(){
-        stopConversation();
-        return "";
-    }
-    
     /**
      * Returnerar en kompetens.
      * @return Kompetens
@@ -102,16 +67,16 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Returnerar antal år för en kompetens.
-     * @return Antal år för en kompetens
+     * Returnerar antal Ã¥r fÃ¶r en kompetens.
+     * @return Antal Ã¥r fÃ¶r en kompetens
      */
     public String getYears(){
         return years;
     }
     
     /**
-     * Skriver in antal år för en kompetens.
-     * @param years Antal år för en kompetens
+     * Skriver in antal Ã¥r fÃ¶r en kompetens.
+     * @param years Antal Ã¥r fÃ¶r en kompetens
      */
     public void setYears(String years){
         this.years = years;
@@ -120,8 +85,8 @@ public class ApplicationManager implements Serializable
     private Competence[] comList;
     
     /**
-     * Hämtar alla möjliga kompetenser och skapar en lista med dem.
-     * Denna lista visas sedan i en dropbox i vyn för ny ansökan.
+     * HÃ¤mtar alla mÃ¶jliga kompetenser och skapar en lista med dem.
+     * Denna lista visas sedan i en dropbox i vyn fÃ¶r ny ansÃ¶kan.
      * @return En lista med olika kompetenser
      */
     public Competence[] getCompetenceValue() 
@@ -150,7 +115,6 @@ public class ApplicationManager implements Serializable
                 skip = false;
             }
             comList = alComp.toArray(new Competence[alComp.size()]);
-            System.out.println("comList: " + comList.length);
         }
         catch(Exception e)
         {}
@@ -158,21 +122,19 @@ public class ApplicationManager implements Serializable
     }
     
     /** 
-     * Om nuvarande kompetenslista innehåller kompetenser kommer "Lägg till"
+     * Om nuvarande kompetenslista innehÃ¥ller kompetenser kommer "LÃ¤gg till"
      * knappen att vara aktiverad.
      * Om nuvarande kompetenslista blir tom kommer
-     * "Lägg till" knappen att bli inaktiverad.
+     * "LÃ¤gg till" knappen att bli inaktiverad.
      * @return true om det finns icke valda kompetenser, annars false
      */
     public Boolean getEnableButton(){
-        if(comList == null)
-            System.out.println("comList är null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return comList.length > 0;
     }
     
     /**
-     * Lägg till kompetens till den privata kompetenslistan.
-     * @return JSF version 2.2 bug - Tom sträng
+     * LÃ¤gg till kompetens till den privata kompetenslistan.
+     * @return JSF version 2.2 bug - Tom strÃ¤ng
      */
     public String addCompetence()
     {
@@ -184,12 +146,11 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Används för att visa en lista med den privata kompetensen i vyn.
+     * AnvÃ¤nds fÃ¶r att visa en lista med den privata kompetensen i vyn.
      * @return en lista med den valda kompetensen 
      */
     public ArrayList<String> getCompetenceAndYearList()
     {
-        startConversation();
         clickOnConfirm = false;
         confirmSuccess = false;
         
@@ -217,9 +178,9 @@ public class ApplicationManager implements Serializable
     }
 
     /**
-     * Hämtar en lista med kompetenser för en specifik ansökan
-     * @param id Id:t för den specifika ansökan
-     * @return Lista med kompetenser och år för respektive
+     * HÃ¤mtar en lista med kompetenser fÃ¶r en specifik ansÃ¶kan
+     * @param id Id:t fÃ¶r den specifika ansÃ¶kan
+     * @return Lista med kompetenser och Ã¥r fÃ¶r respektive
      */
     public List<CompetenceProfileDTO> getCompetenceAndYearList(Integer id)
     {
@@ -234,7 +195,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Händelselyssnare för när användaren väljer datum för tillgänglighet.
+     * HÃ¤ndelselyssnare fÃ¶r nÃ¤r anvÃ¤ndaren vÃ¤ljer datum fÃ¶r tillgÃ¤nglighet.
      * @param event Event lyssnare
      */
     public void onDateSelect(SelectEvent event) {
@@ -245,7 +206,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Returnerar startdatumet för tillgänglighet.
+     * Returnerar startdatumet fÃ¶r tillgÃ¤nglighet.
      * @return Startdatum
      */
     public Date getStartDate() {
@@ -253,7 +214,7 @@ public class ApplicationManager implements Serializable
     }
  
     /**
-     * Skriver in startdatumet för tillgänglighet.
+     * Skriver in startdatumet fÃ¶r tillgÃ¤nglighet.
      * @param startDate Startdatum
      */
     public void setStartDate(Date startDate) {
@@ -261,7 +222,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Returnerar slutdatumet för tillgänglighet.
+     * Returnerar slutdatumet fÃ¶r tillgÃ¤nglighet.
      * @return Slutdatum
      */
     public Date getEndDate() {
@@ -269,7 +230,7 @@ public class ApplicationManager implements Serializable
     }
  
     /**
-     * * Returnerar slutdatumet för tillgänglighet.
+     * * Returnerar slutdatumet fÃ¶r tillgÃ¤nglighet.
      * @param endDate Slutdatum
      */
     public void setEndDate(Date endDate) {
@@ -277,8 +238,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Lägg till datum i tillgänglighetslistan.
-     * @return JSF version 2.2 bug - Tom sträng
+     * LÃ¤gg till datum i tillgÃ¤nglighetslistan.
+     * @return JSF version 2.2 bug - Tom strÃ¤ng
      */
     public String addDates()
     {
@@ -298,15 +259,15 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Anger om ett felmeddellande ska visas för start- och slutdatum
-     * @return true om ett fel har uppstått vid valet av start och slutdatum
+     * Anger om ett felmeddellande ska visas fÃ¶r start- och slutdatum
+     * @return true om ett fel har uppstÃ¥tt vid valet av start och slutdatum
      */
     public Boolean getShowDateMessage(){
         return showDateMessage;
     }
     
     /**
-     * Skapar en lista av start och slutdatumena, för att visa denna lista i vyn.
+     * Skapar en lista av start och slutdatumena, fÃ¶r att visa denna lista i vyn.
      * @return En lista med de valda start och slutdatumena.
      */
     public ArrayList<String> getStartDateAndEndDateList()
@@ -325,9 +286,9 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Hämtar en lista med tillgänglighetsperioder för en specifik ansökan.
-     * @param id Id:t för den specifika ansökan
-     * @return Lista med tillgänglighetsperioder
+     * HÃ¤mtar en lista med tillgÃ¤nglighetsperioder fÃ¶r en specifik ansÃ¶kan.
+     * @param id Id:t fÃ¶r den specifika ansÃ¶kan
+     * @return Lista med tillgÃ¤nglighetsperioder
      */
     public List<AvailabilityDTO> getStartDateAndEndDateList(Integer id)
     {
@@ -344,7 +305,7 @@ public class ApplicationManager implements Serializable
     /**
      * Tar bort en kompetens som man tidigare har valt.
      * @param currentComp Den valda kompetensen som ska tas bort
-     * @return JSF version 2.2 bug - Tom sträng 
+     * @return JSF version 2.2 bug - Tom strÃ¤ng 
      */
     public String removeCurrentComp(String currentComp)
     {
@@ -355,7 +316,7 @@ public class ApplicationManager implements Serializable
         arr = currentComp.split(" ");
         int j = 0;
         String y = "";
-        //Skapa kompetensens namn som en sträng samt plocka ut år
+        //Skapa kompetensens namn som en strÃ¤ng samt plocka ut Ã¥r
         while(true)
         {
             try 
@@ -380,7 +341,7 @@ public class ApplicationManager implements Serializable
             }
         }
         
-        //Tar fram på vilken position i competenceList 
+        //Tar fram pÃ¥ vilken position i competenceList 
         //som den specifika kompetensen finns
         int pos = 0;
         for(int i = 0; i < competenceList.size(); i++)
@@ -400,7 +361,7 @@ public class ApplicationManager implements Serializable
     /**
      * Ta bort en specifik period.
      * @param currentPeriod Den period som ska tas bort
-     * @return JSF version 2.2 bug - Tom sträng
+     * @return JSF version 2.2 bug - Tom strÃ¤ng
      */
     public String removeCurrentPeriod(String currentPeriod)
     {
@@ -421,7 +382,7 @@ public class ApplicationManager implements Serializable
     
     /**
      * Rensar alla valda kompetenser och perioder.
-     * @return JSF version 2.2 bug - Tom sträng
+     * @return JSF version 2.2 bug - Tom strÃ¤ng
      */
     public String clearAll()
     {
@@ -436,8 +397,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Kollar att den sökande har angett minst en tillgänglighetsperiod.
-     * @return JSF version 2.2 bug - Tom sträng 
+     * Kollar att den sÃ¶kande har angett minst en tillgÃ¤nglighetsperiod.
+     * @return JSF version 2.2 bug - Tom strÃ¤ng 
      */
     public String checkValues()
     {
@@ -447,7 +408,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Anger om den sökande kan gå vidare till confirm.
+     * Anger om den sÃ¶kande kan gÃ¥ vidare till confirm.
      * @return true vid ja, annars flase
      */
     public Boolean getGoToConfirm()
@@ -456,7 +417,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Anger om den sökande har klickat på confirm-knappen.
+     * Anger om den sÃ¶kande har klickat pÃ¥ confirm-knappen.
      * @return true om knappen har tryckts, annars false
      */
     public Boolean getClickOnConfirm()
@@ -465,8 +426,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Är till för att godkänna ansökan, skickar ansökan till databasen.
-     * @return JSF version 2.2 bug - Tom sträng 
+     * Ã„r till fÃ¶r att godkÃ¤nna ansÃ¶kan, skickar ansÃ¶kan till databasen.
+     * @return JSF version 2.2 bug - Tom strÃ¤ng 
      */
     public String confirmApplication()
     {
@@ -494,17 +455,17 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Visar om ansökan lyckades eller inte
-     * @return true om ansökan lyckades, annars false
+     * Visar om ansÃ¶kan lyckades eller inte
+     * @return true om ansÃ¶kan lyckades, annars false
      */
     public Boolean getConfirmSuccess(){
         return confirmSuccess;
     }
     
     /**
-     * Hämtar en lista med genomförda ansökningar för en specifik användare
-     * @param username Den specifika användaren
-     * @return En lista med alla genomförda ansökningar
+     * HÃ¤mtar en lista med genomfÃ¶rda ansÃ¶kningar fÃ¶r en specifik anvÃ¤ndare
+     * @param username Den specifika anvÃ¤ndaren
+     * @return En lista med alla genomfÃ¶rda ansÃ¶kningar
      */
     public List<ApplicationDTO> getApplicationList(String username)
     {
@@ -519,7 +480,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Hämtar ett jobbs namn via id
+     * HÃ¤mtar ett jobbs namn via id
      * @param id Ett specifikt jobbs id
      * @return Det specifika jobbets namn
      */
@@ -537,7 +498,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Hämtar en kompetens namn via id
+     * HÃ¤mtar en kompetens namn via id
      * @param id En specifik kompetens id
      * @return Den specifika kompetensens namn
      */
@@ -555,7 +516,7 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Hämtar namnet på en status via id 
+     * HÃ¤mtar namnet pÃ¥ en status via id 
      * @param id Ett specifikt status id
      * @return Statusens namn
      */
@@ -573,24 +534,24 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Anger en specifik ansökan, för att visa den
-     * @param specificApplication Den specifika ansökan
+     * Anger en specifik ansÃ¶kan, fÃ¶r att visa den
+     * @param specificApplication Den specifika ansÃ¶kan
      */
     public void setSpecificApplication(ApplicationDTO specificApplication){
         this.specificApplication = specificApplication;
     }
     
     /**
-     * Hämtar den specifika ansökan
-     * @return Den specifika ansökan
+     * HÃ¤mtar den specifika ansÃ¶kan
+     * @return Den specifika ansÃ¶kan
      */
     public ApplicationDTO getSpecificApplication(){
         return specificApplication;
     }
     
     /**
-     * Meddelar om ansökan lyckades.
-     * @return true om ansökan lyckades, annars false
+     * Meddelar om ansÃ¶kan lyckades.
+     * @return true om ansÃ¶kan lyckades, annars false
      */
     public Boolean getConfirmFailed()
     {
@@ -598,8 +559,8 @@ public class ApplicationManager implements Serializable
     }
     
     /**
-     * Anger om ansökan lyckades.
-     * @param confirmFailed true om ansökan lyckades, annars false.
+     * Anger om ansÃ¶kan lyckades.
+     * @param confirmFailed true om ansÃ¶kan lyckades, annars false.
      */
     public void setConfirmFailed(Boolean confirmFailed)
     {
