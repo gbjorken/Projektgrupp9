@@ -29,12 +29,14 @@ public class LoginManager implements Serializable {
      */
     public void login() {
         HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        try {
+        try 
+        {
             request.login(username, password);
             logoutSuccess=false;
             if(request.isUserInRole("applicant")) { loginAsApplicantSuccess=true; }
             else if(request.isUserInRole("recruiter")) { loginAsRecruiterSuccess=true; }
-        } catch(ServletException se) {
+        } 
+        catch(ServletException se) {
             showMessage=true;
             username=null;
         }
